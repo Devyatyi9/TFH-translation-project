@@ -1,0 +1,32 @@
+{
+  "cSpell.words": [
+    "adress",
+    "anutrainingsession",
+    "blanktest",
+    "bytecode",
+    "defaultstart",
+    "doortdest",
+    "dummyrock",
+    "hiberlite",
+    "inkc",
+    "nfields",
+    "othertrigger",
+    "outercave",
+    "overworld",
+    "rockinteract",
+    "snakechest",
+    "talktome",
+    "testinteract",
+    "testroomd",
+    "testroome",
+    "tfhres",
+    "tink",
+    "walktrigger"
+  ],
+
+  "haxe.displayServer": {
+    // configuration for starting haxe completion server itself
+    "arguments": ["-v"] // arguments before --wait (-v is useful for debugging)
+  },
+  "haxe.displayPort": "auto"
+}

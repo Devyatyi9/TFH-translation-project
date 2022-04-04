@@ -1,0 +1,10 @@
+#-D analyzer-optimize
+-cp test
+-cp src
+--verbose
+--debug
+-lib hashlink
+--main Main
+#--interp
+--hl testSQLite.hl
+#--cmd hl --debug-wait --debug 6112 testSQLite.hl
