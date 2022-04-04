@@ -16,4 +16,4 @@
 
 -cpp bin
 
---class-path ../lib/TFH-font/src
+--class-path ../lib/tfh-font/src
