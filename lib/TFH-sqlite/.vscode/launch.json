@@ -1,0 +1,51 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch debug with compile (cpp)",
+      "type": "hxcpp",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/bin/Main-debug.exe",
+      "preLaunchTask": {
+        "type": "haxe",
+        "args": "active configuration"
+      }
+    },
+    {
+      "name": "HashLink/JIT",
+      "type": "hl",
+      "hxml": "build-hl.hxml",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": {
+        "type": "haxe",
+        "args": "active configuration"
+      }
+    },
+    {
+      "name": "Haxe Interpreter",
+      "type": "haxe-eval",
+      "request": "launch"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Decode js",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\TFHres_db.js",
+      "args": ["decode"]
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Encode js",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\TFHres_db.js",
+      "args": ["encode"]
+    }
+  ]
+}

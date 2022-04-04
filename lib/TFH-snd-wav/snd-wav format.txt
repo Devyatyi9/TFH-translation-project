@@ -1,0 +1,28 @@
+snd-wav foramt
+| ??? |
+ 
+
+          int     int[3]
+|  | ?? | count | lenth 1 | ogg1 | etc...
+     4b      4b	   12b       
+	 
+
+count - количество ogg файлов в контейнере
+targetsprite.snd-wav
+1.ogg 6,101
+2.ogg 6,724
+= 12,825 [1932]
+
+OggS|RIFF WAVEfmt
+
+Snd-wav scheme script
+
+1. поиск самого первого ogg файла - OggS [4F 67 67 53]
+
+2. сделать отступ от начала заголовка OggS на 16 байт
+
+3. считать count количества файлов
+
+4. перейти на 4 байта вперёд и прочитать lenth первого файла
+
+5. 

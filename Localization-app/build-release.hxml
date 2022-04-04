@@ -1,0 +1,15 @@
+-cp src
+
+-lib heaps
+# -lib hldx - directx for windows
+# -lib hlsdl - opengl for all
+-lib hlsdl
+-lib haxeui-core
+-lib haxeui-heaps
+
+# -D linux
+-D windowSize=800x600
+-hl gc.hl
+-main Main
+
+--class-path ../lib/TFH-font/src

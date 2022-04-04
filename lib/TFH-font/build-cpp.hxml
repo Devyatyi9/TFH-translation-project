@@ -1,0 +1,15 @@
+-D analyzer-optimize
+--debug
+-lib hxcpp
+-lib hxcpp-debug-server
+-cp test
+-cp src
+-lib format
+--main Main
+
+-D exe_link
+#Force 64-bit compile for current desktop
+# -D HXCPP_M64
+--cpp bin
+# --cwd ../
+#--cmd haxelib run hxcpp bin/Build.xml -D exe_link

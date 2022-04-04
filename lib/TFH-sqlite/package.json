@@ -1,0 +1,19 @@
+{
+  "name": "pckg",
+  "version": "1.0.0",
+  "description": "i guess",
+  "main": "TFHres_db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "node",
+    "js"
+  ],
+  "author": "Yes Heh <test@test.test>",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^5.0.0"
+  }
+}

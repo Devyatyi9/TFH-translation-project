@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Build",
+      "type": "haxe-eval",
+      "request": "launch"
+    },
+    {
+      "name": "Debug",
+      "request": "launch",
+      "type": "hl",
+      "cwd": "${workspaceRoot}"
+    },
+    {
+      "name": "Build & Debug",
+      "request": "launch",
+      "type": "hl",
+      "cwd": "${workspaceRoot}",
+      "preLaunchTask": {
+        "type": "haxe",
+        "args": "active configuration"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+-cp test
+-main Main
+
+--interp
+--debug
+# --verbose
+# -D analyzer-optimize
+
+--class-path ../lib/TFH-font/src

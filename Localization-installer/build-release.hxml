@@ -1,0 +1,15 @@
+# --verbose
+
+-cp src
+-main Main
+
+-lib haxeui-core
+-lib haxeui-hxwidgets
+-lib hxWidgets
+
+# -D analyzer-optimize
+-D ABI=-MD
+-D WXSTATIC
+-D HXCPP_M64
+
+-cpp bin
