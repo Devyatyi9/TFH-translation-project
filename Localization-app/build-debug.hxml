@@ -12,6 +12,8 @@
 -D debug
 -hl gc.hl
 -main Main
+# -D analyzer-optimize
 --debug
+--verbose
 
 --class-path ../lib/tfh-font/src

@@ -11,5 +11,7 @@
 -D windowSize=800x600
 -hl gc.hl
 -main Main
+# -D analyzer-optimize
+# --verbose
 
 --class-path ../lib/tfh-font/src
