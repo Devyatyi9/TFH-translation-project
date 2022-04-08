@@ -85,7 +85,13 @@ class RepackingGbs {
 		// fontsComparing(fromGameFonts, objectList_export_pixel);
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_pixel);
 		trace('test');
-		// mergeFonts();
+		// mergeFonts(fromGameFonts, translatedFonts);
+	}
+
+	function mergeFonts(importMap:Map<Int, {}>, ExportMap:Map<Int, {}>) {
+		for (key in importMap.keys()) {
+			// key
+		}
 	}
 
 	function fontsAllocate(o:Array<GbsFile>) {
