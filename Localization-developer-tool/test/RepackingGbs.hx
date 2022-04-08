@@ -29,12 +29,8 @@ class RepackingGbs {
 		// var location = "otterui-project/Import/Import-pixel-ui/BuckLobby.gbs";
 		// var location = "otterui-project/OtterExport/Export-pixel-ui/Scenes_pixel.gbs";
 
-		fusion();
-
 		// gbsTestReadWrite(location);
-	}
 
-	function fusion() {
 		// Load export gbs
 		var atlases_export_pixel = "otterui-project/OtterExport/Export-pixel-ui/Fonts";
 		var atlases_export_main = "otterui-project/OtterExport/Export-main-ui/Fonts";
@@ -46,9 +42,9 @@ class RepackingGbs {
 		var fileList_import_pixel = recursiveDir("otterui-project/Import/Import-pixel-ui");
 		var fileList_import_main = recursiveDir("otterui-project/Import/Import-main-ui");
 		//
-		// путь до Patched - main-ui & pixel-ui
-		var path_patched_pixel = "otterui-project/Patched/pixel-ui-patched";
-		var path_patched_main = "otterui-project/Patched/main-ui-patched";
+		// путь до Merged - main-ui & pixel-ui
+		var path_merged_pixel = "otterui-project/Merged/pixel-ui-merged";
+		var path_merged_main = "otterui-project/Merged/main-ui-merged";
 		//
 
 		// здесь проверяем массив сцен на наличие шрифтов
@@ -81,47 +77,57 @@ class RepackingGbs {
 
 		// saveAsJson(objectList_export_pixel);
 
-		// patchCycle(objectList_export_pixel, objectList_import_pixel);
-		// var arr1 = [];
-		var fromGameFonts = fontsAllocate(objectList_import_pixel);
-		// var translatedFonts = fontsAllocate(objectList_export_pixel);
-		fontsComparing(fromGameFonts, objectList_export_pixel);
+		// mergeCycle(objectList_export_pixel, objectList_import_pixel);
+
+		// var fromGameFonts = fontsAllocate(objectList_import_pixel);
+		var translatedFonts = fontsAllocate(objectList_export_pixel);
+
+		// fontsComparing(fromGameFonts, objectList_export_pixel);
+		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_pixel);
+		trace('test');
+		// mergeFonts();
 	}
 
-	/*
-		функция читающая импортируемые файлы и записывающая шрифты в новый массив:
-
-		Последовательное чтение шрифтов, чтение айди шрифта,
-		проверка на наличие информации по индексу в массиве,
-
-		занесение всей информации шрифта в массив с индексом равному айди
-
-	 */
 	function fontsAllocate(o:Array<GbsFile>) {
-		//  o[0].header.sceneID
 		var fontsMap:Map<Int, {}> = [];
-		var fntID = o[0].fontsBlock[0].fontID;
-		trace('font id: ${fntID}');
-		var i = 0;
-		while (i < o.length) {
-			var _ = 0;
-			while (_ < o.length) {
-				var content = o[i].fontsBlock[_];
-				var id = o[i].fontsBlock[_].fontID;
-				trace(id);
-				fontsMap.set(id, content);
-				_++;
+		var nScene = 0;
+		while (nScene < o.length) {
+			var nFont = 0;
+			while (nFont < o[nScene].header.fontsCount) {
+				var content = o[nScene].fontsBlock[nFont];
+				var idFont = o[nScene].fontsBlock[nFont].fontID;
+				// trace('scene number: ${nScene}');
+				// trace('font number: ${nFont}');
+				// trace('font id: ${idFont}');
+				fontsMap.set(idFont, content);
+				nFont++;
 			}
-			i++;
-			var h = fontsMap.exists(55);
-			trace('exist id: ${h}');
+			nScene++;
 		}
+		var h = fontsMap.exists(55);
+		// trace('exist id: ${h}');
 		return fontsMap;
 	}
 
-	function fontsComparing(map:Map<Int, {}>, objects:Array<GbsFile>) {
-		// итерация карты по ключам, сопоставление ключа и айди шрифта в обджектс
-		// map.keys()
+	function fontsComparingAllocate(map:Map<Int, {}>, o:Array<GbsFile>) {
+		var objectsMap:Map<Int, {}> = [];
+		var nScene = 0;
+		while (nScene < o.length) {
+			var nFont = 0;
+			while (nFont < o[nScene].header.fontsCount) {
+				var idFont = o[nScene].fontsBlock[nFont].fontID;
+				if (map.exists(idFont)) {
+					// trace('scene number: ${nScene}');
+					// trace('font number: ${nFont}');
+					// trace('font id: ${idFont}');
+					var content = o[nScene].fontsBlock[nFont];
+					objectsMap.set(idFont, content);
+				}
+				nFont++;
+			}
+			nScene++;
+		}
+		return objectsMap;
 	}
 
 	function saveAsJson(o) {

@@ -38,7 +38,7 @@ class Main {
 		// concatArray();
 		// ArrayContains();
 
-		new PatchingGbs().processing();
+		new RepackingGbs().processing();
 	}
 
 	// 2

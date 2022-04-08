@@ -9,7 +9,7 @@
 
 # -D linux
 -D windowSize=800x600
--hl gc.hl
+-hl localization.hl
 -main Main
 # -D analyzer-optimize
 # --verbose
