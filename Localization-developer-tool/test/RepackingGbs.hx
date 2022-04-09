@@ -1,7 +1,7 @@
 package;
 
-import format.gbs_otterui.GbsData.GbsFont;
-import format.gbs_otterui.GbsData.GbsFile;
+import haxe.ds.ObjectMap;
+import format.gbs_otterui.GbsData;
 import format.gbs_otterui.GbsReader;
 import format.gbs_otterui.GbsWriter;
 import format.gbs_otterui.Tools;
@@ -31,38 +31,32 @@ class RepackingGbs {
 
 		// gbsTestReadWrite(location);
 
+		//**PIXEL**/
+
 		// Load export gbs
 		var atlases_export_pixel = "otterui-project/OtterExport/Export-pixel-ui/Fonts";
-		var atlases_export_main = "otterui-project/OtterExport/Export-main-ui/Fonts";
-		// путь с файлами до OtterExport - main-ui & pixel-ui
+		// путь с файлами до OtterExport - pixel-ui
 		var fileList_export_pixel = recursiveDir("otterui-project/OtterExport/Export-pixel-ui");
-		var fileList_export_main = recursiveDir("otterui-project/OtterExport/Export-main-ui");
 		//
-		// путь с файлами до Import - main-ui & pixel-ui
+		// путь с файлами до Import - pixel-ui
 		var fileList_import_pixel = recursiveDir("otterui-project/Import/Import-pixel-ui");
-		var fileList_import_main = recursiveDir("otterui-project/Import/Import-main-ui");
 		//
-		// путь до Merged - main-ui & pixel-ui
+		// путь до Merged - pixel-ui
 		var path_merged_pixel = "otterui-project/Merged/pixel-ui-merged";
-		var path_merged_main = "otterui-project/Merged/main-ui-merged";
 		//
 
 		// здесь проверяем массив сцен на наличие шрифтов
 		fileList_import_pixel = arrayCheckFonts(fileList_import_pixel);
-		fileList_import_main = arrayCheckFonts(fileList_import_main);
 
 		// Импортируемые игровые файлы
 		var objectList_import_pixel = readGbsList(fileList_import_pixel);
-		var objectList_import_main = readGbsList(fileList_import_main);
 		//***
 
 		var objectList_export_pixel = readGbsList(fileList_export_pixel);
-		var objectList_export_main = readGbsList(fileList_export_main);
 
 		trace(objectList_import_pixel[0].header.sceneID);
-		trace(objectList_import_main[0].header.sceneID);
 		trace(objectList_export_pixel[0].header.sceneID);
-		trace(objectList_export_main[0].header.sceneID);
+
 		#if debug
 		trace("debug");
 		#end
@@ -85,17 +79,53 @@ class RepackingGbs {
 		// fontsComparing(fromGameFonts, objectList_export_pixel);
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_pixel);
 		trace('test');
-		// mergeFonts(fromGameFonts, translatedFonts);
+		mergeFonts(fromGameFonts, translatedFonts);
+
+		//**MAIN**/
+
+		// Load export gbs
+		var atlases_export_main = "otterui-project/OtterExport/Export-main-ui/Fonts";
+		// путь с файлами до OtterExport - main-ui
+		var fileList_export_main = recursiveDir("otterui-project/OtterExport/Export-main-ui");
+		//
+		// путь с файлами до Import - main-ui
+		var fileList_import_main = recursiveDir("otterui-project/Import/Import-main-ui");
+		//
+		// путь до Merged - main-ui
+		var path_merged_main = "otterui-project/Merged/main-ui-merged";
+		//
+
+		// здесь проверяем массив сцен на наличие шрифтов
+		fileList_import_main = arrayCheckFonts(fileList_import_main);
+
+		// Импортируемые игровые файлы
+		var objectList_import_main = readGbsList(fileList_import_main);
+		//***
+
+		var objectList_export_main = readGbsList(fileList_export_main);
+
+		trace(objectList_import_main[0].header.sceneID);
+		trace(objectList_export_main[0].header.sceneID);
 	}
 
-	function mergeFonts(importMap:Map<Int, {}>, ExportMap:Map<Int, {}>) {
+	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>) {
+		// var nameExMp = exportMap[122];
+		// trace(nameExMp.fontID);
 		for (key in importMap.keys()) {
 			// key
+			var exportVal = exportMap[key];
+			// trace(exportVal);
+			trace('***');
 		}
+		// сравнение по MaxTop
+		// сравнение по длине шрифта
+		// сравнение по количеству атласов
+		// сравнение по количеству символов
+		// сравнение символов по индексам
 	}
 
 	function fontsAllocate(o:Array<GbsFile>) {
-		var fontsMap:Map<Int, {}> = [];
+		var fontsMap:Map<Int, GbsFont> = [];
 		var nScene = 0;
 		while (nScene < o.length) {
 			var nFont = 0;
@@ -110,13 +140,13 @@ class RepackingGbs {
 			}
 			nScene++;
 		}
-		var h = fontsMap.exists(55);
+		// var h = fontsMap.exists(55);
 		// trace('exist id: ${h}');
 		return fontsMap;
 	}
 
-	function fontsComparingAllocate(map:Map<Int, {}>, o:Array<GbsFile>) {
-		var objectsMap:Map<Int, {}> = [];
+	function fontsComparingAllocate(map:Map<Int, GbsFont>, o:Array<GbsFile>) {
+		var objectsMap:Map<Int, GbsFont> = [];
 		var nScene = 0;
 		while (nScene < o.length) {
 			var nFont = 0;
