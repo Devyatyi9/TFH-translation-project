@@ -10,7 +10,7 @@
       "name": "Debug",
       "type": "hxcpp",
       "request": "launch",
-	  "cwd": "${workspaceRoot}",
+      "cwd": "${workspaceRoot}",
       "program": "${workspaceFolder}/bin/Main-debug.exe"
     },
     {
@@ -19,6 +19,17 @@
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/bin/Main-debug.exe",
+      "preLaunchTask": {
+        "type": "haxe",
+        "args": "active configuration"
+      }
+    },
+    {
+      "name": "HL OtterUI cli",
+      "request": "launch",
+      "type": "hl",
+      "hxml": "hl-otterui-cli.hxml",
+      "cwd": "${workspaceRoot}",
       "preLaunchTask": {
         "type": "haxe",
         "args": "active configuration"

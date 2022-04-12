@@ -53,6 +53,7 @@ class RepackingGbs {
 		//***
 
 		var objectList_export_pixel = readGbsList(fileList_export_pixel);
+		fileList_export_pixel = [];
 
 		trace(objectList_import_pixel[0].header.sceneID);
 		trace(objectList_export_pixel[0].header.sceneID);
@@ -73,10 +74,9 @@ class RepackingGbs {
 
 		// mergeCycle(objectList_export_pixel, objectList_import_pixel);
 
-		// var fromGameFonts = fontsAllocate(objectList_import_pixel);
 		var translatedFonts = fontsAllocate(objectList_export_pixel);
+		objectList_export_pixel = [];
 
-		// fontsComparing(fromGameFonts, objectList_export_pixel);
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_pixel);
 		trace('test');
 		mergeFonts(fromGameFonts, translatedFonts);
@@ -109,13 +109,46 @@ class RepackingGbs {
 	}
 
 	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>) {
-		// var nameExMp = exportMap[122];
-		// trace(nameExMp.fontID);
 		for (key in importMap.keys()) {
 			// key
+			trace('ключ ${key}');
 			var exportVal = exportMap[key];
-			// trace(exportVal);
-			trace('***');
+			var importVal = importMap[key];
+
+			// перебор по translated символам (exported)
+			var nCharE = 0;
+			while (nCharE < exportVal.charsBlock.length) {
+				trace('***');
+
+				// перебор по fromGame символам (imported)
+				var nCharI = 0;
+				while (nCharI < importVal.charsCount) {
+					var charCodeExp = exportVal.charsBlock[nCharE].charCode;
+					var charCodeImp = importVal.charsBlock[nCharI].charCode;
+					trace('char translated: ${charCodeExp}');
+					trace('char from game: ${charCodeImp}');
+					// charCodeImp.filter
+					// сначала проверяется наличие таких же символов, одинаковые символы удаляются из translated
+					// после все уникальные символы добавляются в конец массива fromGame
+					if (charCodeExp == charCodeImp) { // (nCharI == importVal.charsCount)
+						var charExpObj = exportVal.charsBlock[nCharE];
+						exportVal.charsBlock.remove(charExpObj);
+						nCharI = 0;
+						trace('removed character ${charExpObj.charCode} from array');
+						// trace('length: ${exportVal.charsBlock.length}');
+						continue;
+					} else {
+						// trace('else nope');
+					}
+					nCharI++;
+				}
+				var charCodeExp = exportVal.charsBlock[nCharE].charCode;
+				trace('character translated: ${charCodeExp}');
+				nCharE++;
+			}
+			trace('characters has been filtrated');
+			// скорректировать число атласов и индексы атласов у символов
+			// здесь добавляем символы из exported в imported
 		}
 		// сравнение по MaxTop
 		// сравнение по длине шрифта

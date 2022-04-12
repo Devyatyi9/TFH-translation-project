@@ -1,0 +1,9 @@
+-cp test
+-main Main
+
+-hl otterui-cli.hl
+--debug
+# --verbose
+# -D analyzer-optimize
+
+--class-path ../lib/tfh-font/src
