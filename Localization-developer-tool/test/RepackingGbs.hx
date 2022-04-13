@@ -79,7 +79,7 @@ class RepackingGbs {
 
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_pixel);
 		trace('test');
-		mergeFonts(fromGameFonts, translatedFonts);
+		mergeFonts(fromGameFonts, translatedFonts, atlases_export_pixel);
 
 		//**MAIN**/
 
@@ -108,9 +108,8 @@ class RepackingGbs {
 		trace(objectList_export_main[0].header.sceneID);
 	}
 
-	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>) {
+	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>, atlases_export:String) {
 		for (key in importMap.keys()) {
-			// key
 			trace('ключ ${key}');
 			var exportVal = exportMap[key];
 			var importVal = importMap[key];
@@ -118,43 +117,61 @@ class RepackingGbs {
 			// перебор по translated символам (exported)
 			var nCharE = 0;
 			while (nCharE < exportVal.charsBlock.length) {
-				trace('***');
-
+				// trace('***');
 				// перебор по fromGame символам (imported)
 				var nCharI = 0;
 				while (nCharI < importVal.charsCount) {
 					var charCodeExp = exportVal.charsBlock[nCharE].charCode;
 					var charCodeImp = importVal.charsBlock[nCharI].charCode;
-					trace('char translated: ${charCodeExp}');
-					trace('char from game: ${charCodeImp}');
-					// charCodeImp.filter
+					// trace('char translated: ${charCodeExp}');
+					// trace('char from game: ${charCodeImp}');
 					// сначала проверяется наличие таких же символов, одинаковые символы удаляются из translated
 					// после все уникальные символы добавляются в конец массива fromGame
-					if (charCodeExp == charCodeImp) { // (nCharI == importVal.charsCount)
+					#if utf16
+					if ((charCodeExp == charCodeImp) || (charCodeExp == '?')) { // '?'
+					#elseif !utf16
+					if ((charCodeExp == charCodeImp) || (charCodeExp == '?\x00')) { // '?\x00'
+					#end
 						var charExpObj = exportVal.charsBlock[nCharE];
 						exportVal.charsBlock.remove(charExpObj);
 						nCharI = 0;
 						trace('removed character ${charExpObj.charCode} from array');
 						// trace('length: ${exportVal.charsBlock.length}');
 						continue;
-					} else {
-						// trace('else nope');
 					}
 					nCharI++;
 				}
 				var charCodeExp = exportVal.charsBlock[nCharE].charCode;
-				trace('character translated: ${charCodeExp}');
+				// trace('character translated: ${charCodeExp}');
 				nCharE++;
 			}
 			trace('characters has been filtrated');
 			// скорректировать число атласов и индексы атласов у символов
 			// здесь добавляем символы из exported в imported
+			var impCount = importVal.charsCount - 1;
+			var impIndex = importVal.charsBlock[impCount].charAtlasIndex;
+			nCharE = 0;
+			while (nCharE < exportVal.charsBlock.length) {
+				var expIndex = exportVal.charsBlock[nCharE].charAtlasIndex;
+				// trace(expIndex);
+				var curIndex = impIndex + expIndex + 1;
+				exportVal.charsBlock[nCharE].charAtlasIndex = curIndex;
+				// trace('curIndex: ${curIndex} expIndex: ${expIndex}');
+				nCharE++;
+			}
+			// не забыть переименовать png файлы шрифтов под новое значение индексов
+			var expIndex = exportVal.charsBlock[0].charAtlasIndex;
+			trace(expIndex);
+			trace('nCharE: ${nCharE}');
+			// atlases_export;
 		}
+
 		// сравнение по MaxTop
 		// сравнение по длине шрифта
 		// сравнение по количеству атласов
 		// сравнение по количеству символов
 		// сравнение символов по индексам
+		// пересчитать длину шрифта
 	}
 
 	function fontsAllocate(o:Array<GbsFile>) {
@@ -206,9 +223,7 @@ class RepackingGbs {
 	}
 
 	function fusionCycle(object_export:Array<GbsFile>, object_import:Array<GbsFile>) {}
-}
-
-function getChars(array:Array<GbsFile>, fN:Int) {
+} function getChars(array:Array<GbsFile>, fN:Int) {
 	var tmp = [];
 	var i = 0;
 	while (i < array[0].fontsBlock[fN].charsCount) {

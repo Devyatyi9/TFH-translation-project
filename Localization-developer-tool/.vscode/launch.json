@@ -28,7 +28,6 @@
       "name": "HL OtterUI cli",
       "request": "launch",
       "type": "hl",
-      "hxml": "hl-otterui-cli.hxml",
       "cwd": "${workspaceRoot}",
       "preLaunchTask": {
         "type": "haxe",
