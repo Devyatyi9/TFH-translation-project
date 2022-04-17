@@ -65,6 +65,8 @@ class RepackingGbs {
 
 		mergeFonts(fromGameFonts, translatedFonts);
 		trace(fileList_import_pixel[0]);
+		// map -> object
+		mergeGbsData(objectList_import_pixel, fromGameFonts);
 
 		trace('test');
 
@@ -94,6 +96,8 @@ class RepackingGbs {
 		// trace(objectList_import_main[0].header.sceneID);
 		// trace(objectList_export_main[0].header.sceneID);
 	}
+
+	function mergeGbsData(objectList:Array<GbsFile>, fontsMap:Map<Int, GbsFont>) {}
 
 	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>) {
 		for (key in importMap.keys()) {
@@ -223,145 +227,145 @@ class RepackingGbs {
 		sys.io.File.saveContent('my_file.json', test);
 	}
 
-	function fusionCycle(object_export:Array<GbsFile>, object_import:Array<GbsFile>) {}
-} function getChars(array:Array<GbsFile>, fN:Int) {
-	var tmp = [];
-	var i = 0;
-	while (i < array[0].fontsBlock[fN].charsCount) {
-		var o = array[0].fontsBlock[fN].charsBlock[i];
-		tmp.push(o);
-		i++;
+	function getChars(array:Array<GbsFile>, fN:Int) {
+		var tmp = [];
+		var i = 0;
+		while (i < array[0].fontsBlock[fN].charsCount) {
+			var o = array[0].fontsBlock[fN].charsBlock[i];
+			tmp.push(o);
+			i++;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-function getFontNames(array:Array<GbsFile>) {
-	var tmp = [];
-	var i = 0;
-	while (i < array[0].header.fontsCount) {
-		var o = array[0].fontsBlock[i].fontName;
-		tmp.push(o);
-		i++;
+	function getFontNames(array:Array<GbsFile>) {
+		var tmp = [];
+		var i = 0;
+		while (i < array[0].header.fontsCount) {
+			var o = array[0].fontsBlock[i].fontName;
+			tmp.push(o);
+			i++;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-function readGbsList(array:Array<String>) {
-	var tmp = [];
-	var i = 0;
-	while (i < array.length) {
-		var o = readGuiFile(array[i]);
-		tmp.push(o);
-		var path = haxe.io.Path.withoutDirectory(array[i]);
-		array[i] = path;
-		i++;
+	function readGbsList(array:Array<String>) {
+		var tmp = [];
+		var i = 0;
+		while (i < array.length) {
+			var o = readGuiFile(array[i]);
+			tmp.push(o);
+			var path = haxe.io.Path.withoutDirectory(array[i]);
+			array[i] = path;
+			i++;
+		}
+		return tmp;
 	}
-	return tmp;
-}
 
-function readGuiFile(location:String) {
-	var gi = sys.io.File.read(location);
-	trace('Start of gbs file reading: "$location"');
-	var gbs = new GbsReader(gi).read();
-	gi.close();
-	return gbs;
-}
+	function readGuiFile(location:String) {
+		var gi = sys.io.File.read(location);
+		trace('Start of gbs file reading: "$location"');
+		var gbs = new GbsReader(gi).read();
+		gi.close();
+		return gbs;
+	}
 
-// Recursive loop through all directories / files
-function recursiveDir(directory:String) {
-	var paths = [];
-	if (sys.FileSystem.exists(directory)) {
-		trace("Reading directory: " + directory);
-		for (file in sys.FileSystem.readDirectory(directory)) {
-			var path = haxe.io.Path.join([directory, file]);
-			if (!sys.FileSystem.isDirectory(path)) {
-				var fileExt = new haxe.io.Path(path);
-				if (fileExt.ext == "gbs" && Tools.fileExists(path) == true) {
-					// trace('Gbs file found: $file');
-					paths.push(path);
-				}
-				if (fileExt.ext == "png") {
-					// здесь будет переименовывание файлов по индексам
+	// Recursive loop through all directories / files
+	function recursiveDir(directory:String) {
+		var paths = [];
+		if (sys.FileSystem.exists(directory)) {
+			trace("Reading directory: " + directory);
+			for (file in sys.FileSystem.readDirectory(directory)) {
+				var path = haxe.io.Path.join([directory, file]);
+				if (!sys.FileSystem.isDirectory(path)) {
+					var fileExt = new haxe.io.Path(path);
+					if (fileExt.ext == "gbs" && Tools.fileExists(path) == true) {
+						// trace('Gbs file found: $file');
+						paths.push(path);
+					}
+					if (fileExt.ext == "png") {
+						// здесь будет переименовывание файлов по индексам
+					}
 				}
 			}
+		} else {
+			trace('Unable to scan directory: "$directory"');
 		}
-	} else {
-		trace('Unable to scan directory: "$directory"');
+		return paths;
 	}
-	return paths;
-}
 
-function arrayCheckFonts(array:Array<String>) {
-	var tmp = [];
-	var i = 0;
-	while (i < array.length) {
-		if (Tools.checkFonts(array[i]) == true) {
-			tmp.push(array[i]);
+	function arrayCheckFonts(array:Array<String>) {
+		var tmp = [];
+		var i = 0;
+		while (i < array.length) {
+			if (Tools.checkFonts(array[i]) == true) {
+				tmp.push(array[i]);
+			}
+			i++;
 		}
-		i++;
+		return array = tmp;
 	}
-	return array = tmp;
-}
 
-function objectCheckOffsets(array:Array<GbsFile>, n:Int) {
-	var fileSize = array[n].header.fileSize;
-	var fontsOffset = array[n].header.fontsOffset;
-	var texturesOffset = array[n].header.texturesOffset;
-	var soundsOffset = array[n].header.soundsOffset;
-	var viewsOffset = array[n].header.viewsOffset;
-	var messagesOffset = array[n].header.messagesOffset;
+	function objectCheckOffsets(array:Array<GbsFile>, n:Int) {
+		var fileSize = array[n].header.fileSize;
+		var fontsOffset = array[n].header.fontsOffset;
+		var texturesOffset = array[n].header.texturesOffset;
+		var soundsOffset = array[n].header.soundsOffset;
+		var viewsOffset = array[n].header.viewsOffset;
+		var messagesOffset = array[n].header.messagesOffset;
 
-	var fontsToFileEnd = fileSize - (fontsOffset + 56);
-	var texturesToFileEnd = fileSize - (texturesOffset + 56);
-	var soundsToFileEnd = fileSize - (soundsOffset + 56);
-	var viewsToFileEnd = fileSize - (viewsOffset + 56);
-	var messagesToFileEnd = (fileSize - 56) - messagesOffset;
+		var fontsToFileEnd = fileSize - (fontsOffset + 56);
+		var texturesToFileEnd = fileSize - (texturesOffset + 56);
+		var soundsToFileEnd = fileSize - (soundsOffset + 56);
+		var viewsToFileEnd = fileSize - (viewsOffset + 56);
+		var messagesToFileEnd = (fileSize - 56) - messagesOffset;
 
-	var fBlockSize = fontsToFileEnd - texturesToFileEnd;
-	var tBlockSize = texturesToFileEnd - soundsToFileEnd;
-	var sBlockSize = soundsToFileEnd - viewsToFileEnd;
-	var vBlockSize = viewsToFileEnd - messagesToFileEnd;
-	var mBlockSize = messagesToFileEnd - 4;
+		var fBlockSize = fontsToFileEnd - texturesToFileEnd;
+		var tBlockSize = texturesToFileEnd - soundsToFileEnd;
+		var sBlockSize = soundsToFileEnd - viewsToFileEnd;
+		var vBlockSize = viewsToFileEnd - messagesToFileEnd;
+		var mBlockSize = messagesToFileEnd - 4;
 
-	var eofCheck = fileSize - fBlockSize - tBlockSize - sBlockSize - vBlockSize - mBlockSize - 56 - 4;
-	if (eofCheck == 0) {
-		trace("Data offsets ok.");
-	} else {
-		trace("\n*****\nWARNING! Data offsets is range out end of file!\n*****\n");
-		trace("Fonts to file end: " + fontsToFileEnd);
-		trace("Textures to file end: " + texturesToFileEnd);
-		trace("Sounds to file end: " + soundsToFileEnd);
-		trace("Views to file end: " + viewsToFileEnd);
-		trace("Messages to file end: " + messagesToFileEnd + '\n');
-		trace("File Size: " + fileSize);
-		trace("Fonts Size: " + fBlockSize);
-		trace("Textures Size: " + tBlockSize);
-		trace("Sounds Size: " + sBlockSize);
-		trace("Views Size: " + vBlockSize);
-		trace("Messages Size: " + mBlockSize);
+		var eofCheck = fileSize - fBlockSize - tBlockSize - sBlockSize - vBlockSize - mBlockSize - 56 - 4;
+		if (eofCheck == 0) {
+			trace("Data offsets ok.");
+		} else {
+			trace("\n*****\nWARNING! Data offsets is range out end of file!\n*****\n");
+			trace("Fonts to file end: " + fontsToFileEnd);
+			trace("Textures to file end: " + texturesToFileEnd);
+			trace("Sounds to file end: " + soundsToFileEnd);
+			trace("Views to file end: " + viewsToFileEnd);
+			trace("Messages to file end: " + messagesToFileEnd + '\n');
+			trace("File Size: " + fileSize);
+			trace("Fonts Size: " + fBlockSize);
+			trace("Textures Size: " + tBlockSize);
+			trace("Sounds Size: " + sBlockSize);
+			trace("Views Size: " + vBlockSize);
+			trace("Messages Size: " + mBlockSize);
+		}
+		trace('File has been checked.');
 	}
-	trace('File has been checked.');
-}
 
-// Read/Write Test GBS
-function gbsTestReadWrite(location:String) {
-	// GBS Read
-	var gi = sys.io.File.read(location);
-	trace('Start of gbs file reading: "$location"');
-	var myGBS = new GbsReader(gi).read();
-	gi.close();
+	// Read/Write Test GBS
+	function gbsTestReadWrite(location:String) {
+		// GBS Read
+		var gi = sys.io.File.read(location);
+		trace('Start of gbs file reading: "$location"');
+		var myGBS = new GbsReader(gi).read();
+		gi.close();
 
-	trace("Fonts count: " + myGBS.header.fontsCount);
+		trace("Fonts count: " + myGBS.header.fontsCount);
 
-	var fileInfo = Tools.fileExists(location);
-	trace('$location:\nIs $fileInfo');
+		var fileInfo = Tools.fileExists(location);
+		trace('$location:\nIs $fileInfo');
 
-	// GBS Write
-	var save_location = "test/TestLobby.gbs";
-	//
+		// GBS Write
+		var save_location = "test/TestLobby.gbs";
+		//
 
-	var go = sys.io.File.write(save_location);
-	trace('Start of gbs file writing: "$save_location"');
-	new GbsWriter(go).write(myGBS);
-	go.close();
+		var go = sys.io.File.write(save_location);
+		trace('Start of gbs file writing: "$save_location"');
+		new GbsWriter(go).write(myGBS);
+		go.close();
+	}
 }
