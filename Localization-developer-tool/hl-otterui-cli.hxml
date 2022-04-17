@@ -3,7 +3,7 @@
 
 -hl otterui-cli.hl
 --debug
-# --verbose
+--verbose
 # -D analyzer-optimize
 
 --class-path ../lib/tfh-font/src

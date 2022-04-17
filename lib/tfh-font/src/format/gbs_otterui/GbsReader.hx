@@ -156,8 +156,11 @@ class GbsReader {
 			imageGlyph = yes;
 			charCode = charCode + glyphCode;
 			#if utf16
-			var charByte = Bytes.ofString(charCode, RawNative);
+			var charByte = Bytes.ofString(charCode, UTF8);
 			charCode = charByte.getString(0, 4);
+			#end
+			#if debug
+			// trace(charCode);
 			#end
 			/*
 				// Remix characters

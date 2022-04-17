@@ -93,6 +93,12 @@ class GbsWriter {
 				}
 				o.writeString(charGlyph, RawNative); */
 			o.writeString(gbs.charCode, RawNative);
+			#if debug
+			var byteChar = Bytes.ofString(gbs.charCode, RawNative);
+			if (byteChar.length != 4) {
+				trace('WARNING! Encoding issue detected!');
+			}
+			#end
 		}
 		#else
 		if (gbs.imageGlyph == no) {
@@ -111,7 +117,15 @@ class GbsWriter {
 				trace(charGlyph);
 				trace(charByte);
 				o.writeString(charGlyph, RawNative); */
-			o.writeString(gbs.charCode, RawNative);
+			// check encoding issue
+			// o.write()
+			o.writeString(gbs.charCode, UTF8);
+			#if debug
+			var byteChar = Bytes.ofString(gbs.charCode, UTF8);
+			if (byteChar.length != 4) {
+				trace('WARNING! Encoding issue detected!');
+			}
+			#end
 		}
 		#end
 		if (gbs.imageGlyph == no)

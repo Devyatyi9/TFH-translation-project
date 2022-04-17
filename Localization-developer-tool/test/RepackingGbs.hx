@@ -1,5 +1,7 @@
 package;
 
+import haxe.io.Path;
+import sys.io.File;
 import haxe.ds.ObjectMap;
 import format.gbs_otterui.GbsData;
 import format.gbs_otterui.GbsReader;
@@ -9,7 +11,6 @@ import haxe.io.Bytes;
 
 using format.gbs_otterui.Tools;
 
-// import sys.FileSystem;
 class RepackingGbs {
 	public function new() {}
 
@@ -25,8 +26,8 @@ class RepackingGbs {
 		// var location = "test/Transitions.gbs";
 		// var location = "test/my_file.txt";
 		// var location = "test/ImageGlyph-test.gbs";
-		// var location = "otterui-project/Import/Import-pixel-ui/BuckLobby.gbs";
 		// var location = "otterui-project/OtterExport/Export-pixel-ui/Scenes_pixel.gbs";
+		// var location = "otterui-project/Import/Import-pixel-ui/BuckLobby.gbs";
 
 		// gbsTestReadWrite(location);
 
@@ -61,14 +62,36 @@ class RepackingGbs {
 		var translatedFonts = fontsAllocate(objectList_export_pixel);
 		objectList_export_pixel = [];
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_pixel);
-		// atlases_export_pixel
 
 		mergeFonts(fromGameFonts, translatedFonts);
-		trace(fileList_import_pixel[0]);
-		// map -> object
-		mergeGbsData(objectList_import_pixel, fromGameFonts);
 
-		trace('test');
+		calculateGbsLength(objectList_import_pixel);
+
+		#if debug
+		objectCheckOffsets(objectList_import_pixel, 0);
+		objectCheckOffsets(objectList_import_pixel, 1);
+		#end
+
+		// write new gbs files
+		writeMergedGbs(objectList_import_pixel, path_merged_pixel, fileList_import_pixel);
+
+		renamingPng(atlases_export_pixel, path_merged_pixel, translatedFonts, fromGameFonts);
+		fromGameFonts.clear();
+		translatedFonts.clear();
+		objectList_import_pixel = [];
+
+		#if (debug && eval)
+		var location = "otterui-project/Merged/pixel-ui-merged/BuckLobby.gbs";
+		if (Tools.fileExists(location)) {
+			var gi = sys.io.File.read(location);
+			trace('Start of gbs file reading: "$location"');
+			var myGBS = new GbsReader(gi).read();
+			gi.checkOffsets;
+			gi.close();
+		}
+		#end
+
+		// trace('test');
 
 		//**MAIN**/
 
@@ -92,12 +115,74 @@ class RepackingGbs {
 		//***
 
 		var objectList_export_main = readGbsList(fileList_export_main);
+		fileList_export_main = [];
 
-		// trace(objectList_import_main[0].header.sceneID);
-		// trace(objectList_export_main[0].header.sceneID);
+		var translatedFonts = fontsAllocate(objectList_export_main);
+		objectList_export_main = [];
+		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_main);
+
+		mergeFonts(fromGameFonts, translatedFonts);
+
+		calculateGbsLength(objectList_import_main);
+
+		// write new gbs files
+		writeMergedGbs(objectList_import_main, path_merged_main, fileList_import_main);
+
+		renamingPng(atlases_export_main, path_merged_main, translatedFonts, fromGameFonts);
+		fromGameFonts.clear();
+		translatedFonts.clear();
+		objectList_import_main = [];
 	}
 
-	function mergeGbsData(objectList:Array<GbsFile>, fontsMap:Map<Int, GbsFont>) {}
+	function renamingPng(read_path:String, save_path:String, translated:Map<Int, GbsFont>, fromGame:Map<Int, GbsFont>) {
+		// переименовать png файлы шрифтов под новое значение индексов
+		// по количеству атласов в импорте и экспорте (импорт + экспорт + 1)
+		var read_path = Path.addTrailingSlash(read_path);
+		var save_path = Path.addTrailingSlash(save_path);
+		for (key in translated.keys()) {
+			var impFont = fromGame[key];
+			var expFont = translated[key];
+			var maxAtlasImp = impFont.atlasCount - expFont.atlasCount - 1;
+			for (i in 0...expFont.atlasCount) {
+				var newIndex = maxAtlasImp + i + 1;
+				var name = expFont.fontName + '_${i}';
+				// trace(i);
+				// trace(newIndex);
+				recursiveDir(read_path, name, save_path, newIndex);
+			}
+		}
+	}
+
+	function writeMergedGbs(objectList:Array<GbsFile>, path:String, name:Array<String>) {
+		var i = 0;
+		while (i < objectList.length) {
+			var save_location = path + name[i];
+			var go = sys.io.File.write(save_location);
+			trace('Start of gbs file writing: "$save_location"');
+			new GbsWriter(go).write(objectList[i]);
+			go.close();
+			i++;
+		}
+	}
+
+	function calculateGbsLength(objectList:Array<GbsFile>) {
+		for (gui in objectList) {
+			// здесь суммируем длину всех шрифтов в объекте
+			var allFontsLength = 0;
+			var i = 0;
+			while (i < gui.fontsBlock.length) {
+				allFontsLength += gui.fontsBlock[i].fontLength;
+				i++;
+			}
+			// calculating offsets
+			var currentOffset = allFontsLength;
+			currentOffset = gui.header.texturesOffset = currentOffset + gui.textures.length;
+			currentOffset = gui.header.soundsOffset = currentOffset + gui.sounds.length;
+			currentOffset = gui.header.viewsOffset = currentOffset + gui.views.length;
+			currentOffset = gui.header.messagesOffset = currentOffset + gui.sounds.length;
+			gui.header.fileSize = currentOffset + 56 + 4;
+		}
+	}
 
 	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>) {
 		for (key in importMap.keys()) {
@@ -108,7 +193,6 @@ class RepackingGbs {
 			// перебор по translated символам (exported)
 			var nCharE = 0;
 			while (nCharE < exportVal.charsBlock.length) {
-				// trace('***');
 				// перебор по fromGame символам (imported)
 				var nCharI = 0;
 				while (nCharI < importVal.charsCount) {
@@ -150,8 +234,6 @@ class RepackingGbs {
 				// trace('curIndex: ${curIndex} expIndex: ${expIndex}');
 				nCharE++;
 			}
-			// не забыть переименовать png файлы шрифтов под новое значение индексов
-			// по количеству атласов в импорте и экспорте (импорт + экспорт + 1)
 			var expIndex = exportVal.charsBlock[0].charAtlasIndex;
 			// trace(expIndex);
 			// trace('nCharE: ${nCharE}');
@@ -221,34 +303,6 @@ class RepackingGbs {
 		return objectsMap;
 	}
 
-	function saveAsJson(o) {
-		// var o = {name: "Mark", age: 31};
-		var test:String = haxe.Json.stringify(o, "\t");
-		sys.io.File.saveContent('my_file.json', test);
-	}
-
-	function getChars(array:Array<GbsFile>, fN:Int) {
-		var tmp = [];
-		var i = 0;
-		while (i < array[0].fontsBlock[fN].charsCount) {
-			var o = array[0].fontsBlock[fN].charsBlock[i];
-			tmp.push(o);
-			i++;
-		}
-		return tmp;
-	}
-
-	function getFontNames(array:Array<GbsFile>) {
-		var tmp = [];
-		var i = 0;
-		while (i < array[0].header.fontsCount) {
-			var o = array[0].fontsBlock[i].fontName;
-			tmp.push(o);
-			i++;
-		}
-		return tmp;
-	}
-
 	function readGbsList(array:Array<String>) {
 		var tmp = [];
 		var i = 0;
@@ -271,13 +325,14 @@ class RepackingGbs {
 	}
 
 	// Recursive loop through all directories / files
-	function recursiveDir(directory:String) {
+	function recursiveDir(directory:String, ?pngName:String, ?savePath:String, ?newIndex:Int) {
+		var fs = sys.FileSystem;
 		var paths = [];
-		if (sys.FileSystem.exists(directory)) {
+		if (fs.exists(directory)) {
 			trace("Reading directory: " + directory);
-			for (file in sys.FileSystem.readDirectory(directory)) {
+			for (file in fs.readDirectory(directory)) {
 				var path = haxe.io.Path.join([directory, file]);
-				if (!sys.FileSystem.isDirectory(path)) {
+				if (!fs.isDirectory(path)) {
 					var fileExt = new haxe.io.Path(path);
 					if (fileExt.ext == "gbs" && Tools.fileExists(path) == true) {
 						// trace('Gbs file found: $file');
@@ -285,6 +340,14 @@ class RepackingGbs {
 					}
 					if (fileExt.ext == "png") {
 						// здесь будет переименовывание файлов по индексам
+						var fileName = fileExt.file;
+						if (pngName == fileName) {
+							var newName = fileExt.file.split('_');
+							var dstPath = savePath + 'Fonts' + '/' + newName[0] + '_${newIndex}.' + fileExt.ext;
+							// dstPath = Path.normalize(dstPath); //for unix-systems maybe
+							File.copy(path, dstPath);
+							trace('${fileExt.file} has been copied');
+						}
 					}
 				}
 			}
@@ -367,5 +430,12 @@ class RepackingGbs {
 		trace('Start of gbs file writing: "$save_location"');
 		new GbsWriter(go).write(myGBS);
 		go.close();
+
+		// Checking written file
+		var gi = sys.io.File.read(save_location);
+		trace('Test start of gbs file reading: "$save_location"');
+		var myGBS = new GbsReader(gi).read();
+		gi.checkOffsets;
+		gi.close();
 	}
 }
