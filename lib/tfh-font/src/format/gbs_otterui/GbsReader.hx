@@ -147,21 +147,22 @@ class GbsReader {
 		// if use Eval (for debug or launch via IDE) it will display characters incorrect because of use UTF-8 encoding,
 		// HL and C++ use UTF-16LE for this
 		var charCode = i.readString(2, RawNative);
-		var glyphCode = i.readString(2, RawNative);
+		var glyphCode = i.readString(2, UTF8);
 		// trace("'" + charCode + "'");
 		var imageGlyph;
 		if (i.readInt32() == 0)
 			imageGlyph = no;
 		else {
 			imageGlyph = yes;
-			charCode = charCode + glyphCode;
 			#if utf16
-			var charByte = Bytes.ofString(charCode, UTF8);
-			charCode = charByte.getString(0, 4);
+			var charByte = Bytes.ofString(charCode, RawNative);
+			// trace(charByte.length);
+			var charCode1 = charByte.getString(0, 1, UTF8);
+			var charCode2 = charByte.getString(1, 1, UTF8);
+			charCode = charCode1 + charCode2;
 			#end
-			#if debug
-			// trace(charCode);
-			#end
+			charCode = charCode + glyphCode;
+			// trace(charCode.length);
 			/*
 				// Remix characters
 				var charArray = charCode.split('');

@@ -80,7 +80,7 @@ class RepackingGbs {
 		translatedFonts.clear();
 		objectList_import_pixel = [];
 
-		#if (debug && eval)
+		#if debug
 		var location = "otterui-project/Merged/pixel-ui-merged/BuckLobby.gbs";
 		if (Tools.fileExists(location)) {
 			var gi = sys.io.File.read(location);
@@ -142,13 +142,15 @@ class RepackingGbs {
 		for (key in translated.keys()) {
 			var impFont = fromGame[key];
 			var expFont = translated[key];
-			var maxAtlasImp = impFont.atlasCount - expFont.atlasCount - 1;
-			for (i in 0...expFont.atlasCount) {
-				var newIndex = maxAtlasImp + i + 1;
-				var name = expFont.fontName + '_${i}';
-				// trace(i);
-				// trace(newIndex);
-				recursiveDir(read_path, name, save_path, newIndex);
+			if (expFont.atlasCount != 0) {
+				var maxAtlasImp = impFont.atlasCount - expFont.atlasCount - 1;
+				for (i in 0...expFont.atlasCount) {
+					var newIndex = maxAtlasImp + i + 1;
+					var name = expFont.fontName + '_${i}';
+					// trace(i);
+					// trace(newIndex);
+					recursiveDir(read_path, name, save_path, newIndex);
+				}
 			}
 		}
 	}
@@ -187,6 +189,8 @@ class RepackingGbs {
 	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>) {
 		for (key in importMap.keys()) {
 			trace('merging font key: ${key}');
+			if (key == 47)
+				trace('47');
 			var exportVal = exportMap[key];
 			var importVal = importMap[key];
 
@@ -195,7 +199,7 @@ class RepackingGbs {
 			while (nCharE < exportVal.charsBlock.length) {
 				// перебор по fromGame символам (imported)
 				var nCharI = 0;
-				while (nCharI < importVal.charsCount) {
+				while (nCharI < importVal.charsBlock.length) {
 					var charCodeExp = exportVal.charsBlock[nCharE].charCode;
 					var charCodeImp = importVal.charsBlock[nCharI].charCode;
 					// trace('char translated: ${charCodeExp}');
@@ -209,45 +213,51 @@ class RepackingGbs {
 					#end
 						var charExpObj = exportVal.charsBlock[nCharE];
 						exportVal.charsBlock.remove(charExpObj);
-						nCharI = 0;
 						trace('removed character ${charExpObj.charCode} from array');
-						// trace('length: ${exportVal.charsBlock.length}');
-						continue;
+						if (exportVal.charsBlock.length == 34) {
+							trace('BREAK!');
+							break;
+						} else
+							nCharI = 0;
+						trace('length: ${exportVal.charsBlock.length}');
 					}
 					nCharI++;
 				}
-				var charCodeExp = exportVal.charsBlock[nCharE].charCode;
+				// var charCodeExp = exportVal.charsBlock[nCharE].charCode;
 				// trace('character translated: ${charCodeExp}');
 				nCharE++;
 			}
 			trace('characters in map has been filtrated');
-			// скорректировать число атласов и индексы атласов у символов
-			// здесь добавляем символы из exported в imported
-			var impCount = importVal.charsCount - 1;
-			var impIndex = importVal.charsBlock[impCount].charAtlasIndex;
-			nCharE = 0;
-			while (nCharE < exportVal.charsBlock.length) {
-				var expIndex = exportVal.charsBlock[nCharE].charAtlasIndex;
+			if (exportVal.charsCount > 0) {
+				// скорректировать число атласов и индексы атласов у символов
+				// здесь добавляем символы из exported в imported
+				var impCount = importVal.charsCount - 1;
+				var impIndex = importVal.charsBlock[impCount].charAtlasIndex;
+				nCharE = 0;
+				while (nCharE < exportVal.charsBlock.length) {
+					var expIndex = exportVal.charsBlock[nCharE].charAtlasIndex;
+					// trace(expIndex);
+					var curIndex = impIndex + expIndex + 1;
+					exportVal.charsBlock[nCharE].charAtlasIndex = curIndex;
+					// trace('curIndex: ${curIndex} expIndex: ${expIndex}');
+					nCharE++;
+				}
+				var expIndex = exportVal.charsBlock[0].charAtlasIndex;
 				// trace(expIndex);
-				var curIndex = impIndex + expIndex + 1;
-				exportVal.charsBlock[nCharE].charAtlasIndex = curIndex;
-				// trace('curIndex: ${curIndex} expIndex: ${expIndex}');
-				nCharE++;
-			}
-			var expIndex = exportVal.charsBlock[0].charAtlasIndex;
-			// trace(expIndex);
-			// trace('nCharE: ${nCharE}');
-			var atlasSum = exportVal.atlasCount + importVal.atlasCount;
-			importVal.atlasCount = atlasSum;
-			if (exportVal.maxTop > importVal.maxTop)
-				importVal.maxTop = exportVal.maxTop;
-			for (char in exportVal.charsBlock) {
-				importVal.charsBlock.push(char);
-			}
-			exportVal.charsBlock = [];
-			importVal.charsCount = importVal.charsBlock.length;
-			importVal.fontLength = importVal.charsCount * 40 + 100;
-			// trace(importVal.fontLength);
+				// trace('nCharE: ${nCharE}');
+				var atlasSum = exportVal.atlasCount + importVal.atlasCount;
+				importVal.atlasCount = atlasSum;
+				if (exportVal.maxTop > importVal.maxTop)
+					importVal.maxTop = exportVal.maxTop;
+				for (char in exportVal.charsBlock) {
+					importVal.charsBlock.push(char);
+				}
+				exportVal.charsBlock = [];
+				importVal.charsCount = importVal.charsBlock.length;
+				importVal.fontLength = importVal.charsCount * 40 + 100;
+				// trace(importVal.fontLength);
+			} else
+				exportVal.atlasCount = 0;
 		}
 
 		// сравнение по MaxTop
