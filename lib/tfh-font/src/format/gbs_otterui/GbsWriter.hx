@@ -115,12 +115,6 @@ class GbsWriter {
 			// o.write()
 			trace(gbs.charCode);
 			o.writeString(gbs.charCode.lpad('\x00', 4), UTF8);
-			#if debug
-			var byteChar = Bytes.ofString(gbs.charCode, UTF8);
-			if (byteChar.length != 4) {
-				trace('WARNING! Encoding issue detected!');
-			}
-			#end
 		}
 		#end
 		if (gbs.imageGlyph == no)
