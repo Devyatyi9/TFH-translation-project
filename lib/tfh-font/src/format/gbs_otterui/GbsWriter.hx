@@ -113,7 +113,7 @@ class GbsWriter {
 				o.writeString(charGlyph, RawNative); */
 			// check encoding issue
 			// o.write()
-			trace(gbs.charCode);
+			// trace(gbs.charCode);
 			o.writeString(gbs.charCode.lpad('\x00', 4), UTF8);
 		}
 		#end
