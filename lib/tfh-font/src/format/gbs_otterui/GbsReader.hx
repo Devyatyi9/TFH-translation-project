@@ -157,9 +157,11 @@ class GbsReader {
 			#if utf16
 			var charByte = Bytes.ofString(charCode, RawNative);
 			// trace(charByte.length);
-			var charCode1 = charByte.getString(0, 1, UTF8);
-			var charCode2 = charByte.getString(1, 1, UTF8);
-			charCode = charCode1 + charCode2;
+			if (charByte.length != 0) {
+				var charCode1 = charByte.getString(0, 1, UTF8);
+				var charCode2 = charByte.getString(1, 1, UTF8);
+				charCode = charCode1 + charCode2;
+			}
 			#end
 			charCode = charCode + glyphCode;
 			// trace(charCode.length);
