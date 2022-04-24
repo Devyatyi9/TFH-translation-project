@@ -189,8 +189,6 @@ class RepackingGbs {
 	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>) {
 		for (key in importMap.keys()) {
 			trace('merging font key: ${key}');
-			if (key == 47)
-				trace('47');
 			var exportVal = exportMap[key];
 			var importVal = importMap[key];
 
@@ -202,10 +200,6 @@ class RepackingGbs {
 				while (nCharI < importVal.charsBlock.length) {
 					var charCodeExp = exportVal.charsBlock[nCharE].charCode;
 					var charCodeImp = importVal.charsBlock[nCharI].charCode;
-					// trace('char translated: ${charCodeExp}');
-					// trace('char from game: ${charCodeImp}');
-					// сначала проверяется наличие таких же символов, одинаковые символы удаляются из translated
-					// после все уникальные символы добавляются в конец массива fromGame
 					#if utf16
 					if ((charCodeExp == charCodeImp) || (charCodeExp == '?')) { // '?'
 					#else
@@ -213,19 +207,20 @@ class RepackingGbs {
 					#end
 						var charExpObj = exportVal.charsBlock[nCharE];
 						exportVal.charsBlock.remove(charExpObj);
+						// trace('indexI ${nCharI}');
 						trace('removed character ${charExpObj.charCode} from array');
-						if (exportVal.charsBlock.length == 34) {
-							trace('BREAK!');
+						if (nCharE == exportVal.charsBlock.length) {
 							break;
-						} else
-							nCharI = 0;
-						trace('length: ${exportVal.charsBlock.length}');
+						}
+						nCharI = 0;
+						// trace('length: ${exportVal.charsBlock.length}');
+						// trace('indexE ${nCharE}');
 					}
 					nCharI++;
 				}
+				nCharE++;
 				// var charCodeExp = exportVal.charsBlock[nCharE].charCode;
 				// trace('character translated: ${charCodeExp}');
-				nCharE++;
 			}
 			trace('characters in map has been filtrated');
 			if (exportVal.charsCount > 0) {
