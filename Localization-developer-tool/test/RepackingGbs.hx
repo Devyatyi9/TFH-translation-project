@@ -1,5 +1,6 @@
 package;
 
+import sys.FileSystem;
 import haxe.io.Path;
 import sys.io.File;
 import haxe.ds.ObjectMap;
@@ -155,6 +156,8 @@ class RepackingGbs {
 		var i = 0;
 		while (i < objectList.length) {
 			var save_location = path + name[i];
+			if (FileSystem.exists(path)) {} else
+				FileSystem.createDirectory(path);
 			var go = sys.io.File.write(save_location);
 			trace('Start of gbs file writing: "$save_location"');
 			new GbsWriter(go).write(objectList[i]);
@@ -372,6 +375,8 @@ class RepackingGbs {
 							var newName = fileExt.file.split('_');
 							var dstPath = savePath + 'Fonts' + '/' + newName[0] + '_${newIndex}.' + fileExt.ext;
 							// dstPath = Path.normalize(dstPath); //for unix-systems maybe
+							if (fs.exists(savePath + 'Fonts')) {} else
+								fs.createDirectory(savePath + 'Fonts');
 							File.copy(path, dstPath);
 							trace('${fileExt.file} has been copied');
 						}
