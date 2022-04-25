@@ -14,19 +14,7 @@ using format.gbs_otterui.Tools;
 class RepackingGbs {
 	public function new() {}
 
-	public function processing() {
-		// Cross platform paths
-		// var eLocation = "otterui-project/Import/Import-pixel-ui/BuckLobby.gbs";
-		// var ePath = new haxe.io.Path(eLocation);
-		// trace(ePath.dir); // path/to
-		// trace(ePath.file); // file
-		// trace(ePath.ext); // txt
-
-		// var location = "test/BuckLobby.gbs";
-		// var location = "test/Transitions.gbs";
-		// var location = "test/my_file.txt";
-		// var location = "test/ImageGlyph-test.gbs";
-		// var location = "otterui-project/OtterExport/Export-pixel-ui/Scenes_pixel.gbs";
+	public function processingPixel() {
 		// var location = "otterui-project/Import/Import-pixel-ui/BuckLobby.gbs";
 
 		// gbsTestReadWrite(location);
@@ -65,6 +53,8 @@ class RepackingGbs {
 
 		mergeFonts(fromGameFonts, translatedFonts);
 
+		mapToObjects(fromGameFonts, objectList_import_pixel);
+
 		calculateGbsLength(objectList_import_pixel);
 
 		#if debug
@@ -74,6 +64,7 @@ class RepackingGbs {
 
 		// write new gbs files
 		writeMergedGbs(objectList_import_pixel, path_merged_pixel, fileList_import_pixel);
+		fileList_import_pixel = [];
 
 		renamingPng(atlases_export_pixel, path_merged_pixel, translatedFonts, fromGameFonts);
 		fromGameFonts.clear();
@@ -92,7 +83,9 @@ class RepackingGbs {
 		#end
 
 		// trace('test');
+	}
 
+	public function processingMain() {
 		//**MAIN**/
 
 		// Load export gbs
@@ -123,10 +116,13 @@ class RepackingGbs {
 
 		mergeFonts(fromGameFonts, translatedFonts);
 
+		mapToObjects(fromGameFonts, objectList_import_main);
+
 		calculateGbsLength(objectList_import_main);
 
 		// write new gbs files
 		writeMergedGbs(objectList_import_main, path_merged_main, fileList_import_main);
+		fileList_import_main = [];
 
 		renamingPng(atlases_export_main, path_merged_main, translatedFonts, fromGameFonts);
 		fromGameFonts.clear();
@@ -183,6 +179,32 @@ class RepackingGbs {
 			currentOffset = gui.header.viewsOffset = currentOffset + gui.views.length;
 			currentOffset = gui.header.messagesOffset = currentOffset + gui.sounds.length;
 			gui.header.fileSize = currentOffset + 56 + 4;
+		}
+	}
+
+	function mapToObjects(map:Map<Int, GbsFont>, objectList:Array<GbsFile>) {
+		// objectList[0].fontsBlock[0].fontLength
+		// objectList[0].fontsBlock[0].fontID
+		// map[0].fontLength
+		// map[0].fontID
+		// fontID = key
+		for (key in map.keys()) {
+			var nGui = 0;
+			while (nGui < objectList.length) {
+				var nFont = 0;
+				while (nFont < objectList[nGui].fontsBlock.length) {
+					var id = objectList[nGui].fontsBlock[nFont].fontID;
+					if (id == key) {
+						var objectLength = objectList[nGui].fontsBlock[nFont].fontLength;
+						var mapLength = map[key].fontLength;
+						if (objectLength != mapLength) {
+							objectList[nGui].fontsBlock[nFont] = map[key];
+						}
+					}
+					nFont++;
+				}
+				nGui++;
+			}
 		}
 	}
 

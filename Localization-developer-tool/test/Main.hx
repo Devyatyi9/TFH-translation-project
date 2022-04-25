@@ -38,7 +38,8 @@ class Main {
 		// concatArray();
 		// ArrayContains();
 
-		new RepackingGbs().processing();
+		new RepackingGbs().processingPixel();
+		new RepackingGbs().processingMain();
 	}
 
 	// 2
