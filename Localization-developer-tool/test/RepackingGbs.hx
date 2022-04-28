@@ -38,47 +38,38 @@ class RepackingGbs {
 		var path_merged_pixel = "otterui-project/Merged/pixel-ui-merged/";
 		//
 
-		if (fileList_export_pixel.length == 0)
-			trace('Warning! Export folder is empty.');
-
-		if (fileList_import_pixel.length == 0) {
-			trace('Warning! Import folder is empty.');
+		if (fileList_export_pixel.length == 0 || fileList_import_pixel.length == 0) {
+			trace('Warning! Export or Import pixel folder is empty.');
 			return;
 		}
+
 		// здесь проверяем массив сцен на наличие шрифтов
 		fileList_import_pixel = arrayCheckFonts(fileList_import_pixel);
-
 		// Импортируемые игровые файлы
 		var objectList_import_pixel = readGbsList(fileList_import_pixel);
+
 		//***
-
 		var objectList_export_pixel = readGbsList(fileList_export_pixel);
-		fileList_export_pixel = [];
 
+		fileList_export_pixel = [];
 		var translatedFonts = fontsAllocate(objectList_export_pixel);
 		objectList_export_pixel = [];
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_pixel);
 
 		mergeFonts(fromGameFonts, translatedFonts);
-
 		mapToObjects(fromGameFonts, objectList_import_pixel);
-
 		calculateGbsLength(objectList_import_pixel);
-
 		#if debug
 		objectCheckOffsets(objectList_import_pixel, 0);
 		objectCheckOffsets(objectList_import_pixel, 1);
 		#end
-
 		// write new gbs files
 		writeMergedGbs(objectList_import_pixel, path_merged_pixel, fileList_import_pixel);
 		fileList_import_pixel = [];
-
 		renamingPng(atlases_export_pixel, path_merged_pixel, translatedFonts, fromGameFonts);
 		fromGameFonts.clear();
 		translatedFonts.clear();
 		objectList_import_pixel = [];
-
 		#if debug
 		var location = "otterui-project/Merged/pixel-ui-merged/BuckLobby.gbs";
 		if (Tools.fileExists(location)) {
@@ -89,7 +80,6 @@ class RepackingGbs {
 			gi.close();
 		}
 		#end
-
 		// trace('test');
 	}
 
@@ -108,11 +98,8 @@ class RepackingGbs {
 		var path_merged_main = "otterui-project/Merged/main-ui-merged/";
 		//
 
-		if (fileList_export_main.length == 0)
-			trace('Warning! Export folder is empty.');
-
-		if (fileList_import_main.length == 0) {
-			trace('Warning! Import folder is empty.');
+		if (fileList_export_main.length == 0 || fileList_import_main.length == 0) {
+			trace('Warning! Export or Import main folder is empty.');
 			return;
 		}
 		// здесь проверяем массив сцен на наличие шрифтов
