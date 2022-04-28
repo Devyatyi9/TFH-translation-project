@@ -38,13 +38,14 @@ class RepackingGbs {
 		var path_merged_pixel = "otterui-project/Merged/pixel-ui-merged/";
 		//
 
+		// здесь проверяем массив сцен на наличие шрифтов
+		fileList_import_pixel = arrayCheckFonts(fileList_import_pixel);
+
 		if (fileList_export_pixel.length == 0 || fileList_import_pixel.length == 0) {
 			trace('Warning! Export or Import pixel folder is empty.');
 			return;
 		}
 
-		// здесь проверяем массив сцен на наличие шрифтов
-		fileList_import_pixel = arrayCheckFonts(fileList_import_pixel);
 		// Импортируемые игровые файлы
 		var objectList_import_pixel = readGbsList(fileList_import_pixel);
 
@@ -98,12 +99,13 @@ class RepackingGbs {
 		var path_merged_main = "otterui-project/Merged/main-ui-merged/";
 		//
 
+		// здесь проверяем массив сцен на наличие шрифтов
+		fileList_import_main = arrayCheckFonts(fileList_import_main);
+
 		if (fileList_export_main.length == 0 || fileList_import_main.length == 0) {
 			trace('Warning! Export or Import main folder is empty.');
 			return;
 		}
-		// здесь проверяем массив сцен на наличие шрифтов
-		fileList_import_main = arrayCheckFonts(fileList_import_main);
 
 		// Импортируемые игровые файлы
 		var objectList_import_main = readGbsList(fileList_import_main);
@@ -130,6 +132,17 @@ class RepackingGbs {
 		fromGameFonts.clear();
 		translatedFonts.clear();
 		objectList_import_main = [];
+
+		#if debug
+		var location = "otterui-project/Merged/main-ui-merged/MainMenu.gbs";
+		if (Tools.fileExists(location)) {
+			var gi = sys.io.File.read(location);
+			trace('Start of gbs file reading: "$location"');
+			var myGBS = new GbsReader(gi).read();
+			gi.checkOffsets;
+			gi.close();
+		}
+		#end
 	}
 
 	function renamingPng(read_path:String, save_path:String, translated:Map<Int, GbsFont>, fromGame:Map<Int, GbsFont>) {
@@ -141,9 +154,10 @@ class RepackingGbs {
 			var impFont = fromGame[key];
 			var expFont = translated[key];
 			if (expFont.atlasCount != 0) {
-				var maxAtlasImp = impFont.atlasCount - expFont.atlasCount - 1;
+				var maxAtlasIndexImp = impFont.atlasCount - expFont.atlasCount - 1;
+				trace('MaxAtlasIndex: ${maxAtlasIndexImp} = ${impFont.atlasCount} - ${expFont.atlasCount} - 1');
 				for (i in 0...expFont.atlasCount) {
-					var newIndex = maxAtlasImp + i + 1;
+					var newIndex = maxAtlasIndexImp + i + 1;
 					var name = expFont.fontName + '_${i}';
 					// trace(i);
 					// trace(newIndex);
@@ -177,12 +191,21 @@ class RepackingGbs {
 				i++;
 			}
 			// calculating offsets
-			var currentOffset = allFontsLength;
-			currentOffset = gui.header.texturesOffset = currentOffset + gui.textures.length;
-			currentOffset = gui.header.soundsOffset = currentOffset + gui.sounds.length;
-			currentOffset = gui.header.viewsOffset = currentOffset + gui.views.length;
-			currentOffset = gui.header.messagesOffset = currentOffset + gui.sounds.length;
-			gui.header.fileSize = currentOffset + 56 + 4;
+			var fileSize = gui.header.fileSize;
+			var fontsOffset = gui.header.fontsOffset;
+			var texturesOffset = gui.header.texturesOffset;
+
+			var fontsToFileEnd = fileSize - (fontsOffset + 56);
+			var texturesToFileEnd = fileSize - (texturesOffset + 56);
+
+			var oldFontsLength = fontsToFileEnd - texturesToFileEnd;
+			var currentOffset = allFontsLength - oldFontsLength;
+
+			gui.header.texturesOffset = currentOffset + gui.header.texturesOffset;
+			gui.header.soundsOffset = currentOffset + gui.header.soundsOffset;
+			gui.header.viewsOffset = currentOffset + gui.header.viewsOffset;
+			gui.header.messagesOffset = currentOffset + gui.header.messagesOffset;
+			gui.header.fileSize = currentOffset + gui.header.fileSize;
 		}
 	}
 

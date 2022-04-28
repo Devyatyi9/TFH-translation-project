@@ -49,7 +49,12 @@ class Tools {
 
 	public static function checkOffsets(i:FileInput, fileSize:Int) {
 		i.seek(0, SeekBegin);
-		i.read(36);
+		i.read(16); // 36
+		var fontsCount = i.readInt32();
+		var texturesCount = i.readInt32();
+		var soundsCount = i.readInt32();
+		var viewsCount = i.readInt32();
+		var messagesCount = i.readInt32();
 		var fontsOffset = i.readInt32();
 		var texturesOffset = i.readInt32();
 		var soundsOffset = i.readInt32();
@@ -70,7 +75,7 @@ class Tools {
 
 		var eofCheck = fileSize - fBlockSize - tBlockSize - sBlockSize - vBlockSize - mBlockSize - 56 - 4;
 		if (eofCheck == 0) {
-			trace("Data offsets ok.");
+			trace("File size offsets ok.");
 		} else {
 			trace("\n*****\nWARNING! Data offsets is range out end of file!\n*****\n");
 			trace("Fonts to file end: " + fontsToFileEnd);
@@ -84,6 +89,26 @@ class Tools {
 			trace("Sounds Size: " + sBlockSize);
 			trace("Views Size: " + vBlockSize);
 			trace("Messages Size: " + mBlockSize);
+		}
+		if ((fontsCount > 0 && fBlockSize == 0) || (fontsCount == 0 && fBlockSize > 0)) {
+			trace("\n*****\nWARNING! Data offsets is range out end of fonts block!\n*****");
+			trace('\nFonts count: ${fontsCount}\nFonts block size: ${fBlockSize}');
+		}
+		if ((texturesCount > 0 && tBlockSize == 0) || (texturesCount == 0 && tBlockSize > 0)) {
+			trace("\n*****\nWARNING! Data offsets is range out end of textures block!\n*****");
+			trace('\nTextures count: ${texturesCount}\nTextures block size: ${tBlockSize}');
+		}
+		if ((soundsCount > 0 && sBlockSize == 0) || (soundsCount == 0 && sBlockSize > 0)) {
+			trace("\n*****\nWARNING! Data offsets is range out end of sounds block!\n*****");
+			trace('\nSounds count: ${soundsCount}\nSounds block size: ${sBlockSize}');
+		}
+		if ((viewsCount > 0 && vBlockSize == 0) || (viewsCount == 0 && vBlockSize > 0)) {
+			trace("\n*****\nWARNING! Data offsets is range out end of views block!\n*****");
+			trace('\nViews count: ${viewsCount}\nViews block size: ${vBlockSize}');
+		}
+		if ((messagesCount > 0 && mBlockSize == 0) || (messagesCount == 0 && mBlockSize > 0)) {
+			trace("\n*****\nWARNING! Data offsets is range out end of messages block!\n*****");
+			trace('\nMessages count: ${messagesCount}\nMessages block size: ${mBlockSize}');
 		}
 		trace('File has been checked.');
 		i.seek(0, SeekBegin);
