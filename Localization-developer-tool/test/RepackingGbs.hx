@@ -38,6 +38,13 @@ class RepackingGbs {
 		var path_merged_pixel = "otterui-project/Merged/pixel-ui-merged/";
 		//
 
+		if (fileList_export_pixel.length == 0)
+			trace('Warning! Export folder is empty.');
+
+		if (fileList_import_pixel.length == 0) {
+			trace('Warning! Import folder is empty.');
+			return;
+		}
 		// здесь проверяем массив сцен на наличие шрифтов
 		fileList_import_pixel = arrayCheckFonts(fileList_import_pixel);
 
@@ -101,6 +108,13 @@ class RepackingGbs {
 		var path_merged_main = "otterui-project/Merged/main-ui-merged/";
 		//
 
+		if (fileList_export_main.length == 0)
+			trace('Warning! Export folder is empty.');
+
+		if (fileList_import_main.length == 0) {
+			trace('Warning! Import folder is empty.');
+			return;
+		}
 		// здесь проверяем массив сцен на наличие шрифтов
 		fileList_import_main = arrayCheckFonts(fileList_import_main);
 

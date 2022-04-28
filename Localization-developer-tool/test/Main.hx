@@ -40,6 +40,7 @@ class Main {
 
 		new RepackingGbs().processingPixel();
 		new RepackingGbs().processingMain();
+		trace('The End.');
 	}
 
 	// 2
