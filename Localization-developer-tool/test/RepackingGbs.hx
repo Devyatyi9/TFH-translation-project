@@ -385,6 +385,7 @@ class RepackingGbs {
 			}
 		} else {
 			trace('Unable to scan directory: "$directory"');
+			fs.createDirectory(directory);
 		}
 		return paths;
 	}
