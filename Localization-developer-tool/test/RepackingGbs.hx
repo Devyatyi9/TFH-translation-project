@@ -155,7 +155,6 @@ class RepackingGbs {
 			var expFont = translated[key];
 			if (expFont.atlasCount != 0) {
 				var maxAtlasIndexImp = impFont.atlasCount - expFont.atlasCount - 1;
-				trace('MaxAtlasIndex: ${maxAtlasIndexImp} = ${impFont.atlasCount} - ${expFont.atlasCount} - 1');
 				for (i in 0...expFont.atlasCount) {
 					var newIndex = maxAtlasIndexImp + i + 1;
 					var name = expFont.fontName + '_${i}';
