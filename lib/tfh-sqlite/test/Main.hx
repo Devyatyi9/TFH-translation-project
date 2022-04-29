@@ -38,7 +38,8 @@ class Main {
 		trace("File location: " + Sys.getCwd() + location);
 
 		// SQLite export
-		new tfhres.SQLExport(location).start();
+		// new tfhres.SQLExport(location).start();
+		new TestSqliteLib(location).start();
 	}
 	// function new() {};
 }

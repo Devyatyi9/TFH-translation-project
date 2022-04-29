@@ -6,4 +6,5 @@
 # -lib hashlink
 --main Main
 --hl testSQLite.hl
-# --cmd hl --debug-wait --debug 6112 testSQLite.hl
+
+--library record-macros:git

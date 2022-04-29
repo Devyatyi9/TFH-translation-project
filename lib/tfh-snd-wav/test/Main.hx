@@ -1,5 +1,7 @@
 package;
 
+import format.sndwav_revergelabs.*;
+
 class Main {
 	static function main() {
 		// Creating an array using array syntax and explicit type definition Array<String>
@@ -15,7 +17,7 @@ class Main {
 		// sys.io.File.saveContent('src/my_file.json', content);
 
 		// Cross platform paths
-		var location = "Test_old_resources_prod.tfhres";
+		var location = "files/cow.snd-wav";
 		var path = new haxe.io.Path(location);
 		trace(path.dir); // path/to
 		trace(path.file); // file
@@ -26,11 +28,34 @@ class Main {
 		var file = "./file.txt";
 		trace(haxe.io.Path.join([directory, file])); // path/to/file.txt
 		trace('\n');
-		
+
 		// Check path
 		trace("File location: " + location);
 		trace("Program path: " + Sys.programPath());
 		trace("Working directory: " + Sys.getCwd());
+
+		// Read snd-wav
+		sndwavRead(location);
 	}
+
 	// function new() {};
+	// Read/Write Test
+	static function sndwavRead(location:String) {
+		// Snd-wav Read
+		var i = sys.io.File.read(location);
+		trace('Start of file reading snd-wav: "$location"');
+		// var mySndWav = new Reader(i).read();
+		new Reader(i).read();
+		i.close();
+	}
+
+	static function sndwavWrite(location:String) {
+		// Snd-wav Write
+		var save_location = "test/TestLobby.snd-wav";
+		var mySndWav;
+		var o = sys.io.File.write(save_location);
+		trace('Start of file writing snd-wav: "$save_location"');
+		// new Writer(o).write(mySndWav);
+		o.close();
+	}
 }
