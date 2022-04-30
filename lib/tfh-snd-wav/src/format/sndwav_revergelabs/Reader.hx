@@ -11,9 +11,10 @@ class Reader {
 		i.bigEndian = false;
 	}
 
-	public function read() {
+	public function read():SoundFile {
 		// Skip unknown data
-		Tools.skipUnknownData(i);
+		var dataLength = Tools.skipUnknownData(i);
+		var unknownData = i.read(dataLength);
 		var soundsCount = i.readInt32();
 		var soundsBlock = [];
 		trace(soundsCount);
@@ -24,6 +25,11 @@ class Reader {
 			_++;
 		}
 		trace('test from Reader');
+		return {
+			unknownData: unknownData,
+			soundsCount: soundsCount,
+			soundsBlock: soundsBlock
+		}
 	}
 
 	function parseSounds():Sound {

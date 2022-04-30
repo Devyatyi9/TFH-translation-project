@@ -2,6 +2,12 @@ package format.sndwav_revergelabs;
 
 import haxe.Int32;
 
+typedef SoundFile = {
+	var unknownData:haxe.io.Bytes;
+	var soundsCount:Int32;
+	var soundsBlock:Array<Sound>;
+}
+
 enum SoundFormat {
 	ogg;
 	wav;

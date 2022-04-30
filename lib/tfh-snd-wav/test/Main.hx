@@ -35,24 +35,21 @@ class Main {
 		trace("Working directory: " + Sys.getCwd());
 
 		// Read snd-wav
-		sndwavRead(location);
+		sndwavReadWrite(location);
 	}
 
 	// function new() {};
 	// Read/Write Test
-	static function sndwavRead(location:String) {
+	static function sndwavReadWrite(location:String) {
 		// Snd-wav Read
 		var i = sys.io.File.read(location);
 		trace('Start of file reading snd-wav: "$location"');
-		// var mySndWav = new Reader(i).read();
-		new Reader(i).read();
+		var mySndWav = new Reader(i).read();
+		trace(mySndWav.soundsCount);
 		i.close();
-	}
 
-	static function sndwavWrite(location:String) {
 		// Snd-wav Write
 		var save_location = "test/TestLobby.snd-wav";
-		var mySndWav;
 		var o = sys.io.File.write(save_location);
 		trace('Start of file writing snd-wav: "$save_location"');
 		// new Writer(o).write(mySndWav);
