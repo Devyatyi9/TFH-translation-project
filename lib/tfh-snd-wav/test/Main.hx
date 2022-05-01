@@ -52,7 +52,7 @@ class Main {
 		var save_location = "test/TestLobby.snd-wav";
 		var o = sys.io.File.write(save_location);
 		trace('Start of file writing snd-wav: "$save_location"');
-		// new Writer(o).write(mySndWav);
+		new Writer(o).write(mySndWav);
 		o.close();
 	}
 }

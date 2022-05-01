@@ -24,14 +24,13 @@ class Tools {
 				break;
 			it++;
 		}
-		// return to sounds count
-		// i.seek(-20, SeekCur); // 16
 		i.seek(0, SeekBegin);
 		// Check file
 		if (it == (fileLength - 3)) {
 			trace("File corrupted or not a valid SND-WAV file.");
-			// return -1;
+			throw(haxe.Exception);
 		}
+		// return to sounds count
 		return it - 16;
 	}
 }

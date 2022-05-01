@@ -11,7 +11,7 @@ class Reader {
 		i.bigEndian = false;
 	}
 
-	public function read():SoundFile {
+	public function read():SoundContainer {
 		// Skip unknown data
 		var dataLength = Tools.skipUnknownData(i);
 		var unknownData = i.read(dataLength);
@@ -24,7 +24,6 @@ class Reader {
 			soundsBlock.push(soundFile);
 			_++;
 		}
-		trace('test from Reader');
 		return {
 			unknownData: unknownData,
 			soundsCount: soundsCount,
@@ -38,15 +37,12 @@ class Reader {
 		var soundLength = i.readInt32();
 		i.read(8);
 		var soundFile = i.read(soundLength);
-		// trace(soundFile.length);
 		var fileTag = soundFile.getInt32(0);
 		var soundFormat = ogg;
 		if (fileTag == S_OGG) {
 			soundFormat = ogg;
-			// trace('Ogg');
 		} else if (fileTag == S_RIFF) {
 			soundFormat = wav;
-			// trace('Wav');
 		}
 		return {
 			soundLength: soundLength,
