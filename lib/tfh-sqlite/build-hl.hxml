@@ -7,4 +7,4 @@
 --main Main
 --hl testSQLite.hl
 
---library record-macros:git
+# --library record-macros:git

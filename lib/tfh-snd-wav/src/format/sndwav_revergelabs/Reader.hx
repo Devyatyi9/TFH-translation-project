@@ -24,6 +24,7 @@ class Reader {
 			soundsBlock.push(soundFile);
 			_++;
 		}
+		trace('Snd-wav file has been read.');
 		return {
 			unknownData: unknownData,
 			soundsCount: soundsCount,

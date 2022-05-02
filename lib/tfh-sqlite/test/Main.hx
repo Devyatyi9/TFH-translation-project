@@ -20,7 +20,7 @@ class Main {
 		#end
 
 		// Cross platform paths
-		var location = "test/Test_old_resources_prod.tfhres";
+		var location = "test/dbsqlite/Test_old_resources_prod.tfhres";
 		var path = new haxe.io.Path(location);
 		trace(path.dir); // path/to
 		trace(path.file); // file
@@ -38,8 +38,16 @@ class Main {
 		trace("File location: " + Sys.getCwd() + location);
 
 		// SQLite export
-		// new tfhres.SQLExport(location).start();
-		new TestSqliteLib(location).start();
+		new tfhres.SQLExport(location).start();
+		// new TestSqliteLib(location).start();
+		// jsonRead();
 	}
+
 	// function new() {};
+
+	static function jsonRead() {
+		// var jsonPath:String = 'test/story_prologue_default_start_8.json';
+		// var json = JsonMacro.load('test/story_prologue_default_start_8.json');
+		// trace(json.root[2]);
+	}
 }

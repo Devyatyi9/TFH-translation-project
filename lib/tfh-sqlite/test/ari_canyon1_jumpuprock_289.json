@@ -1,0 +1,660 @@
+{
+    "inkVersion": 19,
+    "listDefs": {},
+    "root": [
+        [
+            [
+                "done",
+                {
+                    "#n": "g-0"
+                }
+            ],
+            null
+        ],
+        "done",
+        {
+            "#f": 3,
+            "choice": [
+                [
+                    {
+                        "#": "cleartalkers"
+                    },
+                    "^Follow the trail up the cliff?",
+                    "\n",
+                    "ev",
+                    "str",
+                    "^Uh... sure!",
+                    "/str",
+                    "/ev",
+                    {
+                        "*": ".^.c-0",
+                        "flg": 4
+                    },
+                    "ev",
+                    "str",
+                    "^Hold on a minute...",
+                    "/str",
+                    "/ev",
+                    {
+                        "*": ".^.c-1",
+                        "flg": 4
+                    },
+                    {
+                        "c-0": [
+                            "^ ",
+                            {
+                                "->": "start_trial"
+                            },
+                            "\n",
+                            null
+                        ],
+                        "c-1": [
+                            "^ ",
+                            "done",
+                            "\n",
+                            null
+                        ]
+                    }
+                ],
+                {
+                    "#f": 3
+                }
+            ],
+            "completed_trial": [
+                [
+                    {
+                        "#": "cleartalkers"
+                    },
+                    "^The runestone lends you some of its magic...",
+                    "\n",
+                    "ev",
+                    "str",
+                    "^Warp to the top.",
+                    "/str",
+                    "/ev",
+                    {
+                        "*": ".^.c-0",
+                        "flg": 4
+                    },
+                    "ev",
+                    "str",
+                    "^Climb the cliff again.",
+                    "/str",
+                    "/ev",
+                    {
+                        "*": ".^.c-1",
+                        "flg": 4
+                    },
+                    "ev",
+                    "str",
+                    "^Stay here.",
+                    "/str",
+                    "/ev",
+                    {
+                        "*": ".^.c-2",
+                        "flg": 4
+                    },
+                    {
+                        "c-0": [
+                            "^ ",
+                            {
+                                "->": "warp"
+                            },
+                            "\n",
+                            null
+                        ],
+                        "c-1": [
+                            "^ ",
+                            {
+                                "->": "start_trial"
+                            },
+                            "\n",
+                            null
+                        ],
+                        "c-2": [
+                            "^ ",
+                            "done",
+                            "\n",
+                            null
+                        ]
+                    }
+                ],
+                {
+                    "#f": 3
+                }
+            ],
+            "do_nothing": [
+                "^:f8b00f20c5bcc35e21241c0c19110268",
+                "\n",
+                "done",
+                {
+                    "#f": 3
+                }
+            ],
+            "global decl": [
+                "ev",
+                1,
+                {
+                    "VAR=": "num_interactions"
+                },
+                0,
+                {
+                    "VAR=": "preds_defeated"
+                },
+                0,
+                {
+                    "VAR=": "salt_amount"
+                },
+                1,
+                {
+                    "VAR=": "num_hits"
+                },
+                0,
+                {
+                    "VAR=": "fight_result_won"
+                },
+                0,
+                {
+                    "VAR=": "fight_rounds_won"
+                },
+                0,
+                {
+                    "VAR=": "current_tick"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball1"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball2"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball3"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball4"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball5"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball6"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball7"
+                },
+                0,
+                {
+                    "VAR=": "BearSewers"
+                },
+                0,
+                {
+                    "VAR=": "BearMuseum"
+                },
+                0,
+                {
+                    "VAR=": "BearTemple"
+                },
+                0,
+                {
+                    "VAR=": "edicts"
+                },
+                0,
+                {
+                    "VAR=": "enigma"
+                },
+                0,
+                {
+                    "VAR=": "ari_first_cat"
+                },
+                0,
+                {
+                    "VAR=": "completed_jumpup"
+                },
+                0,
+                {
+                    "VAR=": "completed_longjump"
+                },
+                0,
+                {
+                    "VAR=": "completed_shorthop"
+                },
+                0,
+                {
+                    "VAR=": "completed_alltogether"
+                },
+                0,
+                {
+                    "VAR=": "went_into_water"
+                },
+                0,
+                {
+                    "VAR=": "lamp_purpose_talk"
+                },
+                0,
+                {
+                    "VAR=": "found_passage"
+                },
+                0,
+                {
+                    "VAR=": "spoke_to_bootlegger"
+                },
+                0,
+                {
+                    "VAR=": "spoke_to_bootlegger_revealed"
+                },
+                0,
+                {
+                    "VAR=": "kidnappedlizard"
+                },
+                0,
+                {
+                    "VAR=": "saw_broken_bridge"
+                },
+                0,
+                {
+                    "VAR=": "greeted_by_madison"
+                },
+                0,
+                {
+                    "VAR=": "took_longest_road"
+                },
+                0,
+                {
+                    "VAR=": "took_normal_way"
+                },
+                0,
+                {
+                    "VAR=": "madison_double_way_reaction"
+                },
+                0,
+                {
+                    "VAR=": "tried_caveblock"
+                },
+                0,
+                {
+                    "VAR=": "spoke_to_madison"
+                },
+                0,
+                {
+                    "VAR=": "asked_to_camp"
+                },
+                0,
+                {
+                    "VAR=": "asked_about_cave"
+                },
+                0,
+                {
+                    "VAR=": "asked_about_reine"
+                },
+                0,
+                {
+                    "VAR=": "camped_with_madison"
+                },
+                0,
+                {
+                    "VAR=": "did_bread_intro"
+                },
+                0,
+                {
+                    "VAR=": "lantern1lit"
+                },
+                0,
+                {
+                    "VAR=": "lantern2lit"
+                },
+                0,
+                {
+                    "VAR=": "lantern3lit"
+                },
+                0,
+                {
+                    "VAR=": "lantern_chest_found"
+                },
+                0,
+                {
+                    "VAR=": "secretdoorfound"
+                },
+                0,
+                {
+                    "VAR=": "orb_cutscene_completed"
+                },
+                0,
+                {
+                    "VAR=": "did_fall_cutscene"
+                },
+                0,
+                {
+                    "VAR=": "triggered_first_alert_pred"
+                },
+                0,
+                {
+                    "VAR=": "triggered_second_alert_pred"
+                },
+                0,
+                {
+                    "VAR=": "ambushedarena2"
+                },
+                0,
+                {
+                    "VAR=": "saw_snakes"
+                },
+                0,
+                {
+                    "VAR=": "litrestcampfire"
+                },
+                0,
+                {
+                    "VAR=": "predearlywarning"
+                },
+                "/ev",
+                "end",
+                null
+            ],
+            "intro": [
+                "^This old runestone marks the trailhead of a heroic pathway.",
+                "\n",
+                {
+                    "->": "choice"
+                },
+                {
+                    "#f": 3
+                }
+            ],
+            "on_interact": [
+                "ev",
+                {
+                    "VAR?": "completed_jumpup"
+                },
+                "/ev",
+                [
+                    {
+                        "->": ".^.b",
+                        "c": true
+                    },
+                    {
+                        "b": [
+                            "^ ",
+                            {
+                                "->": "completed_trial"
+                            },
+                            {
+                                "->": ".^.^.^.4"
+                            },
+                            null
+                        ]
+                    }
+                ],
+                "nop",
+                "\n",
+                "ev",
+                {
+                    "VAR?": "num_interactions"
+                },
+                1,
+                "==",
+                "/ev",
+                [
+                    {
+                        "->": ".^.b",
+                        "c": true
+                    },
+                    {
+                        "b": [
+                            "^ ",
+                            {
+                                "->": "intro"
+                            },
+                            {
+                                "->": ".^.^.^.12"
+                            },
+                            null
+                        ]
+                    }
+                ],
+                "nop",
+                "\n",
+                "ev",
+                {
+                    "VAR?": "num_interactions"
+                },
+                1,
+                ">",
+                "/ev",
+                [
+                    {
+                        "->": ".^.b",
+                        "c": true
+                    },
+                    {
+                        "b": [
+                            "^ ",
+                            {
+                                "->": "second_choice"
+                            },
+                            {
+                                "->": ".^.^.^.20"
+                            },
+                            null
+                        ]
+                    }
+                ],
+                "nop",
+                "\n",
+                {
+                    "#f": 3
+                }
+            ],
+            "second_choice": [
+                [
+                    {
+                        "#": "cleartalkers"
+                    },
+                    "^Follow the trail up the cliff?",
+                    "\n",
+                    "ev",
+                    "str",
+                    "^I'm ready!",
+                    "/str",
+                    "/ev",
+                    {
+                        "*": ".^.c-0",
+                        "flg": 4
+                    },
+                    "ev",
+                    "str",
+                    "^Not yet...",
+                    "/str",
+                    "/ev",
+                    {
+                        "*": ".^.c-1",
+                        "flg": 4
+                    },
+                    {
+                        "c-0": [
+                            "^ ",
+                            {
+                                "->": "start_trial"
+                            },
+                            "\n",
+                            null
+                        ],
+                        "c-1": [
+                            "^ ",
+                            "done",
+                            "\n",
+                            null
+                        ]
+                    }
+                ],
+                {
+                    "#f": 3
+                }
+            ],
+            "set_complete": [
+                "^:2d33dd62b222b76bac02bbb25502ddcf",
+                "\n",
+                "^:4ddaa31beda6dcccba2169dddc58b35a",
+                "\n",
+                "ev",
+                1,
+                "/ev",
+                {
+                    "VAR=": "completed_jumpup",
+                    "re": true
+                },
+                "^:a732a8eb0e001fd8585c96c718aadfbf",
+                "\n",
+                "^Hey now, looks like a path forward! ",
+                {
+                    "#": "hero"
+                },
+                "\n",
+                "done",
+                {
+                    "#f": 3
+                }
+            ],
+            "start_trial": [
+                "^:3510c9def3598bee47c29da64568dbe5",
+                "\n",
+                "^:0e1323bc9899eb96140a89a18f390bd4",
+                "\n",
+                "^:040a769a942a6ebb8e69a3cbe479ee05",
+                "\n",
+                "ev",
+                {
+                    "VAR?": "fight_result_won"
+                },
+                "/ev",
+                [
+                    {
+                        "->": ".^.b",
+                        "c": true
+                    },
+                    {
+                        "b": [
+                            "^ ",
+                            {
+                                "->": "won_trial"
+                            },
+                            {
+                                "->": ".^.^.^.10"
+                            },
+                            null
+                        ]
+                    }
+                ],
+                "nop",
+                "\n",
+                "ev",
+                {
+                    "VAR?": "fight_result_won"
+                },
+                "!",
+                "/ev",
+                [
+                    {
+                        "->": ".^.b",
+                        "c": true
+                    },
+                    {
+                        "b": [
+                            "^ ",
+                            {
+                                "->": "do_nothing"
+                            },
+                            {
+                                "->": ".^.^.^.17"
+                            },
+                            null
+                        ]
+                    }
+                ],
+                "nop",
+                "\n",
+                {
+                    "#f": 3
+                }
+            ],
+            "warp": [
+                "^:11da6680b04adc7de86487d804045c3c",
+                "\n",
+                "^:05b84b4b931d91decd184016dbcbe7e8",
+                "\n",
+                "^:00d36240decdf3cd5cc28f91ba7058c5",
+                "\n",
+                "^:c9da9f69a7752ac69430b8b56ad35f03",
+                "\n",
+                "^:c07476a947c72a260909e3833d8501c3",
+                "\n",
+                "done",
+                {
+                    "#f": 3
+                }
+            ],
+            "won_trial": [
+                "^:dc94931130f0b9efb7b2949ba36af5a4",
+                "\n",
+                "ev",
+                {
+                    "VAR?": "completed_jumpup"
+                },
+                "/ev",
+                [
+                    {
+                        "->": ".^.b",
+                        "c": true
+                    },
+                    {
+                        "b": [
+                            "^ ",
+                            "done",
+                            {
+                                "->": ".^.^.^.6"
+                            },
+                            null
+                        ]
+                    }
+                ],
+                "nop",
+                "\n",
+                "ev",
+                {
+                    "VAR?": "completed_jumpup"
+                },
+                "!",
+                "/ev",
+                [
+                    {
+                        "->": ".^.b",
+                        "c": true
+                    },
+                    {
+                        "b": [
+                            "^ ",
+                            {
+                                "->": "set_complete"
+                            },
+                            {
+                                "->": ".^.^.^.13"
+                            },
+                            null
+                        ]
+                    }
+                ],
+                "nop",
+                "\n",
+                {
+                    "#f": 3
+                }
+            ]
+        }
+    ]
+}

@@ -3,14 +3,9 @@ package tfhres;
 import sys.db.*;
 import cpp.Object;
 import haxe.Json;
+import tfhres.SQLData;
 
 using Lambda;
-
-typedef TfhResult = {
-	hiberlite_id:Int,
-	shortname:String,
-	bytecode:Object
-}
 
 class SQLExport {
 	var p:String;
@@ -29,11 +24,28 @@ class SQLExport {
 	}
 
 	var ignoreSceneID = [
-		'ari_outercave1-anutrainingsession_talktome_78', 'blanktest_start_1', 'prompt_test_doortdest1_119', 'prompt_test_door_test_120',
-		'prompt_test_dummyrock_123', 'prompt_test_othertrigger_113', 'prompt_test_testinteract1_117', 'prompt_test_walktrigger_111',
-		'prompt_test_walk_talk_test_106', 'testroomd_deer1_187', 'testroomd_defaultstart_168', 'testroomd_rockinteract1_169', 'testroomd_snake1_175',
-		'testroomd_snake2_186', 'testroomd_snakechest1_174', 'testroomd_wof1_202', 'testroome_blackness_destination_179', 'trade_test_defaultstart_28',
-		'trade_test_madison_73', 'trade_test_thinking_statue_2_61', 'trade_test_thinking_statue_3_62', 'trade_test_thinking_statue_56'
+		'ari_outercave1-anutrainingsession_talktome_78',
+		'blanktest_start_1',
+		'prompt_test_doortdest1_119',
+		'prompt_test_door_test_120',
+		'prompt_test_dummyrock_123',
+		'prompt_test_othertrigger_113',
+		'prompt_test_testinteract1_117',
+		'prompt_test_walktrigger_111',
+		'prompt_test_walk_talk_test_106',
+		'testroomd_deer1_187',
+		'testroomd_defaultstart_168',
+		'testroomd_rockinteract1_169',
+		'testroomd_snake1_175',
+		'testroomd_snake2_186',
+		'testroomd_snakechest1_174',
+		'testroomd_wof1_202',
+		'testroome_blackness_destination_179',
+		'trade_test_defaultstart_28',
+		'trade_test_madison_73',
+		'trade_test_thinking_statue_2_61',
+		'trade_test_thinking_statue_3_62',
+		'trade_test_thinking_statue_56'
 	];
 
 	// Main decode function
@@ -43,6 +55,7 @@ class SQLExport {
 		var skipped = 0;
 		for (key in (rows : Iterator<TfhResult>)) {
 			var sceneName = key.shortname;
+			// trace(key.bytecode);
 			// database:/example.inkc
 			sceneName = sceneName.split('database:/')[1].split('.inkc')[0];
 			if (ignoreSceneID.contains(sceneName)) {
@@ -50,7 +63,10 @@ class SQLExport {
 				continue; // continue to next key in rows
 			}
 
+			$type(key.bytecode);
+
 			var dialogues = Json.parse(key.bytecode).root[2]; // Root 2 contains dialogue related content
+			$type(dialogues);
 			output.push({
 				hiberlite_id: key.hiberlite_id,
 				scene: sceneName,

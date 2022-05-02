@@ -1,0 +1,566 @@
+{
+    "inkVersion": 19,
+    "listDefs": {},
+    "root": [
+        [
+            [
+                "done",
+                {
+                    "#n": "g-0"
+                }
+            ],
+            null
+        ],
+        "done",
+        {
+            "#f": 3,
+            "global decl": [
+                "ev",
+                1,
+                {
+                    "VAR=": "num_interactions"
+                },
+                0,
+                {
+                    "VAR=": "preds_defeated"
+                },
+                0,
+                {
+                    "VAR=": "salt_amount"
+                },
+                1,
+                {
+                    "VAR=": "num_hits"
+                },
+                0,
+                {
+                    "VAR=": "fight_result_won"
+                },
+                0,
+                {
+                    "VAR=": "fight_rounds_won"
+                },
+                0,
+                {
+                    "VAR=": "current_tick"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball1"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball2"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball3"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball4"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball5"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball6"
+                },
+                0,
+                {
+                    "VAR=": "gotlongmaball7"
+                },
+                0,
+                {
+                    "VAR=": "BearSewers"
+                },
+                0,
+                {
+                    "VAR=": "BearMuseum"
+                },
+                0,
+                {
+                    "VAR=": "BearTemple"
+                },
+                0,
+                {
+                    "VAR=": "edicts"
+                },
+                0,
+                {
+                    "VAR=": "enigma"
+                },
+                0,
+                {
+                    "VAR=": "ari_first_cat"
+                },
+                "/ev",
+                "end",
+                null
+            ],
+            "on_interact": [
+                "^:ce129180dfdd1e6efa65a2241c6bfd5c",
+                "\n",
+                "^:a66bd5a06331f2840770ceb521c9435c",
+                "\n",
+                "^:f14577eb1eae76246f3290e3e4d1be91",
+                "\n",
+                "^:436d44f44d0cc8547814b73af2593613",
+                "\n",
+                "^:ed42ed5d6124b867e2598452491c9c11",
+                "\n",
+                "^:13cacc3bad3e50ed7488e511a19943c2",
+                "\n",
+                "^:f75af1ea3f5f7353ba62369c6a638b26",
+                "\n",
+                "^:7e93097949ca77024f743bcdd467e0f6",
+                "\n",
+                "^:a9122a0a22b58b1f9885bcc97df5171d",
+                "\n",
+                "^:4d2ab32d74a71554b098930249a3c9bf",
+                "\n",
+                "^Reine City, Capital to the nation of The Tundra, just one of many nations in the world of... ",
+                {
+                    "#": "jibberish:typewriter_click.ogg"
+                },
+                "\n",
+                "^:fd2bb4897430f89adc951142ab4c17ed",
+                "\n",
+                "^... Foenum. ",
+                {
+                    "#": "jibberish:typewriter_click.ogg"
+                },
+                "\n",
+                "^:acd8c101c8459654144c6d771f755dcd",
+                "\n",
+                "^For the first time in countless generations, the Foenum Council of Ungulates has been reformed and now convenes to discuss a matter of utmost urgency... ",
+                {
+                    "#": "jibberish:typewriter_click.ogg"
+                },
+                "\n",
+                "^:d7c36f2a8683be502b24cdce7558d78c",
+                "\n",
+                "^:151cf5790fd0eba6a53c69c83fc6c03c",
+                "\n",
+                "^:13cacc3bad3e50ed7488e511a19943c2",
+                "\n",
+                "^:8aa1dd53d5e62ca582128072e7c6cf1b",
+                "\n",
+                "^:045fd2562f43cf2f148352791e2058c4",
+                "\n",
+                "^Fellow Ungulates, even and odd toed alike... ",
+                {
+                    "#": "rhino:right"
+                },
+                "\n",
+                "^:90971bac66ffb4e17dbf2e3e74b3a898",
+                "\n",
+                "^We, the appointed Elders of our nations, are gathered here today to discuss the disturbing rumors that have been circulating across all of Foenum.",
+                "\n",
+                "^:5365cc830df1f2e83c7238d27208abd1",
+                "\n",
+                "^And to bear witness, we have found...",
+                "\n",
+                "^:30895d12da5d1a129f0802c2b0dfe570",
+                "\n",
+                "^... a survivor.",
+                "\n",
+                "^*murmur* *murmur* *murmur* ",
+                {
+                    "#": "cleartalkers"
+                },
+                {
+                    "#": "rabble:right"
+                },
+                "\n",
+                "^:15dc5c98ab5af7d0b5dc2d2e0925b9ed",
+                "\n",
+                "^Come, young foal. ",
+                {
+                    "#": "cleartalkers"
+                },
+                {
+                    "#": "rhino:right"
+                },
+                "\n",
+                "^:045fd2562f43cf2f148352791e2058c4",
+                "\n",
+                "^:893461281f973651e3ae45b2b24d94ab",
+                "\n",
+                "^Th-thank you, Chief. ",
+                {
+                    "#": "ribbon"
+                },
+                "\n",
+                "^:15dc5c98ab5af7d0b5dc2d2e0925b9ed",
+                "\n",
+                "^Do not be frightened, small one. Tell us what you saw. ",
+                {
+                    "#": "rhino"
+                },
+                "\n",
+                "^:045fd2562f43cf2f148352791e2058c4",
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^Yes, ma'am. You see, I was back home in The Savanna, just before dawn. ",
+                {
+                    "#": "ribbon"
+                },
+                "\n",
+                "^:7f652fed248256b7e4776a7c1adb8993",
+                "\n",
+                "^:8d121b54024f778a982e282ef57f0c54",
+                "\n",
+                "^I woke up early that morning when I felt a firefly tickle my nose.",
+                "\n",
+                "^:197f78c7079f1dfda9499b85351554d5",
+                "\n",
+                "^I chased it through the tall grass. Just, you know... playin' around...",
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^Anyway, it took me all the way to the watering hole... and that's when I saw them!",
+                "\n",
+                "^:cebaa3afbb8424deefed498311b80627",
+                "\n",
+                "^:65f8784c60a91d348867cc3163ad6d94",
+                "\n",
+                "^Big, mean looking creatures. Black as night, but you could see through them! Like... ghosts!",
+                "\n",
+                "^*GASP!* ",
+                {
+                    "#": "cleartalkers"
+                },
+                {
+                    "#": "rabble:right"
+                },
+                "\n",
+                "^:65f8784c60a91d348867cc3163ad6d94",
+                "\n",
+                "^That's what I said! They were like nothing I've seen before! ",
+                {
+                    "#": "rhino:right"
+                },
+                {
+                    "#": "ribbon:left"
+                },
+                "\n",
+                "^:893461281f973651e3ae45b2b24d94ab",
+                "\n",
+                "^They were four-legged... but their hooves were strange -- soft and round with little points sticking out.",
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^The hair of their coats were long and thick and shaggy, almost like a bison...",
+                "\n",
+                "^:3bd978674a906bce9e0c9708fe00e64b",
+                "\n",
+                "^Why I never! ",
+                {
+                    "#": "cleartalkers"
+                },
+                {
+                    "#": "jibberish:v8_j.wav"
+                },
+                "\n",
+                "^:acd8c101c8459654144c6d771f755dcd",
+                "\n",
+                "^:893461281f973651e3ae45b2b24d94ab",
+                "\n",
+                "^They spoke to one another. Their voices were low and scratchy... like they had eaten thorns. I tried, but I couldn't understand. ",
+                {
+                    "#": "ribbon"
+                },
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^And then... then...",
+                "\n",
+                "^:590740c848366d3a36b9383f5662f9cf",
+                "\n",
+                "^:30895d12da5d1a129f0802c2b0dfe570",
+                "\n",
+                "^Yes?  What happened next? ",
+                {
+                    "#": "rhino"
+                },
+                "\n",
+                "^:045fd2562f43cf2f148352791e2058c4",
+                "\n",
+                "^:893461281f973651e3ae45b2b24d94ab",
+                "\n",
+                "^One lifted its head, sniffed the air with his pointed nose. I was hidden in the grass -- I know I was, but... ",
+                {
+                    "#": "ribbon"
+                },
+                "\n",
+                "^:fbfd6da26ef7d5d06949fe9904c3562f",
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^That's when they all whipped around and stared straight at me!",
+                "\n",
+                "^:65f8784c60a91d348867cc3163ad6d94",
+                "\n",
+                "^The biggest one croaked out... \"GRASS EATER\"!!!",
+                "\n",
+                "^:faa1c6f55faf1b0407ce7716f3200b76",
+                "\n",
+                "^*GASP!* ",
+                {
+                    "#": "cleartalkers"
+                },
+                {
+                    "#": "rabble:right"
+                },
+                "\n",
+                "^:e49ca701453ca2f29ba733cc8c019185",
+                "\n",
+                "^That's what I said! ",
+                {
+                    "#": "rhino:right"
+                },
+                {
+                    "#": "ribbon:left"
+                },
+                "\n",
+                "^:8d121b54024f778a982e282ef57f0c54",
+                "\n",
+                "^... That's not a bad word, is it? Am I allowed to say that...? ",
+                {
+                    "#": "rhino:right"
+                },
+                {
+                    "#": "ribbon:left"
+                },
+                "\n",
+                "^:197f78c7079f1dfda9499b85351554d5",
+                "\n",
+                "^:30895d12da5d1a129f0802c2b0dfe570",
+                "\n",
+                "^Nevermind that! What happened next?! ",
+                {
+                    "#": "rhino"
+                },
+                "\n",
+                "^:04992a0b57cba040dc2dd3528684eb81",
+                "\n",
+                "^:045fd2562f43cf2f148352791e2058c4",
+                "\n",
+                "^:65f8784c60a91d348867cc3163ad6d94",
+                "\n",
+                "^I ran! They came straight at me! ",
+                {
+                    "#": "ribbon"
+                },
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^I saw *teeth*! Sharp like I've never seen before!",
+                "\n",
+                "^:65f8784c60a91d348867cc3163ad6d94",
+                "\n",
+                "^I ran and ran until my legs almost gave out! ",
+                {
+                    "#": "ribbon"
+                },
+                "\n",
+                "^:e353cb48b56686fe57e40564bfbfb90c",
+                "\n",
+                "^:65f8784c60a91d348867cc3163ad6d94",
+                "\n",
+                "^But before I knew it, they had me completely surrounded...",
+                "\n",
+                "^:893461281f973651e3ae45b2b24d94ab",
+                "\n",
+                "^There was drool coming out of their mouths, and an awful smell.",
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^They growled from all around me, \"The KEY! Take us to THE KEY!\"",
+                "\n",
+                "^:1b85c3782ef040a642cbac69096f87cd",
+                "\n",
+                "^I... thought I was a goner...",
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^But then...",
+                "\n",
+                "^:1efc612563c97afbf446fdb899551381",
+                "\n",
+                "^:65f8784c60a91d348867cc3163ad6d94",
+                "\n",
+                "^The dawn! A big beam of morning light hit them and they turned to smoke!",
+                "\n",
+                "^:7f84014d5112d5e8b464bdd8ac377f20",
+                "\n",
+                "^:015d69a093e9610cafd84f5022549a60",
+                "\n",
+                "^As the big one was fading away, he hissed in a way I could finally understand...",
+                "\n",
+                "^:80fd2b906a5438f04035ceeffbf6ca45",
+                "\n",
+                "^The Predators return. And we will be...",
+                "\n",
+                "^:590740c848366d3a36b9383f5662f9cf",
+                "\n",
+                "^... hungry...",
+                "\n",
+                "^:d59b96f0b10114de7c6279e3947dd5c5",
+                "\n",
+                "^:4c8a286caddde4caeb9e610038c74f48",
+                "\n",
+                "^:f3c33e79b27ee99581bca0ce6ee08565",
+                "\n",
+                "^Then, gone. Just... blown away in the wind.",
+                "\n",
+                "^:8d121b54024f778a982e282ef57f0c54",
+                "\n",
+                "^... I told my chief what happened. Her face - and stripes - turned white!",
+                "\n",
+                "^:893461281f973651e3ae45b2b24d94ab",
+                "\n",
+                "^That's when... she brought me here.",
+                "\n",
+                "^:6f3d6908710d3d08611a4aa03c360a55",
+                "\n",
+                "^:a60368f92186eac4a77cc275ccb93e10",
+                "\n",
+                "^..... So then. Thank you for your story, young one. ",
+                {
+                    "#": "rhino"
+                },
+                "\n",
+                "^:193a5fda3d0d0553fc79312add11bb3b",
+                "\n",
+                "^:6c7ed5e83b8a31508d7a16a8b1ca0d52",
+                "\n",
+                "^:96ae0a45e38fb21fa4e7833829314487",
+                "\n",
+                "^Council Chief! The foal's account lines up with the other reports. She is lucky to remain unscathed... ",
+                {
+                    "#": "rhino:right"
+                },
+                {
+                    "#": "camel:left"
+                },
+                "\n",
+                "^:5365cc830df1f2e83c7238d27208abd1",
+                "\n",
+                "^Indeed... and now we know they're looking for a Key...  ",
+                {
+                    "#": "camel:left"
+                },
+                {
+                    "#": "rhino:right"
+                },
+                "\n",
+                "^:631f36fbe294fd3e628648fc89508717",
+                "\n",
+                "^And now you can no longer deny it, Anga. The legends are true! ",
+                {
+                    "#": "camel"
+                },
+                "\n",
+                "^:96ae0a45e38fb21fa4e7833829314487",
+                "\n",
+                "^:90971bac66ffb4e17dbf2e3e74b3a898",
+                "\n",
+                "^Oh you and your legends again. Don't be a fool, old man. ",
+                {
+                    "#": "rhino"
+                },
+                "\n",
+                "^:045fd2562f43cf2f148352791e2058c4",
+                "\n",
+                "^:631f36fbe294fd3e628648fc89508717",
+                "\n",
+                "^This Key they seek is real, so the legends must be, too! ",
+                {
+                    "#": "camel"
+                },
+                "\n",
+                "^:d7e3c41f2913c48c0d14d09e80161646",
+                "\n",
+                "^:09a184cee9990aff53e0a10f5761b1e5",
+                "\n",
+                "^Somewhere, there is a mystic door keeping our ancient enemies, The Predators, at bay. You are all fools if you do not heed this warning! ",
+                {
+                    "#": "camel"
+                },
+                "\n",
+                "^:631f36fbe294fd3e628648fc89508717",
+                "\n",
+                "^I propose we find the bravest, strongest, most skilled amongst us to find The Key... we must name a champion!",
+                "\n",
+                "^:96ae0a45e38fb21fa4e7833829314487",
+                "\n",
+                "^:5365cc830df1f2e83c7238d27208abd1",
+                "\n",
+                "^Children's fairy tale or no, I admit... this threat must be taken seriously. We shall find this Key, whatever it is. ",
+                {
+                    "#": "rhino"
+                },
+                "\n",
+                "^:90971bac66ffb4e17dbf2e3e74b3a898",
+                "\n",
+                "^After years of discord, I know that the Ungulates of Foenum will not agree on a single champion. So we must settle this as we did in times of old...",
+                "\n",
+                "^:987dbda18fdfca538614ccbf6ef2bef6",
+                "\n",
+                "^:520409e18771d81d66a259afe96ef9a2",
+                "\n",
+                "^:30895d12da5d1a129f0802c2b0dfe570",
+                "\n",
+                "^Fellow Ungulates! Hear my decree! ",
+                {
+                    "#": "cleartalkers"
+                },
+                {
+                    "#": "rhino:right"
+                },
+                "\n",
+                "^:90971bac66ffb4e17dbf2e3e74b3a898",
+                "\n",
+                "^Antelopians from The Valley, Whitetail of The Forest, Goatani of The Islands, Bisenne of The Plains, Equines of The Steppes, and all the other proud nations of Foenum...",
+                "\n",
+                "^:30895d12da5d1a129f0802c2b0dfe570",
+                "\n",
+                "^Choose your own champion! Send them on the quest for this legendary Key. It will be their duty to battle against each other, horn against hoof against antler!",
+                "\n",
+                "^:5365cc830df1f2e83c7238d27208abd1",
+                "\n",
+                "^Until one champion, and one alone, remains. Whoever that Ungulate is will have proven themselves worthy to be the Protector of Foenum...",
+                "\n",
+                "^:4d048a537bc26539cedb34efd8082ddd",
+                "\n",
+                "^... our Key Keeper!",
+                "\n",
+                "^:914714b75183834ac7fc0c9fcb4c8d91",
+                "\n",
+                "^:5365cc830df1f2e83c7238d27208abd1",
+                "\n",
+                "^We must find the strongest of us all to face this threat. For if we fail...",
+                "\n",
+                "^:ef892df009af5de6abb7c0e6385bb6c8",
+                "\n",
+                "^All of Foenum shall surely perish...",
+                "\n",
+                "^:987dbda18fdfca538614ccbf6ef2bef6",
+                "\n",
+                "^:9810507451bc56eb36a6726dbb0f1875",
+                "\n",
+                "^:80f304ada637e3990a7ffb036b811bfe",
+                "\n",
+                "done",
+                {
+                    "#f": 3
+                }
+            ]
+        }
+    ]
+}
