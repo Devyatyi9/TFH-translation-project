@@ -17,9 +17,9 @@ class Main {
 		// sys.io.File.saveContent('test/my_file.json', content);
 
 		// Cross platform paths
-		var location = "test/empty-container-04.gfs";
+		// var location = "test/empty-container-04.gfs";
 		// var location = "test/empty-container-04-aligned.gfs";
-		// var location = "test/test-failik.gfs";
+		var location = "test/test-failik.gfs";
 		var path = new haxe.io.Path(location);
 		trace(path.dir); // path/to
 		trace(path.file); // file
@@ -45,13 +45,13 @@ class Main {
 		var gi = sys.io.File.read(location);
 		trace('Start of gfs file reading: "$location"');
 		var myGFS = new Reader(gi).read();
-		trace(myGFS);
+		trace(myGFS.header);
 		gi.seek(0, SeekBegin);
-		var testFile2 = new Reader(gi).read(2); // 'test-file.txt'
-		trace(testFile2);
+		var testFile2 = new Reader(gi).getFile(6); // 'test-file.txt'
+		trace(testFile2.data);
 		gi.seek(0, SeekBegin);
-		var testFile1 = new Reader(gi).read(3); // 'test-file2.txt'
-		trace(testFile1);
+		var testFile1 = new Reader(gi).getFile('AI/combos/cow/Cow_3_WORK.ini'); // 'test-file2.txt'
+		trace(testFile1.data);
 		gi.close();
 
 		/*

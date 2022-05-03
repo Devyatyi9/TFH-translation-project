@@ -12,7 +12,7 @@ class Reader {
 		i.bigEndian = true;
 	}
 
-	public function read(?name:String = '', ?index:Int32 = -1) {
+	public function read():GfsMetadata {
 		var header = parseHeader();
 		var metaInfBlock = [];
 		var _ = 0;
@@ -20,65 +20,72 @@ class Reader {
 			metaInfBlock.push(fileInfo());
 			_++;
 		}
-		var result = {};
-		result = {
+		trace('Gfs header and metadata has been read.');
+		return {
 			header: header,
 			metaInfBlock: metaInfBlock
 		}
+	}
 
-		trace(Tools.getPosition(i));
-		var running_offset = header.data_offset;
+	public function getFile(?name:String = '', ?index:Int32 = -1) {
+		var gfsMeta = read();
+		var data = Bytes.alloc(0);
+		var result = {data: data};
+		var running_offset = gfsMeta.header.data_offset;
+		// search by name
 		if (name.length != 0 || index >= 0) {
 			if (name.length != 0) {
-				trace(name);
 				var exist = false;
 				var fileCount = 0;
-				while (fileCount < header.n_of_files) {
-					if (metaInfBlock[fileCount].reference_path == name) {
-						trace(metaInfBlock[fileCount].reference_path);
+				while (fileCount < gfsMeta.header.n_of_files) {
+					if (gfsMeta.metaInfBlock[fileCount].reference_path == name) {
 						exist = true;
 						var fileIndex = 0;
+						// skip files behind found index
 						while (fileIndex != fileCount) {
 							var skip = true;
-							var fileDataInstance = fileData(fileIndex, running_offset, metaInfBlock, skip);
+							var fileDataInstance = fileData(fileIndex, running_offset, gfsMeta.metaInfBlock, skip);
 							running_offset = fileDataInstance.running_offset;
 							fileIndex++;
 						}
-						var fileDataInstance = fileData(fileIndex, running_offset, metaInfBlock);
+						var fileDataInstance = fileData(fileIndex, running_offset, gfsMeta.metaInfBlock);
 						var data = fileDataInstance.fData;
 						result = {data: data};
+						trace('File ${name} has been read.');
 					}
 					fileCount++;
 				}
 				if (exist == false) {
 					trace('File ${name} not found.');
-					var data = Bytes.alloc(0);
-					result = {data: data};
+					// var data = Bytes.alloc(0);
+					// result = {data: data};
 				}
 			}
+			// search by index
 			if (index >= 0) {
 				var exist = false;
-				if (index < header.n_of_files) {
+				if (index < gfsMeta.header.n_of_files) {
 					exist = true;
 					var fileCount = 0;
+					// skip files behind index
 					while (fileCount != index) {
 						var skip = true;
-						var fileDataInstance = fileData(fileCount, running_offset, metaInfBlock, skip);
+						var fileDataInstance = fileData(fileCount, running_offset, gfsMeta.metaInfBlock, skip);
 						running_offset = fileDataInstance.running_offset;
 						fileCount++;
 					}
-					var fileDataInstance = fileData(index, running_offset, metaInfBlock);
+					var fileDataInstance = fileData(index, running_offset, gfsMeta.metaInfBlock);
 					var data = fileDataInstance.fData;
 					result = {data: data};
+					trace('File by index ${index} has been read.');
 				}
 				if (exist == false) {
 					trace('File by index ${index} not found.');
-					var data = Bytes.alloc(0);
-					result = {data: data};
+					// var data = Bytes.alloc(0);
+					// result = {data: data};
 				}
 			}
 		}
-		trace('Gfs file has been read.');
 		return result;
 	}
 
@@ -136,10 +143,8 @@ class Reader {
 	}
 
 	function fileData(index:Int32, running_offset:Int32, metaInfBlock, ?skip:Bool = false) {
-		trace(Tools.getPosition(i));
 		var data_offset = running_offset;
 		running_offset += (metaInfBlock[index].reference_alignment - (running_offset % metaInfBlock[index].reference_alignment)) % metaInfBlock[index].reference_alignment;
-		trace(running_offset);
 		// skip empty space (alignment)
 		i.read(running_offset - data_offset);
 		var size = metaInfBlock[index].reference_length;
@@ -150,7 +155,6 @@ class Reader {
 		} else if (size > 0 && skip == true) {
 			i.read(size);
 		}
-		trace(fData);
 		return {
 			running_offset: running_offset += metaInfBlock[index].reference_length,
 			fData: fData

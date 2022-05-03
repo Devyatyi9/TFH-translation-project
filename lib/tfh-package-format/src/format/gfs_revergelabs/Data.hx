@@ -18,4 +18,7 @@ typedef GfsFileInfo = {
 	var reference_alignment:Int32;
 }
 
-typedef MetaInfoArray = Array<GfsFileInfo>;
+typedef GfsMetadata = {
+	var header:GfsHeader;
+	var metaInfBlock:Array<GfsFileInfo>;
+}
