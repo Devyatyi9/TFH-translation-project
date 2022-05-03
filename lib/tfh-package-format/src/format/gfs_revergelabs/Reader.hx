@@ -12,7 +12,7 @@ class Reader {
 		i.bigEndian = true;
 	}
 
-	public function read() {
+	public function read(?name:String = '', ?index:Int32 = -1) {
 		var header = parseHeader();
 		var metaInfBlock = [];
 		var _ = 0;
@@ -20,30 +20,66 @@ class Reader {
 			metaInfBlock.push(fileInfo());
 			_++;
 		}
-		// переписать код, убрав блок для данных
-		// сделать получение данных файлов по запросу (опциональный параметр)
-		var dataBlock = [];
-		var running_offset = header.data_offset;
-		/*
-			_ = 0;
-			while (_ < header.n_of_files) {
-				var fileDataInstance = fileData(_, running_offset, metaInfBlock);
-				dataBlock.push(fileDataInstance.fData);
-				running_offset = fileDataInstance.running_offset;
-				_++;
-			}
-		 */
-		// GfsMetadataEntry:
-		// local_path
-		// offset
-		// size
-
-		trace('Gfs file has been read.');
-		return {
+		var result = {};
+		result = {
 			header: header,
-			metaInfBlock: metaInfBlock,
-			dataBlock: dataBlock
+			metaInfBlock: metaInfBlock
 		}
+
+		trace(Tools.getPosition(i));
+		var running_offset = header.data_offset;
+		if (name.length != 0 || index >= 0) {
+			if (name.length != 0) {
+				trace(name);
+				var exist = false;
+				var fileCount = 0;
+				while (fileCount < header.n_of_files) {
+					if (metaInfBlock[fileCount].reference_path == name) {
+						trace(metaInfBlock[fileCount].reference_path);
+						exist = true;
+						var fileIndex = 0;
+						while (fileIndex != fileCount) {
+							var skip = true;
+							var fileDataInstance = fileData(fileIndex, running_offset, metaInfBlock, skip);
+							running_offset = fileDataInstance.running_offset;
+							fileIndex++;
+						}
+						var fileDataInstance = fileData(fileIndex, running_offset, metaInfBlock);
+						var data = fileDataInstance.fData;
+						result = {data: data};
+					}
+					fileCount++;
+				}
+				if (exist == false) {
+					trace('File ${name} not found.');
+					var data = Bytes.alloc(0);
+					result = {data: data};
+				}
+			}
+			if (index >= 0) {
+				var exist = false;
+				if (index < header.n_of_files) {
+					exist = true;
+					var fileCount = 0;
+					while (fileCount != index) {
+						var skip = true;
+						var fileDataInstance = fileData(fileCount, running_offset, metaInfBlock, skip);
+						running_offset = fileDataInstance.running_offset;
+						fileCount++;
+					}
+					var fileDataInstance = fileData(index, running_offset, metaInfBlock);
+					var data = fileDataInstance.fData;
+					result = {data: data};
+				}
+				if (exist == false) {
+					trace('File by index ${index} not found.');
+					var data = Bytes.alloc(0);
+					result = {data: data};
+				}
+			}
+		}
+		trace('Gfs file has been read.');
+		return result;
 	}
 
 	function parseHeader():GfsHeader {
@@ -87,19 +123,36 @@ class Reader {
 		}
 	}
 
-	function fileData(it:Int32, running_offset:Int32, metaInfBlock) {
-		running_offset += (metaInfBlock[it].reference_alignment - (running_offset % metaInfBlock[it].reference_alignment)) % metaInfBlock[it].reference_alignment;
+	function getMultipleFiles(header, running_offset, metaInfBlock) {
+		var dataBlock = [];
+		var _ = 0;
+		while (_ < header.n_of_files) {
+			var fileDataInstance = fileData(_, running_offset, metaInfBlock);
+			dataBlock.push(fileDataInstance.fData);
+			running_offset = fileDataInstance.running_offset;
+			_++;
+		}
+		return dataBlock;
+	}
+
+	function fileData(index:Int32, running_offset:Int32, metaInfBlock, ?skip:Bool = false) {
+		trace(Tools.getPosition(i));
+		var data_offset = running_offset;
+		running_offset += (metaInfBlock[index].reference_alignment - (running_offset % metaInfBlock[index].reference_alignment)) % metaInfBlock[index].reference_alignment;
 		trace(running_offset);
 		// skip empty space (alignment)
-		i.read(running_offset);
-		var size = metaInfBlock[it].reference_length;
+		i.read(running_offset - data_offset);
+		var size = metaInfBlock[index].reference_length;
 		var fData = Bytes.alloc(0);
-		if (size > 0) {
+
+		if (size > 0 && skip == false) {
 			fData = i.read(size);
+		} else if (size > 0 && skip == true) {
+			i.read(size);
 		}
 		trace(fData);
 		return {
-			running_offset: running_offset += metaInfBlock[it].reference_length,
+			running_offset: running_offset += metaInfBlock[index].reference_length,
 			fData: fData
 		};
 	}

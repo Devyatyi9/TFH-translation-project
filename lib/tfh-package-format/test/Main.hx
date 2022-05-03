@@ -17,8 +17,8 @@ class Main {
 		// sys.io.File.saveContent('test/my_file.json', content);
 
 		// Cross platform paths
-		// var location = "test/empty-container-04.gfs";
-		var location = "test/empty-container-04-aligned.gfs";
+		var location = "test/empty-container-04.gfs";
+		// var location = "test/empty-container-04-aligned.gfs";
 		// var location = "test/test-failik.gfs";
 		var path = new haxe.io.Path(location);
 		trace(path.dir); // path/to
@@ -46,6 +46,12 @@ class Main {
 		trace('Start of gfs file reading: "$location"');
 		var myGFS = new Reader(gi).read();
 		trace(myGFS);
+		gi.seek(0, SeekBegin);
+		var testFile2 = new Reader(gi).read(2); // 'test-file.txt'
+		trace(testFile2);
+		gi.seek(0, SeekBegin);
+		var testFile1 = new Reader(gi).read(3); // 'test-file2.txt'
+		trace(testFile1);
 		gi.close();
 
 		/*
