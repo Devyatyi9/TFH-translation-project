@@ -53,7 +53,7 @@ class SQLExport {
 		var output = [];
 		var keyNum = 0;
 		var skipped = 0;
-		for (key in (rows : Iterator<TfhResult>)) {
+		for (key in (rows : Iterator<Dynamic>)) {
 			var sceneName = key.shortname;
 			// trace(key.bytecode);
 			// database:/example.inkc
@@ -63,10 +63,10 @@ class SQLExport {
 				continue; // continue to next key in rows
 			}
 
-			$type(key.bytecode);
+			// var dialogues = Json.parse(key.bytecode).root[2]; // Root 2 contains dialogue related content
+			var json:Dynamic = Json.parse(Reflect.field(key, 'bytecode'));
+			var dialogues:Dynamic = json.root[2];
 
-			var dialogues = Json.parse(key.bytecode).root[2]; // Root 2 contains dialogue related content
-			$type(dialogues);
 			output.push({
 				hiberlite_id: key.hiberlite_id,
 				scene: sceneName,
@@ -94,12 +94,14 @@ class SQLExport {
 	var regExp = ~/^\^(?!:)/;
 
 	// Recursive function that iterates over object copying its hierarchy and saving text from it
-	function decodeStuff(dialogues:Map<String, String>, outputText) {
-		for (key in dialogues) {
-			if (ignoreKeys.contains(key))
-				continue;
-			var val = dialogues[key];
-		}
+	function decodeStuff(dialogues:Dynamic, outputText) {
+		/*
+			for (key in dialogues) {
+				if (ignoreKeys.contains(key))
+					continue;
+				var val = dialogues[key];
+			}
+		 */
 	}
 
 	/* 

@@ -8,3 +8,4 @@
 --hl testSQLite.hl
 
 # --library record-macros:git
+--library tink_json:0.11.0

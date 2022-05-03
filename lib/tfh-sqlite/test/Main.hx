@@ -38,16 +38,18 @@ class Main {
 		trace("File location: " + Sys.getCwd() + location);
 
 		// SQLite export
-		new tfhres.SQLExport(location).start();
+		// new tfhres.SQLExport(location).start();
 		// new TestSqliteLib(location).start();
-		// jsonRead();
+		var jsonLocation = 'test/story_prologue_default_start_8.json';
+		jsonTest(jsonLocation);
 	}
 
 	// function new() {};
 
-	static function jsonRead() {
-		// var jsonPath:String = 'test/story_prologue_default_start_8.json';
-		// var json = JsonMacro.load('test/story_prologue_default_start_8.json');
-		// trace(json.root[2]);
+	static function jsonTest(path) {
+		var i = sys.io.File.getContent(path);
+		var o:{root:Array<Dynamic>} = tink.Json.parse(i);
+		// var o:{root:Array<Array<Item>>} = tink.Json.parse(i);
+		trace(o.root[2]); // .root[2]
 	}
 }
