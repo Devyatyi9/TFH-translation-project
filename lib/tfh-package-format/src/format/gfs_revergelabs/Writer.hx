@@ -25,4 +25,10 @@ class Writer {
 		o.writeInt32(1);
 		o.writeInt32(gfs.n_of_files);
 	}
+
+	function updateFile(gfs:GfsHeader) {
+		//
+	}
+
+	function addFile() {}
 }

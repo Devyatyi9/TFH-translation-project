@@ -30,8 +30,11 @@ class Reader {
 	public function getFile(?name:String = '', ?index:Int32 = -1) {
 		var gfsMeta = read();
 		var data = Bytes.alloc(0);
-		var result = {data: data};
 		var running_offset = gfsMeta.header.data_offset;
+		var result = {
+			data: data,
+			offset: running_offset
+		};
 		// search by name
 		if (name.length != 0 || index >= 0) {
 			if (name.length != 0) {
@@ -50,7 +53,11 @@ class Reader {
 						}
 						var fileDataInstance = fileData(fileIndex, running_offset, gfsMeta.metaInfBlock);
 						var data = fileDataInstance.fData;
-						result = {data: data};
+						var offset = fileDataInstance.running_offset - gfsMeta.metaInfBlock[fileIndex].reference_length;
+						result = {
+							data: data,
+							offset: offset
+						};
 						trace('File ${name} has been read.');
 					}
 					fileCount++;
@@ -76,7 +83,11 @@ class Reader {
 					}
 					var fileDataInstance = fileData(index, running_offset, gfsMeta.metaInfBlock);
 					var data = fileDataInstance.fData;
-					result = {data: data};
+					var offset = fileDataInstance.running_offset - gfsMeta.metaInfBlock[index].reference_length;
+					result = {
+						data: data,
+						offset: offset
+					};
 					trace('File by index ${index} has been read.');
 				}
 				if (exist == false) {
