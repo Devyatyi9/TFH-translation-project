@@ -18,3 +18,16 @@ typedef Sound = {
 	var soundFormat:SoundFormat;
 	var soundFile:haxe.io.Bytes;
 }
+
+typedef SoundJson = {
+	var SoundNumber:Int32;
+	var SoundName:String;
+	var Description:String;
+	// var SoundFormat:SoundFormat;
+}
+
+typedef ArrayJson = {
+	var soundsInfoBlock:Array<SoundJson>;
+}
+
+//

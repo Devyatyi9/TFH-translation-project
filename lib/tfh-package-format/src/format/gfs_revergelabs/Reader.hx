@@ -64,8 +64,7 @@ class Reader {
 				}
 				if (exist == false) {
 					trace('File ${name} not found.');
-					// var data = Bytes.alloc(0);
-					// result = {data: data};
+					result.offset = -1;
 				}
 			}
 			// search by index
@@ -92,8 +91,7 @@ class Reader {
 				}
 				if (exist == false) {
 					trace('File by index ${index} not found.');
-					// var data = Bytes.alloc(0);
-					// result = {data: data};
+					result.offset = -1;
 				}
 			}
 		}

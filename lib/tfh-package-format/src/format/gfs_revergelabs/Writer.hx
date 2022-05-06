@@ -3,7 +3,7 @@ package format.gfs_revergelabs;
 import format.gfs_revergelabs.Data;
 
 class Writer {
-	var o:haxe.io.Output;
+	var o:sys.io.FileOutput;
 
 	public function new(o) {
 		this.o = o;
@@ -26,8 +26,15 @@ class Writer {
 		o.writeInt32(gfs.n_of_files);
 	}
 
-	function updateFile(gfs:GfsHeader) {
-		//
+	public function updateFile(data:FileData, oldLength:Int) {
+		// gfs.data_offset
+		// gfs.n_of_files
+		trace(data.offset);
+		trace(data.data);
+		// o.writeFullBytes(s:Bytes, pos:Int, len:Int):Void
+		// o.writeFullBytes(data.data, data.offset, data.data.length);
+		trace('test writer.');
+		// запись чанками
 	}
 
 	function addFile() {}

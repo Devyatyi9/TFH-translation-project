@@ -1,6 +1,5 @@
 package format.sndwav_revergelabs;
 
-import haxe.io.Bytes;
 import format.sndwav_revergelabs.Data;
 
 class Reader {
@@ -17,7 +16,6 @@ class Reader {
 		var unknownData = i.read(dataLength);
 		var soundsCount = i.readInt32();
 		var soundsBlock = [];
-		trace(soundsCount);
 		var _ = 0;
 		while (_ < soundsCount) {
 			var soundFile = parseSounds();

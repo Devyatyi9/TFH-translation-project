@@ -35,11 +35,12 @@ class Main {
 		trace("Working directory: " + Sys.getCwd());
 
 		// Read snd-wav
-		sndwavReadWrite(location);
+		// sndwavReadWrite(location);
+		new SndWavRepacker().unpack(location);
 	}
 
 	// function new() {};
-	// Read/Write Test
+	// Read / Write Test
 	static function sndwavReadWrite(location:String) {
 		// Snd-wav Read
 		var i = sys.io.File.read(location);

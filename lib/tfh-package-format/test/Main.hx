@@ -1,6 +1,7 @@
 package;
 
 import format.gfs_revergelabs.Reader;
+import format.gfs_revergelabs.Writer;
 
 class Main {
 	static function main() {
@@ -56,15 +57,16 @@ class Main {
 		trace(testFile1.offset);
 		gi.close();
 
-		/*
-			// GFS Write
-			var save_location = "test/TestLobby.gbs";
-			//
+		// /*
+		// GFS Write
+		var file_location = "test/big-floppa.gfs";
+		// 'temp/true_color_sprites/velvet.txt'
+		// 721
 
-			var go = sys.io.File.write(save_location);
-			trace('Start of gbs file writing: "$save_location"');
-			new GbsWriter(go).write(myGBS);
-			go.close();
-		 */
+		var go = sys.io.File.update(file_location);
+		trace('Start of gfs file writing: "$file_location"');
+		new Writer(go).updateFile(testFile1, 1);
+		go.close();
+		//  */
 	}
 }

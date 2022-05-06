@@ -1,6 +1,7 @@
 package format.gfs_revergelabs;
 
 import haxe.Int32;
+import haxe.io.Bytes;
 
 typedef GfsHeader = {
 	var data_offset:Int32;
@@ -21,4 +22,9 @@ typedef GfsFileInfo = {
 typedef GfsMetadata = {
 	var header:GfsHeader;
 	var metaInfBlock:Array<GfsFileInfo>;
+}
+
+typedef FileData = {
+	var data:Bytes;
+	var offset:Int32;
 }

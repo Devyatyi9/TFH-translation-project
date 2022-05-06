@@ -1,9 +1,7 @@
--D analyzer-optimize
+# -D analyzer-optimize
 -cp test
 -cp src
 # --verbose
 --debug
 --main Main
 --interp
-
-# -lib format
