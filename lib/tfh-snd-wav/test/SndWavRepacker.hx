@@ -17,7 +17,7 @@ class SndWavRepacker {
 		trace('Start of file reading snd-wav: "$location"');
 		var sndWavFile = new Reader(i).read();
 		i.close();
-		//
+
 		var path = new haxe.io.Path(location);
 		var fileName = path.file;
 		if (another_location.length > 0) {
@@ -27,28 +27,27 @@ class SndWavRepacker {
 			another_location = Path.normalize(another_location);
 			another_location = Path.addTrailingSlash(another_location);
 			path = new haxe.io.Path(another_location);
+			trace('Saving location is: "${another_location}"');
 		} else
 			FileSystem.createDirectory('${path.dir}/${fileName}');
-		trace(path);
-		trace(path.dir);
 		var soundsInfo = [];
 		var jsonSoundsArray = {
+			IgnoreList: [],
 			soundsInfo: []
 		};
-		//
+
 		var it = 0;
 		while (it < sndWavFile.soundsCount) {
 			var soundData = sndWavFile.soundsBlock[it].soundFile;
 			var format = sndWavFile.soundsBlock[it].soundFormat;
-			// location
 			var name = '';
+			// checking location
 			if (another_location.length > 0) {
 				name = '${path.dir}/${fileName}_${it + 1}.${format}';
 			} else {
 				name = '${path.dir}/${fileName}/${fileName}_${it + 1}.${format}';
 			}
 			sys.io.File.saveBytes(name, soundData);
-			trace('${fileName}_${it + 1}.${format}');
 			var object:SoundJson = {
 				SoundNumber: it,
 				SoundName: '${fileName}_${it + 1}.${format}',
@@ -59,16 +58,58 @@ class SndWavRepacker {
 		}
 		jsonSoundsArray.soundsInfo = soundsInfo;
 		var stringifyJson = haxe.Json.stringify(jsonSoundsArray, "\t");
-		// if location
 		var save_location;
+		// checking location
 		if (another_location.length > 0) {
 			save_location = Path.withExtension('${path.dir}/${fileName}', "json");
 		} else
 			save_location = Path.withExtension('${path.dir}/${fileName}/${fileName}', "json");
 		sys.io.File.saveContent(save_location, stringifyJson);
+		trace('Snd-wav has been unpacked');
 	}
 
-	function repack() {}
+	public function repack(location:String, ?another_location = '', ?ignoreSfx = false) {
+		// 'location' for snd-wav file and directory
+		// 'another_location' only for directory with sounds
+		if (FileSystem.exists(location)) {
+			var path:Path;
+			if (FileSystem.isDirectory(location)) {
+				// 'path/cow'
+				location = Path.removeTrailingSlashes(location);
+				path = new haxe.io.Path(location);
+				location = '${location}.snd-wav';
+				path = new haxe.io.Path(location);
+			} else {
+				// 'path/cow.snd-wav'
+				path = new haxe.io.Path(location);
+			}
+			var configPath = '${path.dir}/${path.file}/${path.file}.json';
+			var loadConfig:String = sys.io.File.getContent(configPath);
+			// var sndJson:ArrayJson = haxe.Json.parse(loadConfig); // JSON PARSE (failed because of Dynamic type)
+			var sndJson:{
+				IgnoreList:Array<String>,
+				soundsInfo:Array<{SoundNumber:Int, Description:String, SoundName:String}>
+			};
+			sndJson = tink.Json.parse(loadConfig);
+			var dir = '${path.dir}/${path.file}/';
+			var i = sys.io.File.read(path.toString());
+			trace('Start of file reading snd-wav: "$location"');
+			var sndWavFile = new Reader(i).read();
+			i.close();
+			for (key in sndJson.soundsInfo) {
+				var number = key.SoundNumber;
+				var soundName = key.SoundName;
+				var soundData = sys.io.File.getBytes(dir + soundName);
+				sndWavFile.soundsBlock[number].soundLength = soundData.length;
+				sndWavFile.soundsBlock[number].soundFile = soundData;
+			}
+			var o = sys.io.File.write(path.toString());
+			trace('Start of file writing snd-wav: "$location"');
+			new Writer(o).write(sndWavFile);
+			o.close();
+			trace('Snd-wav has been repacked');
+		}
+	}
 }
 
 // Read/Write Test

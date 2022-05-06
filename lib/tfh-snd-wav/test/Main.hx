@@ -17,7 +17,8 @@ class Main {
 		// sys.io.File.saveContent('src/my_file.json', content);
 
 		// Cross platform paths
-		var location = "files/cow.snd-wav";
+		var location = "files/cow";
+		// var location = "files/cow.snd-wav";
 		var path = new haxe.io.Path(location);
 		trace(path.dir); // path/to
 		trace(path.file); // file
@@ -36,7 +37,8 @@ class Main {
 
 		// Read snd-wav
 		// sndwavReadWrite(location);
-		new SndWavRepacker().unpack(location);
+		// new SndWavRepacker().unpack(location);
+		new SndWavRepacker().repack(location);
 	}
 
 	// function new() {};

@@ -21,13 +21,7 @@ typedef Sound = {
 
 typedef SoundJson = {
 	var SoundNumber:Int32;
-	var SoundName:String;
 	var Description:String;
+	var SoundName:String;
 	// var SoundFormat:SoundFormat;
 }
-
-typedef ArrayJson = {
-	var soundsInfoBlock:Array<SoundJson>;
-}
-
-//
