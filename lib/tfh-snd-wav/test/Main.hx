@@ -16,29 +16,64 @@ class Main {
 		// var content:String = haxe.Json.stringify(user);
 		// sys.io.File.saveContent('src/my_file.json', content);
 
-		// Cross platform paths
-		// var location = "files/cow";
-		var location = "files/cow.snd-wav";
-		var path = new haxe.io.Path(location);
-		trace(path.dir); // path/to
-		trace(path.file); // file
-		trace(path.ext); // txt
-
-		// combining path
-		var directory = "path/to/";
-		var file = "./file.txt";
-		trace(haxe.io.Path.join([directory, file])); // path/to/file.txt
-		trace('\n');
+		/*
+			// Cross platform paths
+			// var location = "files/cow";
+			var location = "files/cow.snd-wav";
+			var path = new haxe.io.Path(location);
+			trace(path.dir); // path/to
+			trace(path.file); // file
+			trace(path.ext); // txt
+		 */
+		/*
+			// combining path
+			var directory = "path/to/";
+			var file = "./file.txt";
+			trace(haxe.io.Path.join([directory, file])); // path/to/file.txt
+			trace('\n');
+		 */
 
 		// Check path
-		trace("File location: " + location);
+		// trace("File location: " + location);
 		trace("Program path: " + Sys.programPath());
 		trace("Working directory: " + Sys.getCwd());
+
+		// Command Line Arguments
+		cmdRun();
 
 		// Read snd-wav
 		// sndwavReadWrite(location);
 		// new SndWavRepacker().unpack(location);
-		new SndWavRepacker().repack(location);
+		// new SndWavRepacker().repack(location);
+	}
+
+	static function cmdRun() {
+		var args = Sys.args();
+		// trace(args);
+		var i = 0;
+		while (i < args.length) {
+			if (args[i] == '-unpack') {
+				var location = args[i + 1];
+				var another_location = '';
+				if (args.length > 2) {
+					another_location = args[i + 2];
+				}
+				new SndWavRepacker().unpack(location, another_location);
+			}
+			if (args[i] == '-repack') {
+				var location = args[i + 1];
+				var another_location = '';
+				if (args.length > 2) {
+					another_location = args[i + 2];
+				}
+				new SndWavRepacker().repack(location, another_location);
+			}
+			i++;
+		}
+		if (args.length < 0) {
+			trace('Main.exe -unpack "files/cow.snd-wav" <"files/velvet">');
+			trace('Main.exe -repack "files/cow.snd-wav" <"files/velvet">');
+		}
 	}
 
 	// function new() {};

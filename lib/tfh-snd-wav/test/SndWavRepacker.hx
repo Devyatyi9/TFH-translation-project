@@ -71,7 +71,6 @@ class SndWavRepacker {
 	public function repack(location:String, ?another_location = '', ?ignoreSfx = false) {
 		// 'location' for snd-wav file and directory
 		// 'another_location' only for directory with sounds
-		another_location = 'files/velvet';
 		if (FileSystem.exists(location)) {
 			var path:Path;
 			if (FileSystem.isDirectory(location)) {
