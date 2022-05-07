@@ -71,6 +71,7 @@ class SndWavRepacker {
 	public function repack(location:String, ?another_location = '', ?ignoreSfx = false) {
 		// 'location' for snd-wav file and directory
 		// 'another_location' only for directory with sounds
+		another_location = 'files/velvet';
 		if (FileSystem.exists(location)) {
 			var path:Path;
 			if (FileSystem.isDirectory(location)) {
@@ -83,7 +84,16 @@ class SndWavRepacker {
 				// 'path/cow.snd-wav'
 				path = new haxe.io.Path(location);
 			}
-			var configPath = '${path.dir}/${path.file}/${path.file}.json';
+			var another_path:Path;
+			var configPath:String;
+			var dir = '${path.dir}/${path.file}/';
+			if (another_location.length > 0) {
+				another_location = Path.addTrailingSlash(another_location);
+				another_path = new haxe.io.Path(another_location);
+				configPath = '${another_path.dir}/${path.file}.json';
+				dir = '${another_path.dir}/';
+			} else
+				configPath = '${path.dir}/${path.file}/${path.file}.json';
 			var loadConfig:String = sys.io.File.getContent(configPath);
 			// var sndJson:ArrayJson = haxe.Json.parse(loadConfig); // JSON PARSE (failed because of Dynamic type)
 			var sndJson:{
@@ -91,7 +101,6 @@ class SndWavRepacker {
 				soundsInfo:Array<{SoundNumber:Int, Description:String, SoundName:String}>
 			};
 			sndJson = tink.Json.parse(loadConfig);
-			var dir = '${path.dir}/${path.file}/';
 			var i = sys.io.File.read(path.toString());
 			trace('Start of file reading snd-wav: "$location"');
 			var sndWavFile = new Reader(i).read();
@@ -110,21 +119,4 @@ class SndWavRepacker {
 			trace('Snd-wav has been repacked');
 		}
 	}
-}
-
-// Read/Write Test
-function sndwavReadWrite(location:String) {
-	// Snd-wav Read
-	var i = sys.io.File.read(location);
-	trace('Start of file reading snd-wav: "$location"');
-	var mySndWav = new Reader(i).read();
-	trace(mySndWav.soundsCount);
-	i.close();
-
-	// Snd-wav Write
-	var save_location = "test/TestLobby.snd-wav";
-	var o = sys.io.File.write(save_location);
-	trace('Start of file writing snd-wav: "$save_location"');
-	new Writer(o).write(mySndWav);
-	o.close();
 }
