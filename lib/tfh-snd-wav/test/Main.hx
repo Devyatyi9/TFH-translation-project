@@ -59,18 +59,20 @@ class Main {
 					another_location = args[i + 2];
 				}
 				new SndWavRepacker().unpack(location, another_location);
-			}
-			if (args[i] == '-repack') {
+			} else if (args[i] == '-repack') {
 				var location = args[i + 1];
 				var another_location = '';
 				if (args.length > 2) {
 					another_location = args[i + 2];
 				}
 				new SndWavRepacker().repack(location, another_location);
+			} else {
+				trace('Main.exe -unpack "files/cow.snd-wav" <"files/velvet">');
+				trace('Main.exe -repack "files/cow.snd-wav" <"files/velvet">');
 			}
 			i++;
 		}
-		if (args.length < 0) {
+		if (args.length < 1) {
 			trace('Main.exe -unpack "files/cow.snd-wav" <"files/velvet">');
 			trace('Main.exe -repack "files/cow.snd-wav" <"files/velvet">');
 		}
