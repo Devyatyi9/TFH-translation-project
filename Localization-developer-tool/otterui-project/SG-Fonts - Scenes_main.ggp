@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <GUIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Version>1.1.0</Version>
-  <Name>TFH-Fonts - Scenes_main</Name>
+  <Name>SG-Fonts - Scenes_main</Name>
   <Entries>
     <Scene>
       <ID>1000</ID>
@@ -3291,7 +3291,7 @@
     </GUIFont>
   </Fonts>
   <Platforms>
-    <Platform Name="PC" Endianness="Little" OutputDirectory="OtterExport\Export-main-ui">
+    <Platform Name="PC" Endianness="Little" OutputDirectory="OtterExport">
       <ColorFormat>ARGB</ColorFormat>
       <SafeDisplayWidth>1</SafeDisplayWidth>
       <SafeDisplayHeight>1</SafeDisplayHeight>

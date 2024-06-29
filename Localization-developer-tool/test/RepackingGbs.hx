@@ -100,7 +100,7 @@ class RepackingGbs {
 	function writeMergedGbs(objectList:Array<GbsFile>, path:String, name:Array<String>) {
 		var i = 0;
 		while (i < objectList.length) {
-			var save_location = path + name[i];
+			var save_location = path + '/' + name[i];
 			if (FileSystem.exists(path)) {} else
 				FileSystem.createDirectory(path);
 			var go = sys.io.File.write(save_location);
