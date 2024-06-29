@@ -1,4 +1,4 @@
--cp test
+-cp src
 -main Main
 
 --interp
