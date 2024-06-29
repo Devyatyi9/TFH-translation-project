@@ -15,88 +15,19 @@ using format.gbs_otterui.Tools;
 class RepackingGbs {
 	public function new() {}
 
-	public function processingPixel() {
-		// var location = "otterui-project/Import/Import-pixel-ui/BuckLobby.gbs";
-
-		// gbsTestReadWrite(location);
-
-		#if debug
-		trace("Repacking gbs debug");
-		#end
-
-		//**PIXEL**/
-
-		// Load export gbs
-		var atlases_export_pixel = "otterui-project/OtterExport/Export-pixel-ui/Fonts";
-		// путь с файлами до OtterExport - pixel-ui
-		var fileList_export_pixel = recursiveDir("otterui-project/OtterExport/Export-pixel-ui");
-		//
-		// путь с файлами до Import - pixel-ui
-		var fileList_import_pixel = recursiveDir("otterui-project/Import/Import-pixel-ui");
-		//
-		// путь до Merged - pixel-ui
-		var path_merged_pixel = "otterui-project/Merged/pixel-ui-merged/";
-		//
-
-		// здесь проверяем массив сцен на наличие шрифтов
-		fileList_import_pixel = arrayCheckFonts(fileList_import_pixel);
-
-		if (fileList_export_pixel.length == 0 || fileList_import_pixel.length == 0) {
-			trace('Warning! Export or Import pixel folder is empty.');
-			return;
-		}
-
-		// Импортируемые игровые файлы
-		var objectList_import_pixel = readGbsList(fileList_import_pixel);
-
-		//***
-		var objectList_export_pixel = readGbsList(fileList_export_pixel);
-
-		fileList_export_pixel = [];
-		var translatedFonts = fontsAllocate(objectList_export_pixel);
-		objectList_export_pixel = [];
-		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_pixel);
-
-		mergeFonts(fromGameFonts, translatedFonts);
-		mapToObjects(fromGameFonts, objectList_import_pixel);
-		calculateGbsLength(objectList_import_pixel);
-		#if debug
-		objectCheckOffsets(objectList_import_pixel, 0);
-		objectCheckOffsets(objectList_import_pixel, 1);
-		#end
-		// write new gbs files
-		writeMergedGbs(objectList_import_pixel, path_merged_pixel, fileList_import_pixel);
-		fileList_import_pixel = [];
-		renamingPng(atlases_export_pixel, path_merged_pixel, translatedFonts, fromGameFonts);
-		fromGameFonts.clear();
-		translatedFonts.clear();
-		objectList_import_pixel = [];
-		#if debug
-		var location = "otterui-project/Merged/pixel-ui-merged/BuckLobby.gbs";
-		if (Tools.fileExists(location)) {
-			var gi = sys.io.File.read(location);
-			trace('Start of gbs file reading: "$location"');
-			var myGBS = new GbsReader(gi).read();
-			gi.checkOffsets;
-			gi.close();
-		}
-		#end
-		// trace('test');
-	}
-
 	public function processingMain() {
 		//**MAIN**/
 
 		// Load export gbs
-		var atlases_export_main = "otterui-project/OtterExport/Export-main-ui/Fonts";
+		var atlases_export_main = "otterui-project/OtterExport/Fonts";
 		// путь с файлами до OtterExport - main-ui
-		var fileList_export_main = recursiveDir("otterui-project/OtterExport/Export-main-ui");
+		var fileList_export_main = recursiveDir("otterui-project/OtterExport");
 		//
 		// путь с файлами до Import - main-ui
-		var fileList_import_main = recursiveDir("otterui-project/Import/Import-main-ui");
+		var fileList_import_main = recursiveDir("otterui-project/Import");
 		//
 		// путь до Merged - main-ui
-		var path_merged_main = "otterui-project/Merged/main-ui-merged/";
+		var path_merged_main = "otterui-project/Merged";
 		//
 
 		// здесь проверяем массив сцен на наличие шрифтов
@@ -134,7 +65,7 @@ class RepackingGbs {
 		objectList_import_main = [];
 
 		#if debug
-		var location = "otterui-project/Merged/main-ui-merged/MainMenu.gbs";
+		var location = "otterui-project/Merged/MainMenu.gbs";
 		if (Tools.fileExists(location)) {
 			var gi = sys.io.File.read(location);
 			trace('Start of gbs file reading: "$location"');

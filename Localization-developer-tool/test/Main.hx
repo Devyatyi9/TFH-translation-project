@@ -42,7 +42,6 @@ class Main {
 		// concatArray();
 		// ArrayContains();
 
-		new RepackingGbs().processingPixel();
 		new RepackingGbs().processingMain();
 		trace('The End.');
 	}
