@@ -1,6 +1,10 @@
-# Them's Fightin' Herds translation project
+# Skullgirls translation project
 
-This is an example Haxe project.
+В процессе переписывания...
+
+
+
+Состав проекта:
 
 - `Localization-developer-tool`
 - `Localization-installer`
