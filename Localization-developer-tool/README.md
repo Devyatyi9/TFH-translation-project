@@ -1,9 +1,9 @@
-# Haxe project
+# Описание
 
-This is an example Haxe project scaffolded by Visual Studio Code.
+Здесь у нас тулза и проект OtterUI (ggp), OtterUI генерирует gbs файлы с инфой для копирования в шрифты игры.
 
-Without further changes the structure is following:
+Копирование происходит тулзой из `src/Main.hx`, при компиляции создаётся `otterui-cli.hl`.
 
- * `src/Main.hx`: Entry point Haxe source file
- * `build.hxml`: Haxe command line file used to build the project
- * `README.md`: This file
+- `hl-otterui-cli.hxml`: Конфиг для компиляции тулзы в .hl файл (HashLink)
+
+- `otterui-cli.hxml`: Конфиг для работы тулзы в режиме интерпретатора
