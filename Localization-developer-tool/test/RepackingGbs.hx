@@ -27,7 +27,7 @@ class RepackingGbs {
 		var fileList_import_main = recursiveDir("otterui-project/Import");
 		//
 		// путь до Merged - main-ui
-		var path_merged_main = "otterui-project/Merged";
+		var path_merged_main = "otterui-project/Merged/";
 		//
 
 		// здесь проверяем массив сцен на наличие шрифтов
