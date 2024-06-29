@@ -1,4 +1,4 @@
-# Haxe project
+# Это пока не трогаем
 
 This is an example Haxe project scaffolded by Visual Studio Code.
 
