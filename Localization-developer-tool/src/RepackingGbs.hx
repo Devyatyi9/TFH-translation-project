@@ -19,15 +19,15 @@ class RepackingGbs {
 		//**MAIN**/
 
 		// Load export gbs
-		var atlases_export_main = "otterui-project/OtterExport/Fonts";
+		var atlases_export_main = "otterui-project/TheMiracle/Fonts";
 		// путь с файлами до OtterExport - main-ui
-		var fileList_export_main = recursiveDir("otterui-project/OtterExport");
+		var fileList_export_main = recursiveDir("otterui-project/TheMiracle");
 		//
 		// путь с файлами до Import - main-ui
 		var fileList_import_main = recursiveDir("otterui-project/Import");
 		//
 		// путь до Merged - main-ui
-		var path_merged_main = "otterui-project/Merged/";
+		var path_merged_main = "otterui-project/Merged";
 		//
 
 		// здесь проверяем массив сцен на наличие шрифтов

@@ -6,4 +6,4 @@
 --verbose
 # -D analyzer-optimize
 
---class-path ../lib/tfh-font/src
+--class-path ../lib/otterui-font/src
