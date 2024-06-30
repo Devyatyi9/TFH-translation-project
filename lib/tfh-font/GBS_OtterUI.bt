@@ -3,12 +3,13 @@
 //
 //      File: GBS_OtterUI.bt
 //   Authors: Devyatyi9
-//   Version: 0.3
+//   Version: 0.3a
 //   Purpose: Parser for Aonyx Software's OtterUI scene files https://github.com/ppiecuch/OtterUI
 //  Category: Game
 // File Mask: *.gbs
 //  ID Bytes: 43 53 47 47 //CSGG
 //   History: 
+//   0.3a  2024-06-30 Devyatyi9: Fix for Font_Length
 //   0.2   2020-11-13 Devyatyi9: Added syntax highlighting
 //------------------------------------------------
 
@@ -99,9 +100,14 @@ typedef struct FontsBlock {
 //local int32 n;
 //n = 56 + hds.fontOffsetPos;
 FSkip(hds.fontOffsetPos);
+local int pos;
 local int32 i;
     for (i = 0; i < hds.Fonts_Count; i++) {
+        pos = FTell();
         FontTableHeader fnts <name=GetFntName,comment="/Tool/OtterUI/UI/GUIFont.cs">;
+        // возвращаем курсор в начало таблицы шрифта и делаем скип по размеру таблицы
+        FSeek(pos);
+        FSkip(fnts.Font_Length);
 };
 } FontsBlock;
 
