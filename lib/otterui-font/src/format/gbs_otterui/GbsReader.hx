@@ -21,8 +21,11 @@ class GbsReader {
 			Tools.tagOffset(i, header, readFonts);
 			var _ = 0;
 			while (_ < header.fontsCount) {
+				var cur = i.tell();
 				var fontInstance = parseFonts();
 				fontsBlock.push(fontInstance);
+				i.seek(cur, SeekBegin);
+				i.seek(fontInstance.fontLength, SeekCur);
 				_++;
 			}
 		} else {

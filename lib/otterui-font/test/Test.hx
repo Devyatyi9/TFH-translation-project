@@ -1,8 +1,11 @@
 package;
 
 import format.gbs_otterui.GbsData;
+import format.gbs_otterui.GbsReader;
+import format.gbs_otterui.GbsWriter;
+import format.gbs_otterui.Tools;
 
-class Main {
+class Test {
 	static function main() {
 		// new Main(); // 1
 
@@ -38,11 +41,41 @@ class Main {
 		// concatArray();
 		// ArrayContains();
 
-		new PatchingGbs().processing();
+		// new PatchingGbs().processing();
+		gbsTestReadWrite("test/ErrorWindows.gbs");
 	}
 
 	// 2
 	// function new() {};
+	// Read/Write Test GBS
+	static function gbsTestReadWrite(location:String) {
+		// GBS Read
+		var gi = sys.io.File.read(location);
+		trace('Start of gbs file reading: "$location"');
+		var myGBS = new GbsReader(gi).read();
+		gi.close();
+
+		trace("Fonts count: " + myGBS.header.fontsCount);
+
+		var fileInfo = Tools.fileExists(location);
+		trace('$location:\nIs $fileInfo');
+
+		// GBS Write
+		var save_location = "test/TestLobby.gbs";
+		//
+
+		var go = sys.io.File.write(save_location);
+		trace('Start of gbs file writing: "$save_location"');
+		new GbsWriter(go).write(myGBS);
+		go.close();
+
+		// Checking written file
+		var gi = sys.io.File.read(save_location);
+		trace('Test start of gbs file reading: "$save_location"');
+		var myGBS = new GbsReader(gi).read();
+		// gi.checkOffsets;
+		gi.close();
+	}
 
 	static function ArrayContains() {
 		var a = [];

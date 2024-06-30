@@ -3,5 +3,5 @@
 -cp test
 -cp src
 -lib format
---main Main
+--main Test
 --interp

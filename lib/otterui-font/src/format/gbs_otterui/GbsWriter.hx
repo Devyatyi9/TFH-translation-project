@@ -19,6 +19,13 @@ class GbsWriter {
 			var i = 0;
 			while (i < gbs.header.fontsCount) {
 				writeFonts(gbs.fontsBlock[i]);
+				var allocatedCharsLength = gbs.fontsBlock[i].fontLength - 100;
+				var charsBlockLength = gbs.fontsBlock[i].charsCount * 40;
+				var bufferSize = allocatedCharsLength - charsBlockLength;
+				if (bufferSize > 0) {
+					var bufferBytes = Bytes.alloc(bufferSize);
+					o.writeFullBytes(bufferBytes, 0, bufferSize);
+				}
 				i++;
 			}
 		} else {
