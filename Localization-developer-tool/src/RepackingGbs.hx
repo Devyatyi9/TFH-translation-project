@@ -88,10 +88,14 @@ class RepackingGbs {
 				var maxAtlasIndexImp = impFont.atlasCount - expFont.atlasCount - 1;
 				for (i in 0...expFont.atlasCount) {
 					var newIndex = maxAtlasIndexImp + i + 1;
-					var name = expFont.fontName + '_${i}';
-					// trace(i);
-					// trace(newIndex);
-					recursiveDir(read_path, name, save_path, newIndex);
+					if (newIndex < 0) {
+						throw 'Incorrect newIndex value format: ${newIndex}';
+					} else {
+						var name = expFont.fontName + '_${i}';
+						// trace(i);
+						// trace(newIndex);
+						recursiveDir(read_path, name, save_path, newIndex);
+					}
 				}
 			}
 		}
