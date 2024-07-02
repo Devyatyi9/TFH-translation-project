@@ -334,7 +334,7 @@ class RepackingGbs {
 						// trace('Gbs file found: $file');
 						paths.push(path);
 					}
-					if (fileExt.ext == "png") {
+					if (fileExt.ext == "png" || fileExt.ext == "dds") {
 						// здесь будет переименовывание файлов по индексам
 						var fileName = fileExt.file;
 						if (pngName == fileName) {
