@@ -1,5 +1,6 @@
 package;
 
+import haxe.Int32;
 import sys.FileSystem;
 import haxe.io.Path;
 import sys.io.File;
@@ -251,20 +252,27 @@ class RepackingGbs {
 
 	function fontsAllocate(o:Array<GbsFile>) {
 		var fontsMap:Map<Int, GbsFont> = [];
+		var idFontCache:Array<Int> = [];
 		var nScene = 0;
 		while (nScene < o.length) {
 			var nFont = 0;
 			while (nFont < o[nScene].header.fontsCount) {
-				var content = o[nScene].fontsBlock[nFont];
 				var idFont = o[nScene].fontsBlock[nFont].fontID;
-				// trace('scene number: ${nScene}');
-				// trace('font number: ${nFont}');
-				// trace('font id: ${idFont}');
-				fontsMap.set(idFont, content);
+				if (idFontCache.contains(idFont)) {
+					break;
+				} else {
+					var content:GbsFont = o[nScene].fontsBlock[nFont];
+					// trace('scene number: ${nScene}');
+					// trace('font number: ${nFont}');
+					// trace('font id: ${idFont}');
+					fontsMap.set(idFont, content);
+					idFontCache.push(idFont);
+				}
 				nFont++;
 			}
 			nScene++;
 		}
+		idFontCache = [];
 		// var h = fontsMap.exists(55);
 		// trace('exist id: ${h}');
 		return fontsMap;
