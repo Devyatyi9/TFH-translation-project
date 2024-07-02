@@ -207,7 +207,7 @@ class RepackingGbs {
 				// trace('character translated: ${charCodeExp}');
 			}
 			trace('characters in map has been filtrated');
-			if (exportVal.charsCount > 0) {
+			if (exportVal.charsCount > 0 && exportVal.charsBlock.length > 0) {
 				// скорректировать число атласов и индексы атласов у символов
 				// здесь добавляем символы из exported в imported
 				var impCount = importVal.charsCount - 1;
