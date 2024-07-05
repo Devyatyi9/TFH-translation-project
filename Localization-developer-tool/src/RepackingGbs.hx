@@ -77,6 +77,105 @@ class RepackingGbs {
 		#end
 	}
 
+	public function processingMiracleFont() {
+		//**MAIN**/
+
+		// Load export gbs
+		var atlases_export_main = "otterui-project/TheMiracle/Fonts";
+		// путь с файлами до OtterExport - main-ui
+		var fileList_export_main = recursiveDir("otterui-project/TheMiracle");
+		//
+		// путь с файлами до Import - main-ui
+		var fileList_import_main = recursiveDir("otterui-project/Import");
+		//
+		// путь до Merged - main-ui
+		var path_merged_main = "otterui-project/Merged";
+		//
+
+		// здесь проверяем массив сцен на наличие шрифтов
+		fileList_import_main = arrayCheckFonts(fileList_import_main);
+
+		if (fileList_export_main.length == 0 || fileList_import_main.length == 0) {
+			trace('Warning! Export or Import main folder is empty.');
+			return;
+		}
+
+		// Импортируемые игровые файлы
+		var objectList_import_main = readGbsList(fileList_import_main);
+		//***
+
+		var objectList_export_main = readGbsList(fileList_export_main);
+		fileList_export_main = [];
+
+		var translatedFonts = fontsAllocate(objectList_export_main);
+		objectList_export_main = [];
+		// normalizeCharsIndex Map<Int, GbsFont> //atlases_export_main
+		// var translatedFontsNormalized = normalizeCharsIndex(translatedFonts, atlases_export_main);
+
+		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_main);
+
+		mergeFonts(fromGameFonts, translatedFonts);
+
+		mapToObjects(fromGameFonts, objectList_import_main);
+
+		calculateGbsLength(objectList_import_main);
+
+		// write new gbs files
+		writeMergedGbs(objectList_import_main, path_merged_main, fileList_import_main);
+		fileList_import_main = [];
+
+		renamingPng(atlases_export_main, path_merged_main, translatedFonts, fromGameFonts);
+		fromGameFonts.clear();
+		translatedFonts.clear();
+		objectList_import_main = [];
+
+		#if debug
+		var location = "otterui-project/Merged/MainMenu.gbs";
+		if (Tools.fileExists(location)) {
+			var gi = sys.io.File.read(location);
+			trace('Start of gbs file reading: "$location"');
+			var myGBS = new GbsReader(gi).read();
+			gi.checkOffsets;
+			gi.close();
+		}
+		#end
+	}
+
+	function normalizeCharsIndex(fontsMap:Map<Int, GbsFont>, atlasesPath:String) {
+		// return fontsMap
+		atlasesPath = Path.addTrailingSlash(atlasesPath);
+		var resortMap:Map<Int, Int> = []; // oldIndex newIndex for Characters table
+		// var newFontsMap:Map<Int, GbsFont> = [];
+		for (fontKey in fontsMap.keys()) {
+			var fontName = fontsMap[fontKey].fontName;
+			var maxIndex = fontsMap[fontKey].atlasCount;
+			var newIndex = 0;
+			// перебираем атласы и проверяем с какого индекса существуют
+			for (oldIndex in 0...maxIndex) {
+				var fs = sys.FileSystem;
+				var nameDds = atlasesPath + fontName + '_${oldIndex}.dds';
+				var namePng = atlasesPath + fontName + '_${oldIndex}.png';
+				if (fs.exists(nameDds) && !fs.isDirectory(nameDds) || fs.exists(namePng) && !fs.isDirectory(namePng)) {
+					resortMap.set(oldIndex, newIndex);
+					newIndex++;
+				}
+			}
+			// нужно удалить символы с индексом ниже первого oldIndex
+			for (index => charKey in fontsMap[fontKey].charsBlock) {
+				var atlasIndex = charKey.charAtlasIndex;
+				if (!resortMap.exists(atlasIndex)) {
+					// fontsMap[fontKey].charsBlock[index].; // удаление элемента массива
+				} else {
+					// если нашло тогда меняем атлас индекс на новый
+				}
+			}
+		}
+	}
+
+	function normalizeAtlasIndex() {
+		//
+	}
+
 	function renamingPng(read_path:String, save_path:String, translated:Map<Int, GbsFont>, fromGame:Map<Int, GbsFont>) {
 		// переименовать png файлы шрифтов под новое значение индексов
 		// по количеству атласов в импорте и экспорте (импорт + экспорт + 1)
@@ -221,7 +320,7 @@ class RepackingGbs {
 					// trace('curIndex: ${curIndex} expIndex: ${expIndex}');
 					nCharE++;
 				}
-				var expIndex = exportVal.charsBlock[0].charAtlasIndex;
+				// var expIndex = exportVal.charsBlock[0].charAtlasIndex;
 				// trace(expIndex);
 				// trace('nCharE: ${nCharE}');
 				var atlasSum = exportVal.atlasCount + importVal.atlasCount;
@@ -250,18 +349,18 @@ class RepackingGbs {
 		// заголовок шрифта 100 байт
 	}
 
-	function fontsAllocate(o:Array<GbsFile>) {
+	function fontsAllocate(obj:Array<GbsFile>) {
 		var fontsMap:Map<Int, GbsFont> = [];
 		var idFontCache:Array<Int> = [];
 		var nScene = 0;
-		while (nScene < o.length) {
+		while (nScene < obj.length) {
 			var nFont = 0;
-			while (nFont < o[nScene].header.fontsCount) {
-				var idFont = o[nScene].fontsBlock[nFont].fontID;
+			while (nFont < obj[nScene].header.fontsCount) {
+				var idFont = obj[nScene].fontsBlock[nFont].fontID;
 				if (idFontCache.contains(idFont)) {
 					break;
 				} else {
-					var content:GbsFont = o[nScene].fontsBlock[nFont];
+					var content:GbsFont = obj[nScene].fontsBlock[nFont];
 					// trace('scene number: ${nScene}');
 					// trace('font number: ${nFont}');
 					// trace('font id: ${idFont}');
@@ -278,18 +377,18 @@ class RepackingGbs {
 		return fontsMap;
 	}
 
-	function fontsComparingAllocate(map:Map<Int, GbsFont>, o:Array<GbsFile>) {
+	function fontsComparingAllocate(map:Map<Int, GbsFont>, obj:Array<GbsFile>) {
 		var objectsMap:Map<Int, GbsFont> = [];
 		var nScene = 0;
-		while (nScene < o.length) {
+		while (nScene < obj.length) {
 			var nFont = 0;
-			while (nFont < o[nScene].header.fontsCount) {
-				var idFont = o[nScene].fontsBlock[nFont].fontID;
+			while (nFont < obj[nScene].header.fontsCount) {
+				var idFont = obj[nScene].fontsBlock[nFont].fontID;
 				if (map.exists(idFont)) {
 					// trace('scene number: ${nScene}');
 					// trace('font number: ${nFont}');
 					// trace('font id: ${idFont}');
-					var content = o[nScene].fontsBlock[nFont];
+					var content = obj[nScene].fontsBlock[nFont];
 					objectsMap.set(idFont, content);
 				}
 				nFont++;

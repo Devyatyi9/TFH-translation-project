@@ -15,7 +15,8 @@ class Main {
 		trace("Program path: " + Sys.programPath());
 		trace("Working directory: " + Sys.getCwd());
 
-		new RepackingGbs().processingMain();
+		new RepackingGbs().processingMiracleFont();
+		// new RepackingGbs().processingMain();
 		trace('The End.');
 	}
 }
