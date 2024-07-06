@@ -11,6 +11,7 @@ import format.gbs_otterui.GbsWriter;
 import format.gbs_otterui.Tools;
 import haxe.io.Bytes;
 
+using Lambda;
 using format.gbs_otterui.Tools;
 
 class RepackingGbs {
@@ -111,6 +112,7 @@ class RepackingGbs {
 		objectList_export_main = [];
 		// normalizeCharsIndex Map<Int, GbsFont> //atlases_export_main
 		// var translatedFontsNormalized = normalizeCharsIndex(translatedFonts, atlases_export_main);
+		normalizeCharsIndex(translatedFonts, atlases_export_main);
 
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_main);
 
@@ -142,34 +144,42 @@ class RepackingGbs {
 	}
 
 	function normalizeCharsIndex(fontsMap:Map<Int, GbsFont>, atlasesPath:String) {
-		// return fontsMap
 		atlasesPath = Path.addTrailingSlash(atlasesPath);
-		var resortMap:Map<Int, Int> = []; // oldIndex newIndex for Characters table
-		// var newFontsMap:Map<Int, GbsFont> = [];
+		var indexResortMap:Map<Int, Int> = []; // oldIndex newIndex for Characters table
 		for (fontKey in fontsMap.keys()) {
-			var fontName = fontsMap[fontKey].fontName;
-			var maxIndex = fontsMap[fontKey].atlasCount;
+			var currentFont = fontsMap[fontKey];
+			var fontName = currentFont.fontName;
+			var maxIndex = currentFont.atlasCount;
 			var newIndex = 0;
-			// перебираем атласы и проверяем с какого индекса существуют
+			// перебираем атласы и проверяем с какого индекса существуют, заполняем resortMap
 			for (oldIndex in 0...maxIndex) {
 				var fs = sys.FileSystem;
 				var nameDds = atlasesPath + fontName + '_${oldIndex}.dds';
 				var namePng = atlasesPath + fontName + '_${oldIndex}.png';
-				if (fs.exists(nameDds) && !fs.isDirectory(nameDds) || fs.exists(namePng) && !fs.isDirectory(namePng)) {
-					resortMap.set(oldIndex, newIndex);
+				if ((fs.exists(nameDds) && !fs.isDirectory(nameDds)) || (fs.exists(namePng) && !fs.isDirectory(namePng))) {
+					indexResortMap.set(oldIndex, newIndex);
 					newIndex++;
 				}
 			}
-			// нужно удалить символы с индексом ниже первого oldIndex
+			// удаляем символы с индексом ниже первого oldIndex
+			var newFontArray:Array<GbsChar> = [];
+			var internalIndex = 0;
 			for (index => charKey in fontsMap[fontKey].charsBlock) {
 				var atlasIndex = charKey.charAtlasIndex;
-				if (!resortMap.exists(atlasIndex)) {
-					// fontsMap[fontKey].charsBlock[index].; // удаление элемента массива
-				} else {
+				if (indexResortMap.exists(atlasIndex)) {
 					// если нашло тогда меняем атлас индекс на новый
+					charKey.charAtlasIndex = indexResortMap[atlasIndex];
+					newFontArray[internalIndex] = charKey;
+					internalIndex++;
+					// trace("change atlasIndex");
 				}
 			}
+			currentFont.charsBlock = newFontArray;
+			currentFont.charsCount = newFontArray.length;
+			currentFont.atlasCount = indexResortMap.count();
+			indexResortMap.clear();
 		}
+		// return resortMap;
 	}
 
 	function normalizeAtlasIndex() {
