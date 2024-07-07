@@ -133,7 +133,7 @@ class RepackingGbs {
 		objectList_import_main = [];
 
 		#if debug
-		var location = "otterui-project/Merged/MainMenu.gbs";
+		var location = "otterui-project/Merged/Main.gbs";
 		if (Tools.fileExists(location)) {
 			var gi = sys.io.File.read(location);
 			trace('Start of gbs file reading: "$location"');
