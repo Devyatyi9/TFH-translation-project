@@ -113,7 +113,7 @@ class RepackingGbs {
 
 		// нормализация атлас индексов и фильтрация TheMiracle
 		var fontResortMap = normalizeCharsIndex(translatedFonts, atlases_export_main);
-		normalizeAtlasIndex(translatedFonts, atlases_export_main, fontResortMap);
+		atlases_export_main = normalizeAtlasIndex(translatedFonts, atlases_export_main, fontResortMap);
 
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_main);
 
@@ -188,24 +188,35 @@ class RepackingGbs {
 
 	function normalizeAtlasIndex(fontsMap:Map<Int, GbsFont>, atlasesPath:String, fontResortMap:Map<Int, Int>) {
 		atlasesPath = Path.addTrailingSlash(atlasesPath);
+		var newAtlasesPath = atlasesPath + 'new fonts';
+		newAtlasesPath = Path.addTrailingSlash(newAtlasesPath);
+		var fs = sys.FileSystem;
+		if (fs.exists(newAtlasesPath)) {
+			var files = fs.readDirectory(newAtlasesPath);
+			for (i in 0...files.length) {
+				fs.deleteFile(newAtlasesPath + files[i]);
+			}
+		}
+		fs.createDirectory(newAtlasesPath);
 		for (fontKey in fontResortMap.keys()) {
 			var currentFont = fontsMap[fontKey];
 			var fontName = currentFont.fontName;
 			var oldIndex = fontResortMap.get(fontKey);
 			for (i in 0...currentFont.atlasCount) {
-				var fs = sys.FileSystem;
+				var file = sys.io.File;
 				var nameDds = atlasesPath + fontName + '_${oldIndex}.dds';
 				var namePng = atlasesPath + fontName + '_${oldIndex}.png';
 				if (fs.exists(nameDds) && !fs.isDirectory(nameDds)) {
-					var newNameDds = atlasesPath + fontName + '_${i}.dds';
-					fs.rename(nameDds, newNameDds);
+					var newNameDds = newAtlasesPath + fontName + '_${i}.dds';
+					file.copy(nameDds, newNameDds);
 				} else if ((fs.exists(namePng) && !fs.isDirectory(namePng))) {
-					var newNamePng = atlasesPath + fontName + '_${i}.png';
-					fs.rename(namePng, newNamePng);
+					var newNamePng = newAtlasesPath + fontName + '_${i}.png';
+					file.copy(namePng, newNamePng);
 				}
 				oldIndex++;
 			}
 		}
+		return newAtlasesPath;
 	}
 
 	function renamingPng(read_path:String, save_path:String, translated:Map<Int, GbsFont>, fromGame:Map<Int, GbsFont>) {
