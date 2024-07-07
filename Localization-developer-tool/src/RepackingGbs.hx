@@ -21,9 +21,9 @@ class RepackingGbs {
 		//**MAIN**/
 
 		// Load export gbs
-		var atlases_export_main = "otterui-project/TheMiracle/Fonts";
+		var atlases_export_main = "otterui-project/OtterExport/Fonts";
 		// путь с файлами до OtterExport - main-ui
-		var fileList_export_main = recursiveDir("otterui-project/TheMiracle");
+		var fileList_export_main = recursiveDir("otterui-project/OtterExport");
 		//
 		// путь с файлами до Import - main-ui
 		var fileList_import_main = recursiveDir("otterui-project/Import");
