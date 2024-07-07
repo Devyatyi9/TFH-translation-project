@@ -110,9 +110,10 @@ class RepackingGbs {
 
 		var translatedFonts = fontsAllocate(objectList_export_main);
 		objectList_export_main = [];
-		// normalizeCharsIndex Map<Int, GbsFont> //atlases_export_main
-		// var translatedFontsNormalized = normalizeCharsIndex(translatedFonts, atlases_export_main);
-		normalizeCharsIndex(translatedFonts, atlases_export_main);
+
+		// нормализация атлас индексов и фильтрация TheMiracle
+		var fontResortMap = normalizeCharsIndex(translatedFonts, atlases_export_main);
+		normalizeAtlasIndex(translatedFonts, atlases_export_main, fontResortMap);
 
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_main);
 
@@ -146,6 +147,7 @@ class RepackingGbs {
 	function normalizeCharsIndex(fontsMap:Map<Int, GbsFont>, atlasesPath:String) {
 		atlasesPath = Path.addTrailingSlash(atlasesPath);
 		var indexResortMap:Map<Int, Int> = []; // oldIndex newIndex for Characters table
+		var fontResortMap:Map<Int, Int> = [];
 		for (fontKey in fontsMap.keys()) {
 			var currentFont = fontsMap[fontKey];
 			var fontName = currentFont.fontName;
@@ -158,6 +160,9 @@ class RepackingGbs {
 				var namePng = atlasesPath + fontName + '_${oldIndex}.png';
 				if ((fs.exists(nameDds) && !fs.isDirectory(nameDds)) || (fs.exists(namePng) && !fs.isDirectory(namePng))) {
 					indexResortMap.set(oldIndex, newIndex);
+					if (!fontResortMap.exists(fontKey)) {
+						fontResortMap.set(fontKey, oldIndex);
+					}
 					newIndex++;
 				}
 			}
@@ -171,7 +176,6 @@ class RepackingGbs {
 					charKey.charAtlasIndex = indexResortMap[atlasIndex];
 					newFontArray[internalIndex] = charKey;
 					internalIndex++;
-					// trace("change atlasIndex");
 				}
 			}
 			currentFont.charsBlock = newFontArray;
@@ -179,11 +183,29 @@ class RepackingGbs {
 			currentFont.atlasCount = indexResortMap.count();
 			indexResortMap.clear();
 		}
-		// return resortMap;
+		return fontResortMap;
 	}
 
-	function normalizeAtlasIndex() {
-		//
+	function normalizeAtlasIndex(fontsMap:Map<Int, GbsFont>, atlasesPath:String, fontResortMap:Map<Int, Int>) {
+		atlasesPath = Path.addTrailingSlash(atlasesPath);
+		for (fontKey in fontResortMap.keys()) {
+			var currentFont = fontsMap[fontKey];
+			var fontName = currentFont.fontName;
+			var oldIndex = fontResortMap.get(fontKey);
+			for (i in 0...currentFont.atlasCount) {
+				var fs = sys.FileSystem;
+				var nameDds = atlasesPath + fontName + '_${oldIndex}.dds';
+				var namePng = atlasesPath + fontName + '_${oldIndex}.png';
+				if (fs.exists(nameDds) && !fs.isDirectory(nameDds)) {
+					var newNameDds = atlasesPath + fontName + '_${i}.dds';
+					fs.rename(nameDds, newNameDds);
+				} else if ((fs.exists(namePng) && !fs.isDirectory(namePng))) {
+					var newNamePng = atlasesPath + fontName + '_${i}.png';
+					fs.rename(namePng, newNamePng);
+				}
+				oldIndex++;
+			}
+		}
 	}
 
 	function renamingPng(read_path:String, save_path:String, translated:Map<Int, GbsFont>, fromGame:Map<Int, GbsFont>) {
@@ -368,7 +390,8 @@ class RepackingGbs {
 			while (nFont < obj[nScene].header.fontsCount) {
 				var idFont = obj[nScene].fontsBlock[nFont].fontID;
 				if (idFontCache.contains(idFont)) {
-					break;
+					nFont++;
+					continue;
 				} else {
 					var content:GbsFont = obj[nScene].fontsBlock[nFont];
 					// trace('scene number: ${nScene}');
