@@ -157,7 +157,7 @@ class GbsReader {
 		var charCode = "";
 		var charHexCode:haxe.io.Bytes = i.read(2);
 		var tempCharBytes:haxe.io.Bytes = i.read(2);
-		var glyphCode:haxe.io.Bytes = Bytes.alloc(4);
+		var glyphCode:haxe.io.Bytes = Bytes.alloc(0);
 		// var glyphCode = i.readString(2, UTF8);
 		// trace("'" + charCode + "'");
 		var isImageGlyph;
