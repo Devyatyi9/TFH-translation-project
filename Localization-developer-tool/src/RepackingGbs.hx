@@ -67,7 +67,7 @@ class RepackingGbs {
 		objectList_import_main = [];
 
 		#if debug
-		var location = "otterui-project/Merged/MainMenu.gbs";
+		var location = "otterui-project/Merged/Main.gbs";
 		if (Tools.fileExists(location)) {
 			var gi = sys.io.File.read(location);
 			trace('Start of gbs file reading: "$location"');
@@ -326,21 +326,38 @@ class RepackingGbs {
 				while (nCharI < importVal.charsBlock.length) {
 					var charCodeExp = exportVal.charsBlock[nCharE].charCode;
 					var charCodeImp = importVal.charsBlock[nCharI].charCode;
-					#if utf16
-					if ((charCodeExp == charCodeImp) || (charCodeExp == '?')) { // '?'
-					#else
-					if ((charCodeExp == charCodeImp) || (charCodeExp == '?\x00')) { // '?\x00'
-					#end
-						var charExpObj = exportVal.charsBlock[nCharE];
-						exportVal.charsBlock.remove(charExpObj);
-						// trace('indexI ${nCharI}');
-						trace('removed character ${charExpObj.charCode} from array');
-						if (nCharE == exportVal.charsBlock.length) {
-							break;
+					if ((importVal.charsBlock[nCharI].isImageGlyph == yes) || (exportVal.charsBlock[nCharE].isImageGlyph == yes)) {
+						// Image Glyphs
+						// trace('isImageGlyph');
+						var glyphCodeExp = exportVal.charsBlock[nCharE].glyphCode;
+						var glyphCodeImp = importVal.charsBlock[nCharI].glyphCode;
+						if (glyphCodeExp.compare(glyphCodeImp) == 0) {
+							var charExpObj = exportVal.charsBlock[nCharE];
+							exportVal.charsBlock.remove(charExpObj);
+							var localCharInput = new haxe.io.BytesInput(charExpObj.glyphCode, 0, 4);
+							trace('removed image glyph ${localCharInput.readString(4, RawNative)} from array'); // charExpObj.glyphCode.toString()
+							if (nCharE == exportVal.charsBlock.length) {
+								break;
+							}
+							nCharI = 0;
 						}
-						nCharI = 0;
-						// trace('length: ${exportVal.charsBlock.length}');
-						// trace('indexE ${nCharE}');
+					} else {
+						#if utf16
+						if ((charCodeExp == charCodeImp) || (charCodeExp == '?')) { // '?'
+						#else
+						if ((charCodeExp == charCodeImp) || (charCodeExp == '?\x00')) { // '?\x00'
+						#end
+							var charExpObj = exportVal.charsBlock[nCharE];
+							exportVal.charsBlock.remove(charExpObj);
+							// trace('indexI ${nCharI}');
+							trace('removed character ${charExpObj.charCode} from array');
+							if (nCharE == exportVal.charsBlock.length) {
+								break;
+							}
+							nCharI = 0;
+							// trace('length: ${exportVal.charsBlock.length}');
+							// trace('indexE ${nCharE}');
+						}
 					}
 					nCharI++;
 				}
