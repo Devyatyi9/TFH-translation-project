@@ -1,0 +1,7 @@
+-D analyzer-optimize
+--debug
+-cp test
+-cp src
+-lib format
+--main Test
+--hl test.hl

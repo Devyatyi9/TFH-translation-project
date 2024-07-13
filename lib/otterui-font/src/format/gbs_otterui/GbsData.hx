@@ -50,14 +50,15 @@ typedef GbsFont = {
 	var charsBlock:Array<GbsChar>;
 }
 
-enum ImageGlyph {
+enum IsImageGlyph {
 	yes;
 	no;
 }
 
 typedef GbsChar = {
 	var charCode:UnicodeString;
-	var imageGlyph:ImageGlyph;
+	var isImageGlyph:IsImageGlyph;
+	var glyphCode:haxe.io.Bytes;
 	var charXOffset:Int32;
 	var charYOffset:Int32;
 	var charWidth:Int32;

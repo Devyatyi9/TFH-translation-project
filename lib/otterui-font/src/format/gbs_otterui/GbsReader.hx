@@ -1,5 +1,9 @@
 package format.gbs_otterui;
 
+import haxe.io.StringInput;
+import haxe.Resource;
+import haxe.io.BytesBuffer;
+import haxe.io.BytesInput;
 import haxe.io.Bytes;
 import format.gbs_otterui.GbsData;
 
@@ -149,24 +153,35 @@ class GbsReader {
 	function parseChars():GbsChar {
 		// if use Eval (for debug or launch via IDE) it will display characters incorrect because of use UTF-8 encoding,
 		// HL and C++ use UTF-16LE for this
-		var charCode = i.readString(2, RawNative);
-		var glyphCode = i.readString(2, UTF8);
+		// var charCode = i.readString(2, RawNative);
+		var charCode = "";
+		var charHexCode:haxe.io.Bytes = i.read(2);
+		var tempCharBytes:haxe.io.Bytes = i.read(2);
+		var glyphCode:haxe.io.Bytes = Bytes.alloc(4);
+		// var glyphCode = i.readString(2, UTF8);
 		// trace("'" + charCode + "'");
-		var imageGlyph;
-		if (i.readInt32() == 0)
-			imageGlyph = no;
-		else {
-			imageGlyph = yes;
+		var isImageGlyph;
+		if (i.readInt32() == 0) {
+			isImageGlyph = no;
+			var localCharInput = new BytesInput(charHexCode, 0, 2); // BytesBuffer = new BytesBuffer();
+			charCode = localCharInput.readString(2, RawNative);
+			// var tempCode = charHexCode.getUInt16(0);
+			// charCode = String.fromCharCode(tempCode); // .getString(0, 2, RawNative) // .fromCharCode(tempCode)
+		} else {
+			isImageGlyph = yes;
+			var hexConcatenate = charHexCode.toHex() + tempCharBytes.toHex();
+			glyphCode = haxe.io.Bytes.ofHex(hexConcatenate);
 			#if utf16
-			var charByte = Bytes.ofString(charCode, RawNative);
+			// var charByte = Bytes.ofString(charCode, RawNative);
 			// trace(charByte.length);
-			if (charByte.length != 0) {
-				var charCode1 = charByte.getString(0, 1, UTF8);
-				var charCode2 = charByte.getString(1, 1, UTF8);
-				charCode = charCode1 + charCode2;
-			}
+			/*
+				if (charByte.length != 0) {
+					var charCode1 = charByte.getString(0, 1, UTF8);
+					var charCode2 = charByte.getString(1, 1, UTF8);
+					charCode = charCode1 + charCode2;
+			}*/
 			#end
-			charCode = charCode + glyphCode;
+			// charCode = charCode + glyphCode;
 			// trace(charCode.length);
 			/*
 				// Remix characters
@@ -189,7 +204,8 @@ class GbsReader {
 
 		return {
 			charCode: charCode,
-			imageGlyph: imageGlyph,
+			isImageGlyph: isImageGlyph,
+			glyphCode: glyphCode,
 			charXOffset: charXOffset,
 			charYOffset: charYOffset,
 			charWidth: charWidth,

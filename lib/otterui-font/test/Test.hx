@@ -4,6 +4,7 @@ import format.gbs_otterui.GbsData;
 import format.gbs_otterui.GbsReader;
 import format.gbs_otterui.GbsWriter;
 import format.gbs_otterui.Tools;
+import haxe.crypto.Md5;
 
 class Test {
 	static function main() {
@@ -42,7 +43,7 @@ class Test {
 		// ArrayContains();
 
 		// new PatchingGbs().processing();
-		gbsTestReadWrite("test/ErrorWindows.gbs");
+		gbsTestReadWrite("test/Main.gbs");
 	}
 
 	// 2
@@ -50,10 +51,10 @@ class Test {
 	// Read/Write Test GBS
 	static function gbsTestReadWrite(location:String) {
 		// GBS Read
-		var gi = sys.io.File.read(location);
+		var giOriginal = sys.io.File.read(location);
 		trace('Start of gbs file reading: "$location"');
-		var myGBS = new GbsReader(gi).read();
-		gi.close();
+		var myGBS = new GbsReader(giOriginal).read();
+		giOriginal.close();
 
 		trace("Fonts count: " + myGBS.header.fontsCount);
 
@@ -75,6 +76,24 @@ class Test {
 		var myGBS = new GbsReader(gi).read();
 		// gi.checkOffsets;
 		gi.close();
+
+		// Checking md5 hash
+		var giOriginal = sys.io.File.read(location);
+		var hexOrig = giOriginal.readAll(7000000);
+		giOriginal.close();
+		var md5OrigHash = Md5.make(hexOrig);
+		//
+		var gi = sys.io.File.read(save_location);
+		var hexNew = gi.readAll(7000000);
+		gi.close();
+		var md5NewHash = Md5.make(hexNew);
+
+		if (md5OrigHash.toHex() == md5NewHash.toHex()) {
+			trace('MD5 is OK.');
+		} else {
+			trace('MD5 fail!');
+			throw('MD5 fail!');
+		}
 	}
 
 	static function ArrayContains() {
@@ -94,6 +113,7 @@ class Test {
 	};
 
 	static function concatArray() {
+		var thisBytes:haxe.io.Bytes = haxe.io.Bytes.alloc(4);
 		var fontsBlock:GbsFont = {
 			fontLength: 3900,
 			fontID: 49,
@@ -107,7 +127,8 @@ class Test {
 			charsBlock: [
 				{
 					charCode: 'a',
-					imageGlyph: no,
+					isImageGlyph: no,
+					glyphCode: thisBytes,
 					charXOffset: 60,
 					charYOffset: 27,
 					charWidth: 26,
@@ -122,7 +143,8 @@ class Test {
 
 		var charB:GbsChar = {
 			charCode: 'b',
-			imageGlyph: no,
+			isImageGlyph: no,
+			glyphCode: thisBytes,
 			charXOffset: 78,
 			charYOffset: 182,
 			charWidth: 21,

@@ -87,8 +87,18 @@ class GbsWriter {
 
 	function writeChars(gbs:GbsChar) {
 		#if !utf16
-		if (gbs.imageGlyph == no) {
-			o.writeString(gbs.charCode + '\x00\x00', RawNative); // Eval
+		if (gbs.isImageGlyph == no) {
+			var writeCharCode = haxe.io.Bytes.ofString(gbs.charCode, RawNative);
+			// trace('writeCharCode: ' + writeCharCode.length);
+			o.write(writeCharCode);
+			// trace('tempString: ' + tempString.length);
+			var fourBytes = haxe.io.Bytes.alloc(4);
+			if (writeCharCode.length < 2) {
+				o.writeBytes(fourBytes, 0, 3);
+			} else if (writeCharCode.length == 2) {
+				o.writeBytes(fourBytes, 0, 2);
+			}
+			// o.writeString(gbs.charCode, RawNative); // Eval
 		} else {
 			/*
 				// Remix characters
@@ -99,10 +109,11 @@ class GbsWriter {
 					charGlyph = charGlyph + i;
 				}
 				o.writeString(charGlyph, RawNative); */
-			o.writeString(gbs.charCode, RawNative);
+			// o.writeString(gbs.charCode, RawNative);
+			o.writeFullBytes(gbs.glyphCode, 0, 4);
 		}
 		#else
-		if (gbs.imageGlyph == no) {
+		if (gbs.isImageGlyph == no) {
 			o.writeString(gbs.charCode + '\u{0000}', RawNative); // HL or C++
 		} else {
 			/*
@@ -121,10 +132,11 @@ class GbsWriter {
 			// check encoding issue
 			// o.write()
 			// trace(gbs.charCode);
-			o.writeString(gbs.charCode.lpad('\x00', 4), UTF8);
+			// o.writeString(gbs.charCode.lpad('\x00', 4), UTF8);
+			o.writeFullBytes(gbs.glyphCode, 0, 4);
 		}
 		#end
-		if (gbs.imageGlyph == no)
+		if (gbs.isImageGlyph == no)
 			o.writeInt32(0);
 		else
 			o.writeInt32(1);
