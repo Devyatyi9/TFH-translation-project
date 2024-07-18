@@ -51,6 +51,10 @@ class RepackingGbs {
 		objectList_export_main = [];
 		var fromGameFonts = fontsComparingAllocate(translatedFonts, objectList_import_main);
 
+		// =============== преобразование размеров и координат 768 -> 512
+		coordConversion(translatedFonts);
+		// ==============================================================
+
 		mergeFonts(fromGameFonts, translatedFonts);
 
 		mapToObjects(fromGameFonts, objectList_import_main);
@@ -142,6 +146,34 @@ class RepackingGbs {
 			gi.close();
 		}
 		#end
+	}
+
+	// 768 -> 512
+	function coordConversion(exportMap:Map<Int, GbsFont>) {
+		for (i => fontData in exportMap) {
+			var blockLength = fontData.charsBlock.length;
+			for (j in 0...blockLength) {
+				var chXOff = fontData.charsBlock[j].charXOffset;
+				var chYOff = fontData.charsBlock[j].charYOffset;
+				var chWidth = fontData.charsBlock[j].charWidth;
+				var chHeight = fontData.charsBlock[j].charHeight;
+				// var chTop = fontData.charsBlock[j].charTop;
+				// var chAdv = fontData.charsBlock[j].charAdvance;
+				// var chLBearing = fontData.charsBlock[j].charLeftBearing;
+				// Math.pow
+				var newChXOff = Std.int(chXOff / 1.5);
+				var newChYOff = Std.int(chYOff / 1.5);
+				var newChWidth = Std.int(chWidth / 1.5);
+				var newChHeight = Std.int(chHeight / 1.5);
+				fontData.charsBlock[j].charXOffset = newChXOff;
+				fontData.charsBlock[j].charYOffset = newChYOff;
+				fontData.charsBlock[j].charWidth = newChWidth;
+				fontData.charsBlock[j].charHeight = newChHeight;
+				trace("X: " + newChXOff);
+				trace("Y: " + newChYOff);
+				// trace('test');
+			}
+		}
 	}
 
 	function normalizeCharsIndex(fontsMap:Map<Int, GbsFont>, atlasesPath:String) {
