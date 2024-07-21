@@ -157,22 +157,27 @@ class RepackingGbs {
 				var chYOff = fontData.charsBlock[j].charYOffset;
 				var chWidth = fontData.charsBlock[j].charWidth;
 				var chHeight = fontData.charsBlock[j].charHeight;
-				// var chTop = fontData.charsBlock[j].charTop;
-				// var chAdv = fontData.charsBlock[j].charAdvance;
+				var chTop = fontData.charsBlock[j].charTop;
+				var chAdv = fontData.charsBlock[j].charAdvance;
 				// var chLBearing = fontData.charsBlock[j].charLeftBearing;
-				// Math.pow
+				// trace("X: " + chXOff);
+				// trace("Y: " + chYOff);
 				var newChXOff = Std.int(chXOff / 1.5);
 				var newChYOff = Std.int(chYOff / 1.5);
 				var newChWidth = Std.int(chWidth / 1.5);
 				var newChHeight = Std.int(chHeight / 1.5);
+				var newChTop = Std.int(chTop / 1.5);
+				var newChAdv = Std.int(chAdv / 1.5);
+
 				fontData.charsBlock[j].charXOffset = newChXOff;
 				fontData.charsBlock[j].charYOffset = newChYOff;
 				fontData.charsBlock[j].charWidth = newChWidth;
 				fontData.charsBlock[j].charHeight = newChHeight;
-				trace("X: " + newChXOff);
-				trace("Y: " + newChYOff);
-				// trace('test');
+				fontData.charsBlock[j].charTop = newChTop;
+				fontData.charsBlock[j].charAdvance = newChAdv;
 			}
+			var newMaxTop = Std.int(fontData.maxTop / 1.5);
+			fontData.maxTop = newMaxTop;
 		}
 	}
 
