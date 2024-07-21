@@ -177,7 +177,9 @@ class RepackingGbs {
 				fontData.charsBlock[j].charAdvance = newChAdv;
 			}
 			var newMaxTop = Std.int(fontData.maxTop / 1.5);
+			var newFontSize = Std.int(fontData.fontSize / 1.5);
 			fontData.maxTop = newMaxTop;
+			fontData.fontSize = newFontSize;
 		}
 	}
 
