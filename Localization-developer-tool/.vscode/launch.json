@@ -4,13 +4,15 @@
     {
       "name": "Eval",
       "type": "haxe-eval",
-      "request": "launch"
+      "request": "launch",
+      "args": ["otterui-cli.hxml"]
     },
     {
       "name": "HL OtterUI cli",
       "request": "launch",
       "type": "hl",
       "cwd": "${workspaceRoot}",
+      "args": ["hl-otterui-cli.hxml"],
       "preLaunchTask": {
         "type": "haxe",
         "args": "active configuration"
