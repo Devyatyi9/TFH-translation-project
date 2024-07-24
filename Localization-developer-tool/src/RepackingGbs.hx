@@ -150,6 +150,7 @@ class RepackingGbs {
 
 	// 768 -> 512
 	function coordConversion(exportMap:Map<Int, GbsFont>) {
+		var oneDotFive = 1.5;
 		for (i => fontData in exportMap) {
 			var blockLength = fontData.charsBlock.length;
 			for (j in 0...blockLength) {
@@ -162,12 +163,13 @@ class RepackingGbs {
 				// var chLBearing = fontData.charsBlock[j].charLeftBearing;
 				// trace("X: " + chXOff);
 				// trace("Y: " + chYOff);
-				var newChXOff = Std.int(chXOff / 1.5);
-				var newChYOff = Std.int(chYOff / 1.5);
-				var newChWidth = Std.int(chWidth / 1.5);
-				var newChHeight = Std.int(chHeight / 1.5);
-				var newChTop = Std.int(chTop / 1.5);
-				var newChAdv = Std.int(chAdv / 1.5);
+				var newChXOff = Std.int(chXOff / oneDotFive);
+				var newChYOff = Std.int(chYOff / oneDotFive);
+				var newChWidth = Std.int(chWidth / oneDotFive);
+				var newChHeight = Std.int(chHeight / oneDotFive);
+				var newChTop = Std.int(chTop / oneDotFive);
+				var thisChAdv = Math.round(chAdv / 1.4);
+				var newChAdv = Std.int(thisChAdv);
 
 				fontData.charsBlock[j].charXOffset = newChXOff;
 				fontData.charsBlock[j].charYOffset = newChYOff;
@@ -176,8 +178,8 @@ class RepackingGbs {
 				fontData.charsBlock[j].charTop = newChTop;
 				fontData.charsBlock[j].charAdvance = newChAdv;
 			}
-			var newMaxTop = Std.int(fontData.maxTop / 1.5);
-			var newFontSize = Std.int(fontData.fontSize / 1.5);
+			var newMaxTop = Std.int(fontData.maxTop / oneDotFive);
+			var newFontSize = Std.int(fontData.fontSize / oneDotFive);
 			fontData.maxTop = newMaxTop;
 			fontData.fontSize = newFontSize;
 		}
