@@ -8,7 +8,7 @@
   <Sounds />
   <Messages />
   <Views>
-    <GUIView ID="-1" Name="New View 1" Mask="-1" Locked="false" Hidden="false" NextControlID="6">
+    <GUIView ID="-1" Name="New View 1" Mask="-1" Locked="false" Hidden="false" NextControlID="7">
       <AnchorFlags>None</AnchorFlags>
       <ControlLayout>
         <Location>
@@ -178,6 +178,37 @@
           <FontID>15</FontID>
           <Text>ЫыЬьЭэЮюЯя</Text>
           <TextFit>Wrap</TextFit>
+          <Leading>0.15</Leading>
+          <Tracking>0</Tracking>
+        </GUILabel>
+        <GUILabel ID="6" Name="Copy of Label 1" Mask="-1" Locked="false" Hidden="false" HAlign="Left" VAlign="Top">
+          <AnchorFlags>None</AnchorFlags>
+          <LabelLayout>
+            <Location>
+              <X>289.099976</X>
+              <Y>187.800018</Y>
+            </Location>
+            <Center>
+              <X>168</X>
+              <Y>94</Y>
+            </Center>
+            <Size>
+              <Width>734</Width>
+              <Height>32</Height>
+            </Size>
+            <Rotation>0</Rotation>
+            <Color>White</Color>
+            <Scale>
+              <Width>1</Width>
+              <Height>1</Height>
+            </Scale>
+            <Skew>0</Skew>
+            <DropShadow>0</DropShadow>
+          </LabelLayout>
+          <Controls />
+          <FontID>15</FontID>
+          <Text>АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя</Text>
+          <TextFit>NoWrap</TextFit>
           <Leading>0.15</Leading>
           <Tracking>0</Tracking>
         </GUILabel>
@@ -358,6 +389,38 @@
                     <RightAnchor AbsoluteValue="-854.8999" RatioValue="INF" />
                     <TopAnchor AbsoluteValue="239.80011" RatioValue="INF" />
                     <BottomAnchor AbsoluteValue="-271.8001" RatioValue="INF" />
+                  </KeyFrame>
+                </KeyFrames>
+              </GUIAnimationChannel>
+              <GUIAnimationChannel ControlID="6">
+                <KeyFrames>
+                  <KeyFrame Frame="0" EaseFunction="None" EaseAmount="0">
+                    <LabelLayout>
+                      <Location>
+                        <X>289.099976</X>
+                        <Y>187.800018</Y>
+                      </Location>
+                      <Center>
+                        <X>168</X>
+                        <Y>94</Y>
+                      </Center>
+                      <Size>
+                        <Width>734</Width>
+                        <Height>32</Height>
+                      </Size>
+                      <Rotation>0</Rotation>
+                      <Color>White</Color>
+                      <Scale>
+                        <Width>1</Width>
+                        <Height>1</Height>
+                      </Scale>
+                      <Skew>0</Skew>
+                      <DropShadow>0</DropShadow>
+                    </LabelLayout>
+                    <LeftAnchor AbsoluteValue="121.099976" RatioValue="INF" />
+                    <RightAnchor AbsoluteValue="-855.1" RatioValue="INF" />
+                    <TopAnchor AbsoluteValue="93.80002" RatioValue="INF" />
+                    <BottomAnchor AbsoluteValue="-125.800018" RatioValue="INF" />
                   </KeyFrame>
                 </KeyFrames>
               </GUIAnimationChannel>
