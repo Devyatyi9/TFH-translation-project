@@ -163,25 +163,24 @@ class RepackingGbs {
 				// var chLBearing = fontData.charsBlock[j].charLeftBearing;
 				// trace("X: " + chXOff);
 				// trace("Y: " + chYOff);
-				var newChXOff = Std.int(chXOff / oneDotFive);
-				var newChYOff = Std.int(chYOff / oneDotFive);
-				var newChWidth = Std.int(chWidth / oneDotFive);
-				var newChHeight = Std.int(chHeight / oneDotFive);
-				var newChTop = Std.int(chTop / oneDotFive);
-				var thisChAdv = Math.round(chAdv / 1.4);
-				var newChAdv = Std.int(thisChAdv);
+				var roundChXOff = Math.round(chXOff / oneDotFive);
+				var roundChYOff = Math.round(chYOff / oneDotFive);
+				var roundChWidth = Math.round(chWidth / oneDotFive);
+				var roundChHeight = Math.round(chHeight / oneDotFive);
+				var roundChTop = Math.round(chTop / oneDotFive);
+				var roundChAdv = Math.round(chAdv / 1.4);
 
-				fontData.charsBlock[j].charXOffset = newChXOff;
-				fontData.charsBlock[j].charYOffset = newChYOff;
-				fontData.charsBlock[j].charWidth = newChWidth;
-				fontData.charsBlock[j].charHeight = newChHeight;
-				fontData.charsBlock[j].charTop = newChTop;
-				fontData.charsBlock[j].charAdvance = newChAdv;
+				fontData.charsBlock[j].charXOffset = roundChXOff;
+				fontData.charsBlock[j].charYOffset = roundChYOff;
+				fontData.charsBlock[j].charWidth = roundChWidth;
+				fontData.charsBlock[j].charHeight = roundChHeight;
+				fontData.charsBlock[j].charTop = roundChTop;
+				fontData.charsBlock[j].charAdvance = roundChAdv;
 			}
-			var newMaxTop = Std.int(fontData.maxTop / oneDotFive);
-			var newFontSize = Std.int(fontData.fontSize / oneDotFive);
-			fontData.maxTop = newMaxTop;
-			fontData.fontSize = newFontSize;
+			var roundMaxTop = Math.round(fontData.maxTop / oneDotFive);
+			var roundFontSize = Math.round(fontData.fontSize / oneDotFive);
+			fontData.maxTop = roundMaxTop;
+			fontData.fontSize = roundFontSize;
 		}
 	}
 
