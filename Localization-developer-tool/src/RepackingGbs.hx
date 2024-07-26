@@ -168,7 +168,7 @@ class RepackingGbs {
 				var roundChWidth = Math.round(chWidth / oneDotFive);
 				var roundChHeight = Math.round(chHeight / oneDotFive);
 				var roundChTop = Math.round(chTop / oneDotFive);
-				var roundChAdv = Math.round(chAdv / 1.4);
+				var roundChAdv = Math.round(chAdv / 1.45);
 
 				fontData.charsBlock[j].charXOffset = roundChXOff;
 				fontData.charsBlock[j].charYOffset = roundChYOff;

@@ -20,8 +20,8 @@
           <Y>0</Y>
         </Center>
         <Size>
-          <Width>0</Width>
-          <Height>0</Height>
+          <Width>1920</Width>
+          <Height>1080</Height>
         </Size>
         <Rotation>0</Rotation>
       </ControlLayout>
@@ -42,7 +42,7 @@
               <Height>32</Height>
             </Size>
             <Rotation>0</Rotation>
-            <Color>White</Color>
+            <Color>255; 255; 255</Color>
             <Scale>
               <Width>1</Width>
               <Height>1</Height>
@@ -65,7 +65,7 @@
               <Y>182.000076</Y>
             </Location>
             <Center>
-              <X>197</X>
+              <X>197.000015</X>
               <Y>31</Y>
             </Center>
             <Size>
@@ -73,7 +73,7 @@
               <Height>32</Height>
             </Size>
             <Rotation>0</Rotation>
-            <Color>White</Color>
+            <Color>255; 255; 255</Color>
             <Scale>
               <Width>1</Width>
               <Height>1</Height>
@@ -96,7 +96,7 @@
               <Y>211.6001</Y>
             </Location>
             <Center>
-              <X>197</X>
+              <X>197.000015</X>
               <Y>31</Y>
             </Center>
             <Size>
@@ -104,7 +104,7 @@
               <Height>32</Height>
             </Size>
             <Rotation>0</Rotation>
-            <Color>White</Color>
+            <Color>255; 255; 255</Color>
             <Scale>
               <Width>1</Width>
               <Height>1</Height>
@@ -123,11 +123,11 @@
           <AnchorFlags>None</AnchorFlags>
           <LabelLayout>
             <Location>
-              <X>317.9</X>
+              <X>317.900024</X>
               <Y>241.2001</Y>
             </Location>
             <Center>
-              <X>197</X>
+              <X>197.000015</X>
               <Y>31</Y>
             </Center>
             <Size>
@@ -135,7 +135,7 @@
               <Height>32</Height>
             </Size>
             <Rotation>0</Rotation>
-            <Color>White</Color>
+            <Color>255; 255; 255</Color>
             <Scale>
               <Width>1</Width>
               <Height>1</Height>
@@ -154,11 +154,11 @@
           <AnchorFlags>None</AnchorFlags>
           <LabelLayout>
             <Location>
-              <X>317.899933</X>
+              <X>317.899963</X>
               <Y>270.8001</Y>
             </Location>
             <Center>
-              <X>197</X>
+              <X>197.000015</X>
               <Y>31</Y>
             </Center>
             <Size>
@@ -166,7 +166,7 @@
               <Height>32</Height>
             </Size>
             <Rotation>0</Rotation>
-            <Color>White</Color>
+            <Color>255; 255; 255</Color>
             <Scale>
               <Width>1</Width>
               <Height>1</Height>
@@ -185,8 +185,8 @@
           <AnchorFlags>None</AnchorFlags>
           <LabelLayout>
             <Location>
-              <X>289.099976</X>
-              <Y>187.800018</Y>
+              <X>289.100037</X>
+              <Y>188.800049</Y>
             </Location>
             <Center>
               <X>168</X>
@@ -197,7 +197,7 @@
               <Height>32</Height>
             </Size>
             <Rotation>0</Rotation>
-            <Color>White</Color>
+            <Color>Black</Color>
             <Scale>
               <Width>1</Width>
               <Height>1</Height>
@@ -214,16 +214,16 @@
         </GUILabel>
       </Controls>
       <Left>-0</Left>
-      <Right>0</Right>
+      <Right>1920</Right>
       <Top>-0</Top>
-      <Bottom>0</Bottom>
+      <Bottom>1080</Bottom>
       <Location>
         <X>0</X>
         <Y>0</Y>
       </Location>
       <Size>
-        <Width>0</Width>
-        <Height>0</Height>
+        <Width>1920</Width>
+        <Height>1080</Height>
       </Size>
       <Rotation>0</Rotation>
       <Animations>

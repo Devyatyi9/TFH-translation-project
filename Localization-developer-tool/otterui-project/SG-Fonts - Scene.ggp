@@ -9,13 +9,13 @@
     </Scene>
   </Entries>
   <Fonts>
-    <GUIFont ID="15" Name="Dialogue Text" Filename="Fonts/DreamOrphansKTRV5.ttf" Texture="">
+    <GUIFont ID="15" Name="Dialogue Text" Filename="Fonts/DreamOrphans-Bold.ttf" Texture="">
       <OutlineAmount>0</OutlineAmount>
       <OutlineSharpness>0.9</OutlineSharpness>
       <OutlineColorXML>Transparent</OutlineColorXML>
       <FillColorXML>White</FillColorXML>
       <TextureBaseline>0</TextureBaseline>
-      <FontSize>26</FontSize>
+      <FontSize>36</FontSize>
       <Characters>
         <char>63</char>
         <char>1025</char>
