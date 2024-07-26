@@ -61,8 +61,8 @@
           <AnchorFlags>None</AnchorFlags>
           <LabelLayout>
             <Location>
-              <X>315.111176</X>
-              <Y>190.234268</Y>
+              <X>315.1112</X>
+              <Y>199.234329</Y>
             </Location>
             <Center>
               <X>197.000015</X>
@@ -92,8 +92,8 @@
           <AnchorFlags>None</AnchorFlags>
           <LabelLayout>
             <Location>
-              <X>315.927338</X>
-              <Y>221.01329</Y>
+              <X>315.927368</X>
+              <Y>237.013382</Y>
             </Location>
             <Center>
               <X>197.000015</X>
@@ -123,8 +123,8 @@
           <AnchorFlags>None</AnchorFlags>
           <LabelLayout>
             <Location>
-              <X>318.286774</X>
-              <Y>255.845108</Y>
+              <X>318.2868</X>
+              <Y>277.845245</Y>
             </Location>
             <Center>
               <X>197.000015</X>
@@ -154,8 +154,8 @@
           <AnchorFlags>None</AnchorFlags>
           <LabelLayout>
             <Location>
-              <X>314.727325</X>
-              <Y>295.837341</Y>
+              <X>314.727356</X>
+              <Y>317.837463</Y>
             </Location>
             <Center>
               <X>197.000015</X>
@@ -189,12 +189,12 @@
               <Y>180.023376</Y>
             </Location>
             <Center>
-              <X>168</X>
-              <Y>94</Y>
+              <X>250.6</X>
+              <Y>103.020004</Y>
             </Center>
             <Size>
-              <Width>734</Width>
-              <Height>32</Height>
+              <Width>816.6</Width>
+              <Height>41.0200043</Height>
             </Size>
             <Rotation>0</Rotation>
             <Color>255; 255; 255</Color>
@@ -237,8 +237,8 @@
                   <KeyFrame Frame="0" EaseFunction="None" EaseAmount="0">
                     <LabelLayout>
                       <Location>
-                        <X>287.108063</X>
-                        <Y>219.708679</Y>
+                        <X>208.108078</X>
+                        <Y>212.70871</Y>
                       </Location>
                       <Center>
                         <X>168</X>
@@ -257,10 +257,10 @@
                       <Skew>0</Skew>
                       <DropShadow>0</DropShadow>
                     </LabelLayout>
-                    <LeftAnchor AbsoluteValue="119.108063" RatioValue="0.06203545" />
-                    <RightAnchor AbsoluteValue="1066.892" RatioValue="0.4443271" />
-                    <TopAnchor AbsoluteValue="125.708679" RatioValue="0.116396926" />
-                    <BottomAnchor AbsoluteValue="922.2913" RatioValue="0.146026552" />
+                    <LeftAnchor AbsoluteValue="40.108078" RatioValue="0.0208896231" />
+                    <RightAnchor AbsoluteValue="1145.89185" RatioValue="0.403181285" />
+                    <TopAnchor AbsoluteValue="118.70871" RatioValue="0.109915473" />
+                    <BottomAnchor AbsoluteValue="929.29126" RatioValue="0.1395451" />
                   </KeyFrame>
                 </KeyFrames>
               </GUIAnimationChannel>
@@ -269,8 +269,8 @@
                   <KeyFrame Frame="0" EaseFunction="None" EaseAmount="0">
                     <LabelLayout>
                       <Location>
-                        <X>315.111176</X>
-                        <Y>190.234268</Y>
+                        <X>315.1112</X>
+                        <Y>199.234329</Y>
                       </Location>
                       <Center>
                         <X>197.000015</X>
@@ -289,10 +289,10 @@
                       <Skew>0</Skew>
                       <DropShadow>0</DropShadow>
                     </LabelLayout>
-                    <LeftAnchor AbsoluteValue="118.11116" RatioValue="0.06151623" />
-                    <RightAnchor AbsoluteValue="1067.88892" RatioValue="0.4438079" />
-                    <TopAnchor AbsoluteValue="159.234268" RatioValue="0.147439137" />
-                    <BottomAnchor AbsoluteValue="888.765747" RatioValue="0.17706877" />
+                    <LeftAnchor AbsoluteValue="118.111191" RatioValue="0.061516244" />
+                    <RightAnchor AbsoluteValue="1067.88879" RatioValue="0.44380793" />
+                    <TopAnchor AbsoluteValue="168.234329" RatioValue="0.155772522" />
+                    <BottomAnchor AbsoluteValue="879.7657" RatioValue="0.185402155" />
                   </KeyFrame>
                 </KeyFrames>
               </GUIAnimationChannel>
@@ -301,8 +301,8 @@
                   <KeyFrame Frame="0" EaseFunction="None" EaseAmount="0">
                     <LabelLayout>
                       <Location>
-                        <X>315.927338</X>
-                        <Y>221.01329</Y>
+                        <X>315.927368</X>
+                        <Y>237.013382</Y>
                       </Location>
                       <Center>
                         <X>197.000015</X>
@@ -321,10 +321,10 @@
                       <Skew>0</Skew>
                       <DropShadow>0</DropShadow>
                     </LabelLayout>
-                    <LeftAnchor AbsoluteValue="118.927322" RatioValue="0.0619413145" />
-                    <RightAnchor AbsoluteValue="1067.07275" RatioValue="0.44423297" />
-                    <TopAnchor AbsoluteValue="190.01329" RatioValue="0.175938234" />
-                    <BottomAnchor AbsoluteValue="857.9867" RatioValue="0.205567867" />
+                    <LeftAnchor AbsoluteValue="118.927353" RatioValue="0.06194133" />
+                    <RightAnchor AbsoluteValue="1067.07263" RatioValue="0.444233" />
+                    <TopAnchor AbsoluteValue="206.013382" RatioValue="0.190753132" />
+                    <BottomAnchor AbsoluteValue="841.986633" RatioValue="0.220382765" />
                   </KeyFrame>
                 </KeyFrames>
               </GUIAnimationChannel>
@@ -333,8 +333,8 @@
                   <KeyFrame Frame="0" EaseFunction="None" EaseAmount="0">
                     <LabelLayout>
                       <Location>
-                        <X>318.286774</X>
-                        <Y>255.845108</Y>
+                        <X>318.2868</X>
+                        <Y>277.845245</Y>
                       </Location>
                       <Center>
                         <X>197.000015</X>
@@ -353,10 +353,10 @@
                       <Skew>0</Skew>
                       <DropShadow>0</DropShadow>
                     </LabelLayout>
-                    <LeftAnchor AbsoluteValue="121.286758" RatioValue="0.06317019" />
-                    <RightAnchor AbsoluteValue="1064.71326" RatioValue="0.445461839" />
-                    <TopAnchor AbsoluteValue="224.845108" RatioValue="0.20818992" />
-                    <BottomAnchor AbsoluteValue="823.1549" RatioValue="0.237819538" />
+                    <LeftAnchor AbsoluteValue="121.286789" RatioValue="0.0631702" />
+                    <RightAnchor AbsoluteValue="1064.71313" RatioValue="0.445461869" />
+                    <TopAnchor AbsoluteValue="246.845245" RatioValue="0.228560418" />
+                    <BottomAnchor AbsoluteValue="801.1548" RatioValue="0.258190036" />
                   </KeyFrame>
                 </KeyFrames>
               </GUIAnimationChannel>
@@ -365,8 +365,8 @@
                   <KeyFrame Frame="0" EaseFunction="None" EaseAmount="0">
                     <LabelLayout>
                       <Location>
-                        <X>314.727325</X>
-                        <Y>295.837341</Y>
+                        <X>314.727356</X>
+                        <Y>317.837463</Y>
                       </Location>
                       <Center>
                         <X>197.000015</X>
@@ -385,10 +385,10 @@
                       <Skew>0</Skew>
                       <DropShadow>0</DropShadow>
                     </LabelLayout>
-                    <LeftAnchor AbsoluteValue="117.72731" RatioValue="0.0613163076" />
-                    <RightAnchor AbsoluteValue="1068.27271" RatioValue="0.443607956" />
-                    <TopAnchor AbsoluteValue="264.837341" RatioValue="0.245219767" />
-                    <BottomAnchor AbsoluteValue="783.162659" RatioValue="0.274849385" />
+                    <LeftAnchor AbsoluteValue="117.727341" RatioValue="0.0613163225" />
+                    <RightAnchor AbsoluteValue="1068.27271" RatioValue="0.443608" />
+                    <TopAnchor AbsoluteValue="286.837463" RatioValue="0.26559025" />
+                    <BottomAnchor AbsoluteValue="761.162537" RatioValue="0.295219868" />
                   </KeyFrame>
                 </KeyFrames>
               </GUIAnimationChannel>
@@ -401,12 +401,12 @@
                         <Y>180.023376</Y>
                       </Location>
                       <Center>
-                        <X>168</X>
-                        <Y>94</Y>
+                        <X>250.6</X>
+                        <Y>103.020004</Y>
                       </Center>
                       <Size>
-                        <Width>734</Width>
-                        <Height>32</Height>
+                        <Width>816.6</Width>
+                        <Height>41.0200043</Height>
                       </Size>
                       <Rotation>0</Rotation>
                       <Color>255; 255; 255</Color>
@@ -417,9 +417,9 @@
                       <Skew>0</Skew>
                       <DropShadow>0</DropShadow>
                     </LabelLayout>
-                    <LeftAnchor AbsoluteValue="121.098938" RatioValue="0.06307236" />
-                    <RightAnchor AbsoluteValue="1064.90112" RatioValue="0.445364028" />
-                    <TopAnchor AbsoluteValue="86.02338" RatioValue="0.0796512738" />
+                    <LeftAnchor AbsoluteValue="38.49893" RatioValue="0.0200515278" />
+                    <RightAnchor AbsoluteValue="1064.90112" RatioValue="0.445364" />
+                    <TopAnchor AbsoluteValue="77.00337" RatioValue="0.07129942" />
                     <BottomAnchor AbsoluteValue="961.9766" RatioValue="0.109280907" />
                   </KeyFrame>
                 </KeyFrames>
