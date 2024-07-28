@@ -353,6 +353,17 @@ class RepackingGbs {
 	}
 
 	function mergeFonts(importMap:Map<Int, GbsFont>, exportMap:Map<Int, GbsFont>) {
+		var importMCount = Lambda.count(importMap);
+		var exportMCount = Lambda.count(exportMap);
+		trace("Imported fonts map have: " + importMCount + " font(s).");
+		trace("Exported fonts map have: " + exportMCount + " font(s).");
+		// Фильтрация Экспортированных шрифтов для отсеивания неиспользуемых в игре по ID
+		for (key in exportMap.keys()) {
+			if (!importMap.exists(key)) {
+				exportMap.remove(key);
+				trace("Exported font key ID: " + key + "has been deleted.");
+			}
+		}
 		for (key in importMap.keys()) {
 			trace('merging font key: ${key}');
 			var exportVal = exportMap[key];
@@ -405,7 +416,9 @@ class RepackingGbs {
 				// var charCodeExp = exportVal.charsBlock[nCharE].charCode;
 				// trace('character translated: ${charCodeExp}');
 			}
-			trace('characters in map has been filtrated');
+			trace('Characters in map has been filtrated.');
+			exportMCount = Lambda.count(exportMap);
+			trace("Now Exported fonts map have: " + exportMCount + " font(s).");
 			if (exportVal.charsCount > 0 && exportVal.charsBlock.length > 0) {
 				// скорректировать число атласов и индексы атласов у символов
 				// здесь добавляем символы из exported в imported
