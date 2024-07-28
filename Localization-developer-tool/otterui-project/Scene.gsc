@@ -30,8 +30,8 @@
           <AnchorFlags>None</AnchorFlags>
           <LabelLayout>
             <Location>
-              <X>287.108063</X>
-              <Y>219.708679</Y>
+              <X>208.108078</X>
+              <Y>212.70871</Y>
             </Location>
             <Center>
               <X>168</X>
@@ -249,7 +249,7 @@
                         <Height>32</Height>
                       </Size>
                       <Rotation>0</Rotation>
-                      <Color>255; 255; 255</Color>
+                      <Color>White</Color>
                       <Scale>
                         <Width>1</Width>
                         <Height>1</Height>
@@ -281,7 +281,7 @@
                         <Height>32</Height>
                       </Size>
                       <Rotation>0</Rotation>
-                      <Color>255; 255; 255</Color>
+                      <Color>White</Color>
                       <Scale>
                         <Width>1</Width>
                         <Height>1</Height>
@@ -313,7 +313,7 @@
                         <Height>32</Height>
                       </Size>
                       <Rotation>0</Rotation>
-                      <Color>255; 255; 255</Color>
+                      <Color>White</Color>
                       <Scale>
                         <Width>1</Width>
                         <Height>1</Height>
@@ -345,7 +345,7 @@
                         <Height>32</Height>
                       </Size>
                       <Rotation>0</Rotation>
-                      <Color>255; 255; 255</Color>
+                      <Color>White</Color>
                       <Scale>
                         <Width>1</Width>
                         <Height>1</Height>
@@ -377,7 +377,7 @@
                         <Height>32</Height>
                       </Size>
                       <Rotation>0</Rotation>
-                      <Color>255; 255; 255</Color>
+                      <Color>White</Color>
                       <Scale>
                         <Width>1</Width>
                         <Height>1</Height>
@@ -409,7 +409,7 @@
                         <Height>41.0200043</Height>
                       </Size>
                       <Rotation>0</Rotation>
-                      <Color>255; 255; 255</Color>
+                      <Color>White</Color>
                       <Scale>
                         <Width>1</Width>
                         <Height>1</Height>
