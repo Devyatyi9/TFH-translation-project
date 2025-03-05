@@ -10,3 +10,5 @@
 
 > [!IMPORTANT]
 > Для корректного открытия проекта в IDE необходимо выбирать эту директорию в качестве корневой
+
+[SkullGirls fonts repacker](https://github.com/Devyatyi9/TFH-translation-project/releases/tag/SG-1.0)
