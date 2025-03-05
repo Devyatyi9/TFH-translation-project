@@ -1,6 +1,6 @@
 # Описание
 
-Здесь у нас тулза которая объединяет инфу из gbs (бинарный формат [OtterUI](https://github.com/ppiecuch/OtterUI/tree/master/Distributions) файлов и генерирует новые.
+Здесь у нас тулза которая объединяет инфу из gbs (бинарный формат [OtterUI](https://github.com/ppiecuch/OtterUI/tree/master/Distributions) файлов и генерирует новые.)
 
 Объединение происходит тулзой из `src/Main.hx`, при компиляции создаётся `otterui-cli.hl` (сразу же запускается).
 
