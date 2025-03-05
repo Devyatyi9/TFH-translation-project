@@ -2,7 +2,7 @@
 
 В процессе переписывания...
 
-[Releases](https://github.com/Devyatyi9/TFH-translation-project/releases)
+[SkullGirls fonts repacker](https://github.com/Devyatyi9/TFH-translation-project/releases/tag/SG-1.0)
 
 Состав проекта:
 
